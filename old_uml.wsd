@@ -1,0 +1,222 @@
+@startuml old-uml
+
++abstract class Actor {
+    #x: double
+    #y: double
+    #width: double
+    #height: double
+    #vx: double
+    #vy: double
+    #approachFactor: double
+    #speed: double
+
+    #didCollideWithSpikes: boolean
+
+    +Actor(startX: double, startY: double, width: double, height: double)
+    +drawActor(g2: Graphics2D): void
+    +checkCollision(t: Tile): boolean
+    +toString(): String
+    +getX(): double
+    +setX(x: double): void
+    +getY(): double
+    +setY(y: double): void
+    +getVx(): double
+    +setVx(vx: double): void
+    +getVy(): double
+    +setVy(vy: double): void
+    +getHeight(): double
+    +getWidth(): double
+    +setHeight(newHeight: double): void
+    +setWidth(newWidth: double): void
+}
+
++class Bomb extends Tile {
+    -floatManager: double
+
+    +Bomb(x: int, y: int, width: int, height: int)
+    +display(g: Graphics2D): void
+    +handleCollision(a: Player, ix: double, iy: double): void
+    +handleSeekerCollision(a: HunterSeeker, double ix, double iy): void
+    +handleEnemyCollision(a: Enemy, ix: double, iy: double): void
+}
+
++class BouncePad extends Tile {
+    +Bomb(x: int, y: int, width: int, height: int)
+    +display(g: Graphics2D): void
+    +handleCollision(a: Player, ix: double, iy: double): void
+    +handleSeekerCollision(a: HunterSeeker, double ix, double iy): void
+    +handleEnemyCollision(a: Enemy, ix: double, iy: double): void
+}
+
++class Enemy extends Actor {
+    #patrolDistance: int
+    #initialX: double
+    #initialY: double
+    #enemyColor: Color
+    #adding: boolean
+
+    +Enemy()
+    +Enemy(startX: double, startY: double, width: double, height: double)
+    +Enemy(startX: double, startY: double, width: double, height: double, velocityX: double, velocityY: double)
+    +drawActor(g2 Graphics2D): void
+    +update(tiles: ArrayList<Tile>): void
+    +handleCollisions(tiles: ArrayList<Tile>, ix: doublem, iy: double): void
+    +getAdding: boolean
+    +setAdding(newAdding: double): void
+    +returnNew(): Enemy
+    +controll(): void
+}
+
++class HunterSeeker extends Actor {
+    -hero: Player
+    -gravity: double
+    -c: Color
+
+    +HunterSeeker()
+    +HunterSeeker(startX: double, startY: double, width: double, height: double)
+    +HunterSeeker(startX: double, startY: double, width: double, height: double, velocityX: double, velocityY: double)
+    +drawActor(g2 Graphics2D): void
+    +handleCollisions(tiles: ArrayList<Tile>, ix: doublem, iy: double): void
+    +controll(): void
+}
+
++class EnemySpawner extends Actor {
+    #patrolDistance: int
+    #initialX: double
+    #initialY: double
+    #enemyColor: Color
+    #adding: boolean
+
+    +EnemySpawner()
+    +EnemySpawner(startX: double, startY: double, width: double, height: double)
+    +EnemySpawner(startX: double, startY: double, width: double, height: double, velocityX: double, velocityY: double)
+    +drawActor(g2 Graphics2D): void
+    +update(tiles: ArrayList<Tile>): void
+    +handleCollisions(tiles: ArrayList<Tile>, ix: doublem, iy: double): void
+    +getAdding(): boolean
+    +setAdding(newAdding: double): void
+    +returnNew(): Enemy
+    +controll(): void
+}
+
++class GameAdvanceListener implements ActionListener {
+    -gameComponent: GameComponent
+    +GameAdvanceListener(gameComponent: GameComponent)
+    +actionPerformed(e: ActionEvent): void
+    +advanceOneTick(): void
+}
+
++class GameComponent extends JComponent {
+    -scene: String
+    -transitionTimer: int
+    -score: int
+    ~levelFiles: String[]
+    -levelIndex: int
+    -level: String
+    -levelLayout: ArrayList<String>
+    -levelWidth: int
+    -levelHeight: int
+    -levelWidth: int
+    -tiles: ArrayList<Tile>
+    -numBombs: int
+    -hero: Player
+    -keys: HashMap<Integer, Boolean>
+    -frame: JFrame
+
+    +GameComponent(frame: JFrame)
+    +handleKey(keyCode: int, newVal: boolean): void
+    +updateState(): void
+    +drawScreen(): void
+    +switchScene(): void
+    +loadLevel(inputFilename: String): void
+    +generateLevel(inputFilename: String): void
+    +paintComponent(g: Graphics): void
+    +sizeFrame(frame JFrame): void
+    +switchLevel(newLevel: String): void
+    +levelReset(): void
+    +heroLosedLife(): void
+}
+
++class MainApp {
+    +{static}{final} DELAY: int
+    -component: GameComponent
+    -gameFrame: JFrame
+    -time: Timer
+
+    -runApp(): void
+    +{static} main(args: String[]): void
+}
+
++class Platform extends Tile {
+    +display(g: Graphics2D): void
+    +handleCollision(a: Player, ix: double, iy: double): void
+    +handleSeekerCollision(a: HunterSeeker, double ix, double iy): void
+    +handleEnemyCollision(a: Enemy, ix: double, iy: double): void
+}
+
++class Spike extends Tile {
+    +display(g: Graphics2D): void
+    +handleCollision(a: Player, ix: double, iy: double): void
+    +handleSeekerCollision(a: HunterSeeker, double ix, double iy): void
+    +handleEnemyCollision(a: Enemy, ix: double, iy: double): void
+}
+
++class Wall extends Tile {
+    +display(g: Graphics2D): void
+    +handleCollision(a: Player, ix: double, iy: double): void
+    +handleSeekerCollision(a: HunterSeeker, double ix, double iy): void
+    +handleEnemyCollision(a: Enemy, ix: double, iy: double): void
+}
+
++abstract class Tile{
+    #x: int
+    #y: int
+    #width: int
+    #height: int
+    #remove: boolean
+
+    +Tile(x: int, y: int, width: int, height: int)
+    +getX(): int
+    +getY(): int
+    +getWidth(): int
+    +getHeight(): int
+    +setRemove(): void
+    +shouldRemove(): void
+    +{abstract} display(g: Graphics2D): void
+    +{abstract} handleCollision(a: Player, ix: double, iy: double): void
+    +{abstract} handleSeekerCollision(a: HunterSeeker, double ix, double iy): void
+    +{abstract} handleEnemyCollision(a: Enemy, ix: double, iy: double): void
+}
+
++class Player extends Actor {
+    -gravity: double
+    -jumpHeight: double
+    -speed: double
+    -lives: int
+    +update(keys: HashMAp<Integer, Boolean>, tiles: ArrayList<Tile>)
+    +findKey(keys: HashMAp<Integer, Boolean>, val: int): boolean
+    +handleCollisions(tiles: ArrayList<Tile>, ix: double, iy: double)
+    +handleCollisions(enemy: Enemy): int
+    -checkCollision(e: Enemy): boolean
+    +loseLife(): void
+    +checkLives(): boolean
+    +getNumberOfLives(): int
+    +clearMovementSpeed(): void
+    +controll(keys: HashMap<Integer, Boolean> keys)
+    +drawActor(g2 Graphics2D): void
+}
+
+Actor ..> Tile
+Enemy ..>"*" Tile
+HunterSeeker ..>"*" Tile
+EnemySpawner ..>"*" Tile
+GameAdvanceListener --> GameComponent
+GameComponent -->"*" Tile
+GameComponent --> Player
+MainApp --> GameComponent
+Tile ..> Player
+Tile ..> HunterSeeker
+Tile ..> Enemy
+Player ..> Enemy
+Player ..> Tile
+@enduml
