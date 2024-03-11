@@ -1,0 +1,17 @@
+@startuml Three Layer Design Diagram
+
+package presentation {
+    +class MainApp {
+        +MainApp(args: String[])
+    }
+}
+
+package domain {
+
+}
+
+package datasource {
+
+}
+
+@enduml
