@@ -1,0 +1,96 @@
+@startuml ArcadeGame
+package presentation {
+  class GameViewer {
+    + {static} main(args: String[]): void
+  }
+  class GameAdvanceListener
+  class StartScreen {
+    + draw(): void
+  }
+  class GameOverScreen {
+    + draw(): void
+  }
+  class GameWonScreen {
+    + draw(): void
+  }
+  class LevelViewer {
+    + draw(): void
+  }
+  abstract Drawable {
+    + draw(): void
+  }
+  class DrawablePlayer
+  class DrawableEnemy
+  class DrawableBarrier
+  class DrawableSpike
+  class DrawableBouncePad
+  class DrawableCoin
+  class DrawableBomb
+  class DrawableEnemySpawner
+
+  GameViewer .d.> StartScreen
+  GameViewer .u.> GameAdvanceListener
+  StartScreen -> LevelViewer
+  StartScreen .u.> GameAdvanceListener
+  LevelViewer .> GameWonScreen
+  LevelViewer .> GameOverScreen
+  LevelViewer .u.> GameAdvanceListener
+  GameWonScreen .u.> GameAdvanceListener
+  GameOverScreen .u.> GameAdvanceListener
+  LevelViewer -d->"*" Drawable
+  DrawablePlayer -u-|> Drawable
+  DrawableEnemy -u-|> Drawable
+  DrawableBarrier -u-|> Drawable
+  DrawableSpike -u-|> Drawable
+  DrawableBouncePad -u-|> Drawable
+  DrawableCoin -u-|> Drawable
+  DrawableBomb -u-|> Drawable
+  DrawableEnemySpawner -u-|> Drawable
+}
+Drawable -l-> data.ImageReader
+DrawablePlayer -d-> domain.Player
+DrawableEnemy -d-> domain.Enemy
+DrawableBarrier -d-> domain.Barrier
+DrawableSpike -d-> domain.Spike
+DrawableBouncePad -d-> domain.BouncePad
+DrawableCoin -d-> domain.Coin
+DrawableBomb -d-> domain.Bomb
+DrawableEnemySpawner -d-> domain.EnemySpawner
+
+package domain {
+  class Level
+  abstract GameObject
+  class Player
+  class Enemy
+  class Barrier
+  class Spike
+  class BouncePad
+  class Coin
+  class Bomb
+  class EnemySpawner
+
+  Level -d->"*" GameObject
+  Player -u-|> GameObject
+  Enemy -u-|> GameObject
+  Barrier -u-|> GameObject
+  Spike -u-|> GameObject
+  BouncePad -u-|> GameObject
+  Coin -u-|> GameObject
+  Bomb -u-|> GameObject
+  EnemySpawner -u-|> GameObject
+}
+Level -u-> data.LevelReader
+Level -u-> data.LevelWriter
+
+package data {
+  interface FileReader
+  interface FileWriter
+  class LevelReader
+  class ImageReader
+  class LevelWriter
+
+  LevelReader .u.|> FileReader
+  ImageReader .u.|> FileReader
+  LevelWriter .u.|> FileWriter
+}
+@enduml
