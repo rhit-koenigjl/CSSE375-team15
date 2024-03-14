@@ -1,8 +1,6 @@
 @startuml ArcadeGame
 package presentation {
   class GameViewer {
-    - lives: int
-    - score: int
     + {static} main(args: String[]): void
   }
   class GameAdvanceListener {
@@ -29,6 +27,7 @@ package presentation {
     - level: Level
     - gameObjects: List<Drawable>
     + LevelViewer(level: Level)
+    - nextLevel(): void
     - handleGameWon(): void
     - handleGameLost(): void
     + draw(): void
@@ -39,24 +38,35 @@ package presentation {
     # handleCollision(other: Drawable): void
   }
   class DrawablePlayer {
+    - player: Player
     + draw(): void
+    ~ moveLeft(): void
+    ~ moveRight(): void
+    ~ jump(): void
   }
   class DrawableEnemy {
+    - enemy: Enemy
     + draw(): void
   }
   class DrawableBarrier {
+    - barrier: Barrier
     + draw(): void
   }
   class DrawableSpike {
+    - spike: Spike
+    - direction: int
     + draw(): void
   }
   class DrawableBouncePad {
+    - bouncePad: BouncePad
     + draw(): void
   }
   class DrawableCoin {
+    - coin: Coin
     + draw(): void
   }
   class DrawableEnemySpawner {
+    - enemySpawner: EnemySpawner
     + draw(): void
   }
 
@@ -86,17 +96,49 @@ DrawableSpike -d-> domain.Spike
 DrawableBouncePad -d-> domain.BouncePad
 DrawableCoin -d-> domain.Coin
 DrawableEnemySpawner -d-> domain.EnemySpawner
+LevelViewer -u-> domain.Level
 
 package domain {
-  class Level
-  abstract GameObject
-  class Player
-  class Enemy
+  class Level {
+    - reader: LevelReader
+    - gameObjects: List<GameObject>
+    - name: String
+    - lives: int
+    - score: int
+    + Level(fileName: String)
+    - load(): void
+    + getObjects(): List<GameObject>
+  }
+  abstract GameObject {
+    # xPos: int
+    # yPos: int
+    # xVel: int
+    # yVel: int
+    + GameObject(xPos: int, yPos: int)
+    # getPosition(): int[]
+    # setVelocity(xVel: int, yVel: int): void
+    ~ collidesWith(other: GameObject): boolean
+    ~ collisionAction(): void
+  }
+  class Player {
+    + moveLeft(): void
+    + moveRight(): void
+    + jump(): void
+    - loseLife(): void
+  }
+  class Enemy {
+    ~ move(): void
+  }
   class Barrier
   class Spike
   class BouncePad
-  class Coin
-  class EnemySpawner
+  class Coin {
+    ~ collect(): void
+  }
+  class EnemySpawner {
+    - spawnRate: int
+    ~ spawn(): void
+  }
 
   Level -d->"*" GameObject
   Player -u-|> GameObject
@@ -108,21 +150,20 @@ package domain {
   EnemySpawner -u-|> GameObject
 }
 Level -u-> data.LevelReader
-Level -u-> data.LevelWriter
 
 package data {
   interface FileReader {
     + read(): String
   }
-  interface FileWriter {
-    + write(data: String): void
+  class LevelReader {
+    + read(): String
+    - parseJson(): Object
   }
-  class LevelReader
-  class ImageReader
-  class LevelWriter
+  class ImageReader {
+    + read(): String
+  }
 
   LevelReader .u.|> FileReader
   ImageReader .u.|> FileReader
-  LevelWriter .u.|> FileWriter
 }
 @enduml
