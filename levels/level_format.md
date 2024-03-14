@@ -24,3 +24,12 @@ We will maintain a standard set of character keys that represent each block:
 |  v  |      downward-spike      |
 |  >  |     rightward-spike      |
 |  <  |      leftward-spike      |
+Others will be added in the future
+
+the info stream will be a string representing a list of pairs in the following format
+
+|a1-b1|a2-b2|a3-b3|
+
+the a's represent block types and the b's represent quantity in a row (including wrapping)
+
+This will still be human readable, which is not ideal, but far less so than the original draft.
