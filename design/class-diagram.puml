@@ -1,32 +1,64 @@
 @startuml ArcadeGame
 package presentation {
   class GameViewer {
+    - lives: int
+    - score: int
     + {static} main(args: String[]): void
   }
-  class GameAdvanceListener
+  class GameAdvanceListener {
+    - {static} {final} NUM_TICKS: int
+    + nextTick(): void
+  }
   class StartScreen {
+    - {static} {final} LEVEL_FILES_LOCATION: String
+    - handleStartGame(): void
+    - handleDisplayControls(): void
     + draw(): void
   }
   class GameOverScreen {
+    - handleQuitGame(): void
+    - handleRestartGame(): void
     + draw(): void
   }
   class GameWonScreen {
+    - handleQuitGame(): void
+    - handleRestartGame(): void
     + draw(): void
   }
   class LevelViewer {
+    - level: Level
+    - gameObjects: List<Drawable>
+    + LevelViewer(level: Level)
+    - handleGameWon(): void
+    - handleGameLost(): void
     + draw(): void
   }
   abstract Drawable {
+    # image: ImageReader
+    + draw(): void
+    # handleCollision(other: Drawable): void
+  }
+  class DrawablePlayer {
     + draw(): void
   }
-  class DrawablePlayer
-  class DrawableEnemy
-  class DrawableBarrier
-  class DrawableSpike
-  class DrawableBouncePad
-  class DrawableCoin
-  class DrawableBomb
-  class DrawableEnemySpawner
+  class DrawableEnemy {
+    + draw(): void
+  }
+  class DrawableBarrier {
+    + draw(): void
+  }
+  class DrawableSpike {
+    + draw(): void
+  }
+  class DrawableBouncePad {
+    + draw(): void
+  }
+  class DrawableCoin {
+    + draw(): void
+  }
+  class DrawableEnemySpawner {
+    + draw(): void
+  }
 
   GameViewer .d.> StartScreen
   GameViewer .u.> GameAdvanceListener
@@ -44,7 +76,6 @@ package presentation {
   DrawableSpike -u-|> Drawable
   DrawableBouncePad -u-|> Drawable
   DrawableCoin -u-|> Drawable
-  DrawableBomb -u-|> Drawable
   DrawableEnemySpawner -u-|> Drawable
 }
 Drawable -l-> data.ImageReader
@@ -54,7 +85,6 @@ DrawableBarrier -d-> domain.Barrier
 DrawableSpike -d-> domain.Spike
 DrawableBouncePad -d-> domain.BouncePad
 DrawableCoin -d-> domain.Coin
-DrawableBomb -d-> domain.Bomb
 DrawableEnemySpawner -d-> domain.EnemySpawner
 
 package domain {
@@ -66,7 +96,6 @@ package domain {
   class Spike
   class BouncePad
   class Coin
-  class Bomb
   class EnemySpawner
 
   Level -d->"*" GameObject
@@ -76,15 +105,18 @@ package domain {
   Spike -u-|> GameObject
   BouncePad -u-|> GameObject
   Coin -u-|> GameObject
-  Bomb -u-|> GameObject
   EnemySpawner -u-|> GameObject
 }
 Level -u-> data.LevelReader
 Level -u-> data.LevelWriter
 
 package data {
-  interface FileReader
-  interface FileWriter
+  interface FileReader {
+    + read(): String
+  }
+  interface FileWriter {
+    + write(data: String): void
+  }
   class LevelReader
   class ImageReader
   class LevelWriter
