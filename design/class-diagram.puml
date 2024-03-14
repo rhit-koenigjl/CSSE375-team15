@@ -130,8 +130,8 @@ package domain {
     + GameObject(xPos: int, yPos: int)
     # getPosition(): int[]
     # setVelocity(xVel: int, yVel: int): void
-    ~ collidesWith(other: GameObject): boolean
-    ~ collisionAction(): void
+    ~ {abstract} collidesWith(other: GameObject): boolean
+    ~ {abstract} collisionAction(): void
   }
   class Player {
     - {static} {final} X_VELOCITY: int
@@ -141,29 +141,44 @@ package domain {
     ~ moveRight(): void
     ~ jump(): void
     - loseLife(): void
+    ~ collidesWith(other: GameObject): boolean
+    ~ collisionAction(): void
   }
   class Enemy {
     + Enemy(xPos: int, yPos: int)
     ~ move(): void
+    ~ collidesWith(other: GameObject): boolean
+    ~ collisionAction(): void
   }
   class Barrier {
     + Barrier(xPos: int, yPos: int)
+    ~ collidesWith(other: GameObject): boolean
+    ~ collisionAction(): void
   }
   class Spike {
-    + Spike(xPos: int, yPos: int)
     - direction: SpikeDirection
+    + Spike(xPos: int, yPos: int)
+    ~ setDirection(direction: SpikeDirection): void
+    ~ collidesWith(other: GameObject): boolean
+    ~ collisionAction(): void
   }
   class BouncePad {
     + BouncePad(xPos: int, yPos: int)
+    ~ collidesWith(other: GameObject): boolean
+    ~ collisionAction(): void
   }
   class Coin {
     + Coin(xPos: int, yPos: int)
     ~ collect(): void
+    ~ collidesWith(other: GameObject): boolean
+    ~ collisionAction(): void
   }
   class EnemySpawner {
     - spawnRate: int
     + EnemySpawner(xPos: int, yPos: int)
     ~ spawn(): void
+    ~ collidesWith(other: GameObject): boolean
+    ~ collisionAction(): void
   }
   enum SpikeDirection {
     UP
@@ -182,7 +197,7 @@ package domain {
   Coin -u-|> GameObject
   EnemySpawner -u-|> GameObject
 }
-Level -u-> data.LevelReader
+domain.Level -u-> data.LevelReader
 
 package data {
   interface FileReader {
