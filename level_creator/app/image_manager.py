@@ -17,3 +17,6 @@ class ImageManager:
     
     def get_image_map(self):
         return self.image_map
+    
+    def get_image(self, type):
+        return self.image_map[type]
