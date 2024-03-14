@@ -43,24 +43,21 @@ while running:
         if event.type == pygame.MOUSEBUTTONUP:
             mouse_down = False
         if event.type == pygame.KEYDOWN:
-            print(event.key)
-            # pygame.K_1 = 49
             if event.key >= 49 and event.key <= 57:
                 block_pallete.set_collection(event.key - 49)
-            if event.key == pygame.K_SPACE:
-                image_index += 1
-                image_index %= len(image_keys)
+            if event.key == pygame.K_LCTRL:
+                block_pallete.iterate_collection()
 
     # Fill the screen with white
     screen.fill((200, 200, 200))  # RGB values for white
 
     # Game logic goes here
-    if mouse_down:
-        mx, my = pygame.mouse.get_pos()
-        grid.set_type(mx, my, image_keys[image_index])
+    mx, my = pygame.mouse.get_pos()
+    if mouse_down and mx >= 0 and mx < BLOCK_SIZE * LEVEL_WIDTH >= 0 and my < BLOCK_SIZE * LEVEL_HEIGHT and my > 0:
+        grid.set_type(mx, my, block_pallete.get_active_type())
 
     # Drawing code goes here
-    grid.display(screen, image_manager.get_image_map(), image_keys[image_index])
+    grid.display(screen, image_manager.get_image_map(), block_pallete.get_active_type())
     block_pallete.display(screen, image_manager.get_image_map())
 
     # Update the display

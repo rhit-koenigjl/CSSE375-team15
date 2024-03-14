@@ -1,7 +1,7 @@
 {
-    "block-size": 32,
-    "level-width": 30,
-    "level-height": 20,
+    "block-size": 16,
+    "level-width": 60,
+    "level-height": 40,
     "assets": [
         [
             [
@@ -35,6 +35,12 @@
             [
                 "c",
                 "assets\\coin.gif"
+            ]
+        ],
+        [
+            [
+                "none",
+                "assets\\none_type.png"
             ]
         ]
     ]
