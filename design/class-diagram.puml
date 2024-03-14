@@ -38,35 +38,48 @@ package presentation {
     # handleCollision(other: Drawable): void
   }
   class DrawablePlayer {
+    - {static} {final} PLAYER_IMAGE: String
     - player: Player
+    + DrawablePlayer(player: Player)
     + draw(): void
     ~ moveLeft(): void
     ~ moveRight(): void
     ~ jump(): void
   }
   class DrawableEnemy {
+    - {static} {final} ENEMY_IMAGE: String
     - enemy: Enemy
+    + DrawableEnemy(enemy: Enemy)
     + draw(): void
   }
   class DrawableBarrier {
+    - {static} {final} BARRIER_IMAGE: String
     - barrier: Barrier
+    + DrawableBarrier(barrier: Barrier)
     + draw(): void
   }
   class DrawableSpike {
+    - {static} {final} SPIKE_IMAGE: String
     - spike: Spike
-    - direction: int
+    + DrawableSpike(spike: Spike)
     + draw(): void
   }
   class DrawableBouncePad {
+    - {static} {final} BOUNCE_PAD_IMAGE: String
     - bouncePad: BouncePad
+    + DrawableBouncePad(bouncePad: BouncePad)
     + draw(): void
   }
   class DrawableCoin {
+    - {static} {final} COIN_IMAGE: String
     - coin: Coin
+    + DrawableCoin(coin: Coin)
     + draw(): void
   }
   class DrawableEnemySpawner {
+    - {static} {final} ENEMY_SPAWNER_IMAGE: String
     - enemySpawner: EnemySpawner
+    + DrawableEnemySpawner(enemySpawner: EnemySpawner)
     + draw(): void
   }
 
@@ -121,23 +134,42 @@ package domain {
     ~ collisionAction(): void
   }
   class Player {
-    + moveLeft(): void
-    + moveRight(): void
-    + jump(): void
+    - {static} {final} X_VELOCITY: int
+    - {static} {final} Y_VELOCITY: int
+    + Player(xPos: int, yPos: int)
+    ~ moveLeft(): void
+    ~ moveRight(): void
+    ~ jump(): void
     - loseLife(): void
   }
   class Enemy {
+    + Enemy(xPos: int, yPos: int)
     ~ move(): void
   }
-  class Barrier
-  class Spike
-  class BouncePad
+  class Barrier {
+    + Barrier(xPos: int, yPos: int)
+  }
+  class Spike {
+    + Spike(xPos: int, yPos: int)
+    - direction: SpikeDirection
+  }
+  class BouncePad {
+    + BouncePad(xPos: int, yPos: int)
+  }
   class Coin {
+    + Coin(xPos: int, yPos: int)
     ~ collect(): void
   }
   class EnemySpawner {
     - spawnRate: int
+    + EnemySpawner(xPos: int, yPos: int)
     ~ spawn(): void
+  }
+  enum SpikeDirection {
+    UP
+    DOWN
+    LEFT
+    RIGHT
   }
 
   Level -d->"*" GameObject
@@ -145,6 +177,7 @@ package domain {
   Enemy -u-|> GameObject
   Barrier -u-|> GameObject
   Spike -u-|> GameObject
+  Spike -d-> SpikeDirection
   BouncePad -u-|> GameObject
   Coin -u-|> GameObject
   EnemySpawner -u-|> GameObject
