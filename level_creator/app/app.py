@@ -43,6 +43,10 @@ while running:
         if event.type == pygame.MOUSEBUTTONUP:
             mouse_down = False
         if event.type == pygame.KEYDOWN:
+            print(event.key)
+            # pygame.K_1 = 49
+            if event.key >= 49 and event.key <= 57:
+                block_pallete.set_collection(event.key - 49)
             if event.key == pygame.K_SPACE:
                 image_index += 1
                 image_index %= len(image_keys)
