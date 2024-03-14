@@ -4,13 +4,14 @@ import pygame
 class ImageManager:
     def __init__(self, filepath) -> None:
         f = open(filepath)
-        images = json.load(f)['images']
+        j = json.load(f)
+        collections = list(j['assets'])
 
         self.image_map = {}
 
-        for i in images:
-            # 0 index is name, 1 index is file name
-            self.image_map[i[0]] = pygame.image.load(i[1])
+        for c in collections:
+            for asset in c:
+                self.image_map[asset[0]] = pygame.image.load(asset[1])
 
     def get_keys(self):
         return self.image_map.keys()

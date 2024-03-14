@@ -3,6 +3,7 @@ import sys
 import json
 from grid import Grid
 from image_manager import ImageManager
+from block_pallete import BlockPallete
 
 config_f = open('app-config.json')
 config_data = json.load(config_f)
@@ -11,7 +12,8 @@ BLOCK_SIZE = config_data['block-size']
 LEVEL_WIDTH, LEVEL_HEIGHT = config_data['level-width'], config_data['level-height']
 
 grid = Grid(LEVEL_WIDTH, LEVEL_HEIGHT, BLOCK_SIZE)
-image_manager = ImageManager("asset-log.json")
+image_manager = ImageManager("app-config.json")
+block_pallete = BlockPallete(list(config_data['assets']))
 
 image_keys = list(image_manager.get_keys())
 image_keys.append("none")
@@ -21,7 +23,7 @@ image_index = 0
 pygame.init()
 
 # Set up the screen
-screen_width, screen_height = BLOCK_SIZE * LEVEL_WIDTH, BLOCK_SIZE * LEVEL_HEIGHT
+screen_width, screen_height = BLOCK_SIZE * LEVEL_WIDTH + 40, BLOCK_SIZE * LEVEL_HEIGHT
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Minimal Pygame Starter")
 
@@ -54,7 +56,8 @@ while running:
         grid.set_type(mx, my, image_keys[image_index])
 
     # Drawing code goes here
-    grid.display(screen, image_manager.get_image_map(), image_keys[image_index]  )
+    grid.display(screen, image_manager.get_image_map(), image_keys[image_index])
+    block_pallete.display(screen, image_manager.get_image_map())
 
     # Update the display
     pygame.display.flip()
