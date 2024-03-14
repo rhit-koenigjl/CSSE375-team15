@@ -1,0 +1,8 @@
+{
+    "images": [
+        ["block", "assets\\brick.png"],
+        ["mossy-block", "assets\\coin.gif"],
+        ["coin", "assets\\mossy_brick.png"],
+        ["spike", "assets\\spike.png"]
+    ]
+}
