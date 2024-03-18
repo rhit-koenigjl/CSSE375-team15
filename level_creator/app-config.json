@@ -1,7 +1,7 @@
 {
-    "block-size": 64,
-    "level-width": 8,
-    "level-height": 8,
+    "block-size": 32,
+    "level-width": 30,
+    "level-height": 20,
     "assets": [
         [
             [
@@ -56,6 +56,9 @@
             ["@#DL", "assets\\angry_ghost_down_left.png"],
             ["@#L", "assets\\angry_ghost_left.png"],
             ["@#UL", "assets\\angry_ghost_up_left.png"]
+        ],
+        [
+            ["P", "assets\\player_right.gif"]
         ],
         [
             [
