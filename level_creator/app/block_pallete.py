@@ -20,7 +20,6 @@ class BlockPallete:
     
     def iterate_collection(self):
         self.current_selections[self.current_collection] += 1
-        print(len(self.collections[self.current_collection]))
         self.current_selections[self.current_collection] %= len(self.collections[self.current_collection])
 
     def set_collection(self, collection):
