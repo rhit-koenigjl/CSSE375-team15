@@ -14,10 +14,9 @@ ls = LevelSetup('temp_level_folder')
 level_data = ls.get_level_object()
 
 BLOCK_SIZE = config_data['block-size']
-LEVEL_WIDTH, LEVEL_HEIGHT = int(level_data['width']), int(level_data['height'])
+LEVEL_WIDTH, LEVEL_HEIGHT, STREAM = int(level_data['width']), int(level_data['height']), level_data['data']
 
-
-grid = Grid(LEVEL_WIDTH, LEVEL_HEIGHT, BLOCK_SIZE)
+grid = Grid(LEVEL_WIDTH, LEVEL_HEIGHT, BLOCK_SIZE, STREAM)
 image_manager = ImageManager("app-config.json")
 block_pallete = BlockPallete(list(config_data['assets']))
 
@@ -55,6 +54,8 @@ while running:
                 block_pallete.iterate_collection()
             if event.key == pygame.K_m:
                 ls.dump_data(grid.get_data_string())
+                pygame.quit()
+                sys.exit()
 
     # Fill the screen with white
     screen.fill((200, 200, 200))  # RGB values for white

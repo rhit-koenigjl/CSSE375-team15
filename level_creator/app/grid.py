@@ -3,17 +3,27 @@ import math
 from block import Block
 
 class Grid:
-    def __init__(self, width, height, bs) -> None:
+    def __init__(self, width, height, bs, stream) -> None:
         self.width = width
         self.height = height
         self.bs = bs
 
         self.blocks = []
 
+        count = 0
+        type = 0
+        s_chunks = stream.split('|')
+        cur_chunk = None
+
         for i in range(height):
             row = []
             for j in range(width):
-                row.append(Block(j * self.bs, i * self.bs, self.bs, "none"))
+                if count == 0:
+                    cur_chunk = s_chunks.pop(0).split('-')
+                    count = int(cur_chunk[1])
+                    type = cur_chunk[0]
+                row.append(Block(j * self.bs, i * self.bs, self.bs, type))
+                count -= 1
             self.blocks.append(row)
 
     def display(self, screen, image_map, current_block):
@@ -25,7 +35,7 @@ class Grid:
         self.blocks[math.floor(y/self.bs)][math.floor(x/self.bs)].set_type(new_type)
 
     def get_data_string(self):
-        return_string = "|"
+        return_string = ""
 
         x = 0
         y = 0
@@ -46,7 +56,7 @@ class Grid:
             
 
         return_string += cur_type + '-' + str(cur_iterations) + '|'
-        return return_string[3:]
+        return return_string[3:-1]
 
 
     

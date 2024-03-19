@@ -44,8 +44,10 @@ class LevelSetup():
         return json.load(f)
     
     def dump_data(self, stream):
-        fd = open(self.file_path, 'r+')
-        d = json.load(fd)
-        fd.seek(0)
-        d['data'] = stream
-        json.dump(d, fd)
+        d = {}
+        with open(self.file_path, 'r') as fd:
+            d = json.load(fd)
+            d['data'] = stream
+
+        with open(self.file_path, 'w') as fd:
+            json.dump(d, fd)
