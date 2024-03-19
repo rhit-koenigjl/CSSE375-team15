@@ -1,10 +1,12 @@
 package arcadeGame;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Spike extends Tile {
 	/**
 	 * ensures: calls the Tile constructor for the bouncepad
+	 * 
 	 * @param x
 	 * @param y
 	 * @param width
@@ -19,17 +21,16 @@ public class Spike extends Tile {
 		g2.translate(x, y);
 		g2.setColor(Color.gray);
 		g2.fillRect(0, 0, width, height);
-		g2.translate(width/2, -(height*Math.sqrt(2)/2 - height/2));
-		g2.rotate(Math.PI/4);
-		g2.fillRect(0,0, width, height);
-		g2.rotate(-Math.PI/4);
-		g2.translate(-width/2, (height*Math.sqrt(2)/2 - height/2));
-		g2.translate(-x,-y);
+		g2.translate(width / 2, -(height * Math.sqrt(2) / 2 - height / 2));
+		g2.rotate(Math.PI / 4);
+		g2.fillRect(0, 0, width, height);
+		g2.rotate(-Math.PI / 4);
+		g2.translate(-width / 2, (height * Math.sqrt(2) / 2 - height / 2));
+		g2.translate(-x, -y);
 	}
 
 	@Override
 	public void handleCollision(Player a, double ix, double iy) {
-		// TODO Auto-generated method stub
 		if (ix > 0) {
 			a.setX(x - a.getWidth());
 			a.setVx(0);
@@ -40,22 +41,20 @@ public class Spike extends Tile {
 			a.setVx(0);
 			a.didCollideWithSpikes = true;
 		}
-		if(iy > 0) {
+		if (iy > 0) {
 			a.setY(y - a.getHeight());
 			a.setVy(0);
 			a.didCollideWithSpikes = true;
 		}
-		if(iy < 0) {
+		if (iy < 0) {
 			a.setY(y + height);
 			a.setVy(0);
 			a.didCollideWithSpikes = true;
 		}
-		
 	}
 
 	@Override
 	public void handleSeekerCollision(HunterSeeker a, double ix, double iy) {
-		// TODO Auto-generated method stub
 		if (ix > 0) {
 			a.setX(x - a.getWidth());
 			a.setVx(0);
@@ -66,12 +65,12 @@ public class Spike extends Tile {
 			a.setVx(0);
 			a.didCollideWithSpikes = true;
 		}
-		if(iy > 0) {
+		if (iy > 0) {
 			a.setY(y - a.getHeight());
 			a.setVy(0);
 			a.didCollideWithSpikes = true;
 		}
-		if(iy < 0) {
+		if (iy < 0) {
 			a.setY(y + height);
 			a.setVy(0);
 			a.didCollideWithSpikes = true;
@@ -80,7 +79,6 @@ public class Spike extends Tile {
 
 	@Override
 	public void handleEnemyCollision(Enemy a, double ix, double iy) {
-		// TODO Auto-generated method stub
 		if (ix > 0) {
 			a.setX(x - a.getWidth());
 			a.setVx(a.getVx() * -1);
@@ -91,12 +89,12 @@ public class Spike extends Tile {
 			a.setVx(a.getVx() * -1);
 			a.didCollideWithSpikes = true;
 		}
-		if(iy > 0) {
+		if (iy > 0) {
 			a.setY(y - a.getHeight());
 			a.setVy(a.getVy() * -1);
 			a.didCollideWithSpikes = true;
 		}
-		if(iy < 0) {
+		if (iy < 0) {
 			a.setY(y + height);
 			a.setVy(a.getVy() * -1);
 			a.didCollideWithSpikes = true;

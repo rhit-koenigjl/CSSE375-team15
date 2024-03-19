@@ -1,4 +1,5 @@
 package arcadeGame;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 
@@ -6,6 +7,7 @@ public class BouncePad extends Tile {
 
 	/**
 	 * ensures: calls the Tile constructor for the bouncepad
+	 * 
 	 * @param x
 	 * @param y
 	 * @param width
@@ -20,7 +22,7 @@ public class BouncePad extends Tile {
 		g2.translate(x, y);
 		g2.setColor(Color.pink);
 		g2.fillRect(0, 0, width, height);
-		g2.translate(-x,-y);
+		g2.translate(-x, -y);
 	}
 
 	@Override
@@ -33,11 +35,11 @@ public class BouncePad extends Tile {
 			a.setX(x + width);
 			a.setVx(0);
 		}
-		if(iy > 0) {
+		if (iy > 0) {
 			a.setY(y - a.getHeight());
 			a.setVy(-30);
 		}
-		if(iy < 0) {
+		if (iy < 0) {
 			a.setY(y + height);
 			a.setVy(0);
 		}
@@ -53,19 +55,18 @@ public class BouncePad extends Tile {
 			a.setX(x + width);
 			a.setVx(0);
 		}
-		if(iy > 0) {
+		if (iy > 0) {
 			a.setY(y - a.getHeight());
 			a.setVy(-30);
 		}
-		if(iy < 0) {
+		if (iy < 0) {
 			a.setY(y + height);
 			a.setVy(0);
 		}
 	}
-	
+
 	@Override
 	public void handleEnemyCollision(Enemy a, double ix, double iy) {
-		// TODO Auto-generated method stub
 		if (ix > 0) {
 			a.setX(x - a.getWidth());
 			a.setVx(a.getVx() * -1);
@@ -74,11 +75,11 @@ public class BouncePad extends Tile {
 			a.setX(x + width);
 			a.setVx(a.getVx() * -1);
 		}
-		if(iy > 0) {
+		if (iy > 0) {
 			a.setY(y - a.getHeight());
 			a.setVy(a.getVy() * -1);
 		}
-		if(iy < 0) {
+		if (iy < 0) {
 			a.setY(y + height);
 			a.setVy(a.getVy() * -1);
 		}

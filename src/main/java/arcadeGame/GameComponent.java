@@ -11,7 +11,6 @@ import java.util.Scanner;
 
 import javax.swing.*;
 
-
 public class GameComponent extends JComponent {
 	private String scene = "menu";
 	private int transitionTimer = 0;
@@ -58,7 +57,6 @@ public class GameComponent extends JComponent {
 	public void handleKey(int keyCode, boolean newVal) {
 		keys.put(keyCode, newVal);
 	}
-
 
 	/**
 	 * ensures: the actions of the game that must take place every frame
@@ -149,7 +147,6 @@ public class GameComponent extends JComponent {
 					keys.remove(27);
 				}
 
-
 				// switch to screen if you lose
 				if (!hero.checkLives()) {
 					switchScene("loss");
@@ -181,7 +178,6 @@ public class GameComponent extends JComponent {
 		}
 	}
 
-
 	/**
 	 * ensures: the drawing of the screen that must take place every frame.
 	 */
@@ -209,20 +205,19 @@ public class GameComponent extends JComponent {
 		try {
 			scanner =
 					new Scanner(ClassLoader.getSystemClassLoader().getResource(inputFilename).openStream());
+			String title = scanner.nextLine();
+			System.out.println("Title: " + title);
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+				System.out.println(line);
+				levelLayout.add(line);
+				scanner.close();
+			} // end while
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		} // end try-catch
 
-		String title = scanner.nextLine();
-		System.out.println("Title: " + title);
-		while (scanner.hasNextLine()) {
-			String line = scanner.nextLine();
-			System.out.println(line);
-			levelLayout.add(line);
-		} // end while
-
-		scanner.close();
 		return levelLayout;
 	} // readFile
 
