@@ -1,27 +1,33 @@
-package mainApp;
-
+package arcadeGame;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
 
-public class BouncePad extends Tile {
-
+public class Wall extends Tile{
+	private Image image;
+	
 	/**
-	 * ensures: calls the Tile constructor for the bouncepad
+	 * ensures: the correct initialization of a Wall
 	 * @param x
 	 * @param y
 	 * @param width
 	 * @param height
 	 */
-	public BouncePad(int x, int y, int width, int height) {
+	public Wall(int x, int y, int width, int height) {
 		super(x, y, width, height);
+		Toolkit t = Toolkit.getDefaultToolkit();
+		this.image = t.getImage("media/brick block.png");
 	}
-
-	@Override
-	public void display(Graphics2D g2) {
-		g2.translate(x, y);
-		g2.setColor(Color.pink);
-		g2.fillRect(0, 0, width, height);
-		g2.translate(-x,-y);
+	
+	/**
+	 * ensures: the drawing of the Wall
+	 */
+	public void display(Graphics2D g) {
+		g.translate(getX(), getY());
+		g.setColor(Color.gray);
+		g.fillRect(0, 0, width, height);
+		g.translate(-getX(), -getY());
 	}
 
 	@Override
@@ -36,7 +42,7 @@ public class BouncePad extends Tile {
 		}
 		if(iy > 0) {
 			a.setY(y - a.getHeight());
-			a.setVy(-30);
+			a.setVy(0);
 		}
 		if(iy < 0) {
 			a.setY(y + height);
@@ -56,14 +62,14 @@ public class BouncePad extends Tile {
 		}
 		if(iy > 0) {
 			a.setY(y - a.getHeight());
-			a.setVy(-30);
+			a.setVy(0);
 		}
 		if(iy < 0) {
 			a.setY(y + height);
 			a.setVy(0);
 		}
 	}
-	
+
 	@Override
 	public void handleEnemyCollision(Enemy a, double ix, double iy) {
 		// TODO Auto-generated method stub
@@ -84,5 +90,4 @@ public class BouncePad extends Tile {
 			a.setVy(a.getVy() * -1);
 		}
 	}
-
 }

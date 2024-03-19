@@ -1,5 +1,4 @@
-package mainApp;
-
+package arcadeGame;
 import java.awt.Color;
 import java.awt.Graphics2D;
 

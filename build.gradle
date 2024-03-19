@@ -8,6 +8,7 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+    id 'java'
 }
 
 repositories {
@@ -17,16 +18,19 @@ repositories {
 
 dependencies {
     // Use JUnit test framework.
-    testImplementation libs.junit
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
     // This dependency is used by the application.
     implementation libs.guava
 }
 
+tasks.named('test', Test) {
+    useJUnitPlatform()
+}
 
 application {
     // Define the main class for the application.
-    mainClass = 'mainApp.MainApp'
+    mainClass = 'arcadeGame.MainApp'
 }
-
-sourceSets.main.java.srcDirs = ['src']

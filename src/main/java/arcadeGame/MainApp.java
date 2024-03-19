@@ -1,5 +1,4 @@
-package mainApp;
-
+package arcadeGame;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
