@@ -1,15 +1,21 @@
 import pygame
 import sys
 import json
+
 from grid import Grid
 from image_manager import ImageManager
 from block_pallete import BlockPallete
+from level_setup import LevelSetup
 
 config_f = open('app-config.json')
 config_data = json.load(config_f)
 
+ls = LevelSetup('temp_level_folder')
+level_data = ls.get_level_object()
+
 BLOCK_SIZE = config_data['block-size']
-LEVEL_WIDTH, LEVEL_HEIGHT = config_data['level-width'], config_data['level-height']
+LEVEL_WIDTH, LEVEL_HEIGHT = int(level_data['width']), int(level_data['height'])
+
 
 grid = Grid(LEVEL_WIDTH, LEVEL_HEIGHT, BLOCK_SIZE)
 image_manager = ImageManager("app-config.json")
@@ -23,8 +29,8 @@ image_index = 0
 pygame.init()
 
 # Set up the screen
-screen_width, screen_height = BLOCK_SIZE * LEVEL_WIDTH + 40, BLOCK_SIZE * LEVEL_HEIGHT
-screen = pygame.display.set_mode((screen_width, screen_height))
+screen_size = (BLOCK_SIZE * LEVEL_WIDTH + 40, BLOCK_SIZE * LEVEL_HEIGHT)
+screen = pygame.display.set_mode(screen_size, pygame.RESIZABLE)
 pygame.display.set_caption("Minimal Pygame Starter")
 
 # Set up the clock
@@ -47,6 +53,8 @@ while running:
                 block_pallete.set_collection(event.key - 49)
             if event.key == pygame.K_LCTRL:
                 block_pallete.iterate_collection()
+            if event.key == pygame.K_m:
+                ls.dump_data(grid.get_data_string())
 
     # Fill the screen with white
     screen.fill((200, 200, 200))  # RGB values for white

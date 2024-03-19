@@ -24,4 +24,29 @@ class Grid:
     def set_type(self, x, y, new_type):
         self.blocks[math.floor(y/self.bs)][math.floor(x/self.bs)].set_type(new_type)
 
+    def get_data_string(self):
+        return_string = "|"
+
+        x = 0
+        y = 0
+        cur_type = ''
+        cur_iterations = 0
+
+        while y < len(self.blocks) and x < len(self.blocks[y]):
+            if cur_type == self.blocks[y][x].get_type():
+                cur_iterations += 1
+            else:
+                return_string += cur_type + '-' + str(cur_iterations) + '|'
+                cur_iterations = 1
+                cur_type = self.blocks[y][x].get_type()
+            x += 1
+            if x == len(self.blocks[y]):
+                x = 0
+                y += 1
+            
+
+        return_string += cur_type + '-' + str(cur_iterations) + '|'
+        return return_string[3:]
+
+
     
