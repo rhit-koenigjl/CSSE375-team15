@@ -31,7 +31,7 @@ class LevelSetup():
             l_object = {
                 'width': l_data['width'],
                 'height': l_data['height'],
-                'data': ''
+                'data': 'none-' + str(int(l_data['width']) * int(l_data['height']))
             }
             json.dump(l_object, open(self.file_path, 'w'))
             return
