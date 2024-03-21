@@ -45,7 +45,10 @@ public class GameComponent extends JComponent {
 	 */
 	public GameComponent(JFrame frame) {
 		this.frame = frame;
-		generateLevel(levelFiles[levelIndex]);
+	}
+
+	public void loadLevelByIndex(int index) {
+		switchLevel(levelFiles[index]);
 	}
 
 	/**
@@ -201,6 +204,7 @@ public class GameComponent extends JComponent {
 	public ArrayList<String> loadLevel(String inputFilename) {
 		System.out.println(inputFilename);
 		level = inputFilename;
+		levelLayout.clear();
 		Scanner scanner = null;
 		try {
 			scanner =
@@ -226,7 +230,7 @@ public class GameComponent extends JComponent {
 	 * 
 	 * @param inputFilename: the text file the level is taking data from
 	 */
-	public void generateLevel(String inputFilename) {
+	public Object[] generateLevel(String inputFilename) {
 		tiles.clear();
 		enemies.clear();
 		ArrayList<int[]> hunterSeekersToAdd = new ArrayList<int[]>(); // HunterSeekers to be added after
@@ -297,8 +301,9 @@ public class GameComponent extends JComponent {
 			HunterSeeker h = new HunterSeeker(HSInfo[0], HSInfo[1], HSInfo[2], HSInfo[3], hero);
 			enemies.add(h);
 		}
-		levelHeight = levelLayout.size();
-		levelWidth = levelLayout.get(0).length();
+		levelHeight = l.size();
+		levelWidth = l.get(0).length();
+		return new Object[] { tiles, hero, enemies };
 	}
 
 	/**

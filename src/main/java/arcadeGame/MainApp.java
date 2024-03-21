@@ -28,6 +28,7 @@ public class MainApp {
 		gameFrame.setSize(800, 600);
 
 		component = new GameComponent(gameFrame);
+		component.loadLevelByIndex(0);
 		gameFrame.add(component, BorderLayout.CENTER);
 		gameFrame.getContentPane().setBackground(new Color(206, 214, 237));
 		GameAdvanceListener advanceListener = new GameAdvanceListener(component);
