@@ -211,8 +211,8 @@ public class GameComponent extends JComponent {
 				String line = scanner.nextLine();
 				System.out.println(line);
 				levelLayout.add(line);
-				scanner.close();
 			} // end while
+			scanner.close();
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
