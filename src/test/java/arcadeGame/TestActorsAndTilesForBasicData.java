@@ -2,6 +2,9 @@ package arcadeGame;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.junit.jupiter.api.Test;
 
 public class TestActorsAndTilesForBasicData {
@@ -23,5 +26,24 @@ public class TestActorsAndTilesForBasicData {
         assertEquals(2, enemy.getY());
         assertEquals(3, enemy.getWidth());
         assertEquals(4, enemy.getHeight());
+    }
+
+    @Test
+    public void testPlayerActor_testAfterMovement_expectValuesMovedFromInitialPosition() {
+        Player p = new Player(0, 0, 10, 10);
+
+        assertEquals(0, p.getX());
+        assertEquals(0, p.getY());
+        assertEquals(10, p.getWidth());
+        assertEquals(10, p.getHeight());
+
+        p.setVx(10);
+        p.setVy(7);
+        p.update(new HashMap<Integer, Boolean>(), new ArrayList<Tile>());
+
+        assertEquals(7.5, p.getX()); // vx will be minimized by 1/4 since the key isn't being held
+        assertEquals(7.5, p.getX()); // vy will be increased by 0.5 because of gravity
+        assertEquals(10, p.getWidth());
+        assertEquals(10, p.getHeight());
     }
 }

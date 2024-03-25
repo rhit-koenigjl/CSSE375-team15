@@ -11,8 +11,6 @@ import java.util.ArrayList;
 public class Enemy extends Actor {
 
 	protected int patrolDistance = 300;
-	protected double initialX;
-	protected double initialY;
 	protected Color enemyColor = new Color(255, 0, 0);
 	protected boolean adding = false;
 
@@ -21,8 +19,6 @@ public class Enemy extends Actor {
 	 */
 	public Enemy() {
 		super(100, 100, 40, 40); // viable arbitrary starting values
-		initialX = 100;
-		initialY = 100;
 		vx = Math.random() * speed;
 		vy = Math.random() * speed;
 	}
@@ -37,8 +33,6 @@ public class Enemy extends Actor {
 	 */
 	public Enemy(double startX, double startY, double width, double height) {
 		super(startX, startY, width, height);
-		initialX = startX;
-		initialY = startY;
 		vx = Math.random() * speed;
 		vy = Math.random() * speed;
 	}
@@ -56,8 +50,6 @@ public class Enemy extends Actor {
 	public Enemy(double startX, double startY, double width, double height, double velocityX,
 			double velocityY) {
 		super(startX, startY, width, height);
-		initialX = startX;
-		initialY = startY;
 		vx = velocityX;
 		vy = velocityY;
 	}
