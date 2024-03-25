@@ -1,6 +1,6 @@
 package arcadeGame;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,5 +45,22 @@ public class TestActorsAndTilesForBasicData {
         assertEquals(7.5, p.getX()); // vy will be increased by 0.5 because of gravity
         assertEquals(10, p.getWidth());
         assertEquals(10, p.getHeight());
+    }
+
+
+    @Test
+    public void testTwoObjectCollisions_haveNoCollision_expectNoCollision() {
+        Player p = new Player(100, 100, 50, 50);
+        Wall t = new Wall(200, 200, 40, 40);
+
+        assertFalse(p.checkCollision(t));
+    }
+
+    @Test
+    public void testTwoObjectCollisions_hasCollision_expectCollision() {
+        Player p = new Player(0, 0, 50, 50);
+        Wall t = new Wall(10, 30, 40, 40);
+
+        assertTrue(p.checkCollision(t));
     }
 }
