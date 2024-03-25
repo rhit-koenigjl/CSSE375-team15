@@ -2,12 +2,7 @@ package arcadeGame;
 
 import java.awt.Graphics2D;
 
-public abstract class Tile {
-	protected int x;
-	protected int y;
-	protected int width;
-	protected int height;
-
+public abstract class Tile extends GameObject {
 	protected boolean remove = false;
 
 	/**
@@ -19,26 +14,7 @@ public abstract class Tile {
 	 * @param height
 	 */
 	public Tile(int x, int y, int width, int height) {
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public int getHeight() {
-		return height;
+		super(x, y, width, height);
 	}
 
 	public void setRemove() {

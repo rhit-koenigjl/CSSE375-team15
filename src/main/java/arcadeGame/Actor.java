@@ -2,17 +2,7 @@ package arcadeGame;
 
 import java.awt.Graphics2D;
 
-public abstract class Actor {
-
-	// bounding box of the actor
-	protected double x;
-	protected double y;
-	protected double width;
-	protected double height;
-
-	// velocity variables
-	protected double vx;
-	protected double vy = 0;
+public abstract class Actor extends GameObject{
 	protected double approachFactor = 4;
 	protected double speed = 5;
 
@@ -27,10 +17,7 @@ public abstract class Actor {
 	 * @param height
 	 */
 	public Actor(double startX, double startY, double width, double height) {
-		this.setX(startX);
-		this.setY(startY);
-		this.width = width;
-		this.height = height;
+		super(startX, startY, width, height);
 	}
 
 	/**
@@ -60,53 +47,4 @@ public abstract class Actor {
 		return "Actor [x=" + getX() + ", y=" + getY() + ", width=" + width + ", height=" + height
 				+ ", vx=" + getVx() + ", vy=" + getVy() + "]";
 	}
-
-	public double getX() {
-		return x;
-	}
-
-	public void setX(double x) {
-		this.x = x;
-	}
-
-	public double getY() {
-		return y;
-	}
-
-	public void setY(double y) {
-		this.y = y;
-	}
-
-	public double getVx() {
-		return vx;
-	}
-
-	public void setVx(double vx) {
-		this.vx = vx;
-	}
-
-	public double getVy() {
-		return vy;
-	}
-
-	public void setVy(double vy) {
-		this.vy = vy;
-	}
-
-	public double getHeight() {
-		return height;
-	}
-
-	public double getWidth() {
-		return width;
-	}
-
-	public void setHeight(double newHeight) {
-		height = newHeight;
-	}
-
-	public void setWidth(double newWidth) {
-		width = newWidth;
-	}
-
 }
