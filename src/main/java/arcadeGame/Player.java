@@ -91,11 +91,6 @@ public class Player extends Actor {
 		return collisionType;
 	}
 
-	private boolean checkCollision(Enemy e) {
-		return x + width > e.getX() && y + height > e.getY() && x < e.getX() + e.getWidth()
-				&& y < e.getY() + e.getHeight();
-	}
-
 	public void loseLife() {
 		System.out.println(lives);
 		lives--;

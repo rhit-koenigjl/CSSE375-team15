@@ -37,10 +37,6 @@ public abstract class Actor extends GameObject{
 	 * @param t: the tiles
 	 * @return: true if the actor is overlapping a tile, false if not
 	 */
-	public boolean checkCollision(Tile t) {
-		return x + width > t.getX() && y + height > t.getY() && x < t.getX() + t.getWidth()
-				&& y < t.getY() + t.getHeight();
-	}
 
 	@Override
 	public String toString() {

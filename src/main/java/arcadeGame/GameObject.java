@@ -70,4 +70,8 @@ public class GameObject {
     public void setWidth(double width) {
         this.width = width;
     }
+
+    public boolean checkCollision (GameObject o) {
+		return x + width > o.x && y + height > o.y && x < o.x + o.width && y < o.y + o.height; 
+	}
 }
