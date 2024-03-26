@@ -1,6 +1,7 @@
 package arcadeGame;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.Map;
 
@@ -27,6 +28,7 @@ public class PauseUpdater extends SceneUpdater {
     @Override
     public void drawScene(Graphics2D g2, String shownString, int xMiddle, int yMiddle, int score) {
         Color previousColor = g2.getColor();
+        g2.setFont(new Font("Monospaced", Font.BOLD, 28));
         level.handlePause(g2, previousColor);
 		shownString = "Game Paused. Press Escape to Continue";
 		g2.drawString(shownString, xMiddle, yMiddle);

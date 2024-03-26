@@ -211,10 +211,6 @@ public class Level {
       keys.remove(27);
     }
 
-    // switch to screen if you lose
-    if (!hero.checkLives()) {
-      sceneManager.switchScene(new LossUpdater(sceneManager, this));
-    }
     if (heroHurt) {
       state.heroLostLife();
     }

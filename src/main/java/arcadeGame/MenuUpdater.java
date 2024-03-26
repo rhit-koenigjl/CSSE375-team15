@@ -1,5 +1,6 @@
 package arcadeGame;
 
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.Map;
 
@@ -22,6 +23,7 @@ public class MenuUpdater extends SceneUpdater {
 
     @Override
     public void drawScene(Graphics2D g2, String shownString, int xMiddle, int yMiddle, int score) {
+        g2.setFont(new Font("Monospaced", Font.BOLD, 28));
         shownString = "Press Spacebar to Start";
         g2.drawString(shownString, xMiddle, yMiddle - 50);
         g2.drawString("Use the Arrow Keys to move", xMiddle, yMiddle);

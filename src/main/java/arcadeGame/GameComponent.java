@@ -12,8 +12,6 @@ import javax.swing.*;
 
 public class GameComponent extends JComponent {
 	private SceneManager sceneManager;
-	private String scene = "menu";
-	private int transitionTimer = 0;
 	private int score = 0;
 
 	// Fields for level management and creation
@@ -70,15 +68,6 @@ public class GameComponent extends JComponent {
 	}
 
 	/**
-	 * allows the switching of states
-	 * 
-	 * @param newState
-	 */
-	public void switchScene(String newState) {
-		scene = newState;
-	}
-
-	/**
 	 * ensures: the drawing of all the objects onto the JFrame
 	 */
 	@Override
@@ -131,7 +120,9 @@ public class GameComponent extends JComponent {
 		levelReset();
 		System.out.println("You Died! Lives left: " + hero.getNumberOfLives());
 		if (hero.checkLives()) {
-			switchScene("reset");
+			sceneManager.switchScene(new ResetUpdater(sceneManager, sceneManager.getCurrentScene()));
+		} else {
+			sceneManager.switchScene(new LossUpdater(sceneManager, currentLevel));
 		}
 	}
 
