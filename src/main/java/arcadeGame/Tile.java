@@ -3,7 +3,7 @@ package arcadeGame;
 import java.awt.Graphics2D;
 
 public abstract class Tile extends GameObject {
-	protected boolean remove = false;
+	private boolean remove = false;
 
 	/**
 	 * ensures the correct creation of a Tile

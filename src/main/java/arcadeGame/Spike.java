@@ -32,7 +32,7 @@ public class Spike extends Tile {
 	@Override
 	public boolean handleCollision(Actor a, double ix, double iy) {
 		if (super.handleCollision(a, ix, iy)) {
-			a.didCollideWithSpikes = true;
+			a.setSpikeCollision(true);
 			return true;
 		}
 		return false;

@@ -7,7 +7,7 @@ public abstract class Actor extends GameObject {
 	protected double approachFactor = 4;
 	protected double speed = 5;
 
-	protected boolean didCollideWithSpikes = false;
+	private boolean didCollideWithSpikes = false;
 
 	/**
 	 * ensures: the proper construction of an Actor instance
@@ -65,5 +65,13 @@ public abstract class Actor extends GameObject {
 
 	public boolean isNonTrackingEnemy() {
 		return false;
+	}
+
+	public void setSpikeCollision(boolean didCollideWithSpikes) {
+		this.didCollideWithSpikes = didCollideWithSpikes;
+	}
+
+	public boolean getSpikeCollision() {
+		return didCollideWithSpikes;
 	}
 }

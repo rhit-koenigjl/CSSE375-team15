@@ -9,8 +9,7 @@ import java.awt.Graphics2D;
  */
 public class Enemy extends Actor {
 
-	protected int patrolDistance = 300;
-	protected Color enemyColor = new Color(255, 0, 0);
+	private Color enemyColor = new Color(255, 0, 0);
 	protected boolean adding = false;
 
 	/**

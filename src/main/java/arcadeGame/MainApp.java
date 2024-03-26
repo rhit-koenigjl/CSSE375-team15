@@ -16,7 +16,7 @@ import javax.swing.Timer;
  *         Restrictions: None
  */
 public class MainApp {
-	public static final int DELAY = 10;
+	private static final int DELAY = 10;
 	private GameComponent component;
 	private JFrame gameFrame;
 

@@ -77,8 +77,7 @@ public class Player extends Actor {
 	public void loseLife() {
 		System.out.println(lives);
 		lives--;
-		didCollideWithSpikes = false;
-		// System.out.println("Spike Collision Reset");
+		setSpikeCollision(false);
 	}
 
 	public boolean checkLives() {
