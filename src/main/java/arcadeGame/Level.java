@@ -45,7 +45,6 @@ public class Level {
         switch (blockChar) {
           case '-':
             tiles.add(new Platform(x * 50, y * 50, 50, 20));
-            // System.out.println("Tile printed at x: " + x*50 + " y: " + y*50);
             break;
           case '|':
             tiles.add(new Wall(x * 50, y * 50, 50, 50));
@@ -59,22 +58,18 @@ public class Level {
             hero.setWidth(30);
             hero.setHeight(40);
             hero.clearMovementSpeed();
-            // System.out.println("Hero");
             break;
           case 'E':
             Enemy enemy = new Enemy(x * 50 + 10, y * 50, 40, 40);
             enemies.add(enemy);
-            // System.out.println("Enemy Created");
             break;
           case 'V':
             enemy = new Enemy(x * 50 + 10, y * 50, 40, 40, 0, 5);
             enemies.add(enemy);
-            // System.out.println("Enemy Created");
             break;
           case 'H':
             enemy = new Enemy(x * 50 + 10, y * 50, 40, 40, 5, 0);
             enemies.add(enemy);
-            // System.out.println("Enemy Created");
             break;
           case 'S':
             int[] addedHunterSeeker = {x * 50 + 10, y * 50, 40, 40};
@@ -239,27 +234,27 @@ public class Level {
 
   public void handlePause(Graphics2D g2, Color previousColor) {
     Color pauseColor = new Color(0, 0, 0, 75);
-				for (Tile t : tiles) {
-					t.display(g2);
-				}
-				for (Enemy e : enemies) {
-					e.drawActor(g2);
-				}
-				hero.drawActor(g2);
-				g2.setColor(pauseColor);
-				g2.fillRect(0, 0, levelWidth * 50 + 14, levelHeight * 50 + 37);
-				g2.setColor(previousColor);
-				g2.setColor(Color.blue);
-				g2.drawString("Lives: " + hero.getNumberOfLives() + "      Level: " + levelIndex, 25, 30);
-				g2.setColor(previousColor);
+    for (Tile t : tiles) {
+      t.display(g2);
+    }
+    for (Enemy e : enemies) {
+      e.drawActor(g2);
+    }
+    hero.drawActor(g2);
+    g2.setColor(pauseColor);
+    g2.fillRect(0, 0, levelWidth * 50 + 14, levelHeight * 50 + 37);
+    g2.setColor(previousColor);
+    g2.setColor(Color.blue);
+    g2.drawString("Lives: " + hero.getNumberOfLives() + "      Level: " + levelIndex, 25, 30);
+    g2.setColor(previousColor);
   }
 
   public void reset() {
     numBombs = 0;
-		enemies.clear();
-		tiles.clear();
-		levelLayout.clear();
-		generateLevel();
+    enemies.clear();
+    tiles.clear();
+    levelLayout.clear();
+    generateLevel();
   }
 
   public int getHeight() {

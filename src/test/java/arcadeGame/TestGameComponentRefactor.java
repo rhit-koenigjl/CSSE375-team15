@@ -32,7 +32,8 @@ public class TestGameComponentRefactor {
   public void testGenerateLevel_withValidFilePath_returnsGameObjects() {
     String filePath = "levels/level00";
 
-    Player hero = EasyMock.createMock(Player.class);
+    Player hero =
+        EasyMock.partialMockBuilder(Player.class).addMockedMethod("getNumberOfLives").createMock();
     Level level = new Level(new File(filePath), 0, hero);
     Object[] gameObjects = level.generateLevel();
 
