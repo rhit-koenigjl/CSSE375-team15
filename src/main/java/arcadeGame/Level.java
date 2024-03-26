@@ -172,7 +172,7 @@ public class Level {
     }
 
     // handles the updating of the tiles and the removal of bombs
-    ArrayList<Tile> toRemove = new ArrayList<Tile>();
+    List<Tile> toRemove = new ArrayList<Tile>();
     for (Tile t : tiles) {
       if (t.shouldRemove()) {
         toRemove.add(t);
