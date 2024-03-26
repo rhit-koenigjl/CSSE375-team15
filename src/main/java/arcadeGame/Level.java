@@ -53,7 +53,7 @@ public class Level {
             tiles.add(new Spike(x * 50, y * 50, 50));
             break;
           case 'P':
-            hero.setX(x * 50 + 10);
+             hero.setX(x * 50 + 10);
             hero.setY(y * 50);
             hero.setWidth(30);
             hero.setHeight(40);
@@ -144,8 +144,8 @@ public class Level {
     }
 
     // handles the updating and removing of enemies
-    ArrayList<Enemy> enemiesRemove = new ArrayList<Enemy>();
-    ArrayList<Enemy> enemiesToAdd = new ArrayList<Enemy>();
+    List<Enemy> enemiesRemove = new ArrayList<Enemy>();
+    List<Enemy> enemiesToAdd = new ArrayList<Enemy>();
     for (Enemy enemy : enemies) {
       int collisionType = hero.handleCollisions(enemy);
       if (collisionType == 1) {
