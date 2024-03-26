@@ -26,7 +26,7 @@ public class BouncePad extends Tile {
 	}
 
 	@Override
-	public void handleCollision(Player a, double ix, double iy) {
+	public void handleCollision(Actor a, double ix, double iy) {
 		if (ix > 0) {
 			a.setX(x - a.getWidth());
 			a.setVx(0);
@@ -44,45 +44,4 @@ public class BouncePad extends Tile {
 			a.setVy(0);
 		}
 	}
-
-	@Override
-	public void handleSeekerCollision(HunterSeeker a, double ix, double iy) {
-		if (ix > 0) {
-			a.setX(x - a.getWidth());
-			a.setVx(0);
-		}
-		if (ix < 0) {
-			a.setX(x + width);
-			a.setVx(0);
-		}
-		if (iy > 0) {
-			a.setY(y - a.getHeight());
-			a.setVy(-30);
-		}
-		if (iy < 0) {
-			a.setY(y + height);
-			a.setVy(0);
-		}
-	}
-
-	@Override
-	public void handleEnemyCollision(Enemy a, double ix, double iy) {
-		if (ix > 0) {
-			a.setX(x - a.getWidth());
-			a.setVx(a.getVx() * -1);
-		}
-		if (ix < 0) {
-			a.setX(x + width);
-			a.setVx(a.getVx() * -1);
-		}
-		if (iy > 0) {
-			a.setY(y - a.getHeight());
-			a.setVy(a.getVy() * -1);
-		}
-		if (iy < 0) {
-			a.setY(y + height);
-			a.setVy(a.getVy() * -1);
-		}
-	}
-
 }

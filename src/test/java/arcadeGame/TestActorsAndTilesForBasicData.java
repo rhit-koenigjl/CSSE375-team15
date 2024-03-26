@@ -53,7 +53,7 @@ public class TestActorsAndTilesForBasicData {
         Player p = new Player(100, 100, 50, 50);
         Wall t = new Wall(200, 200, 40, 40);
 
-        assertFalse(p.checkCollision(t));
+        assertFalse(p.collidesWith(t));
     }
 
     @Test
@@ -61,6 +61,6 @@ public class TestActorsAndTilesForBasicData {
         Player p = new Player(0, 0, 50, 50);
         Wall t = new Wall(10, 30, 40, 40);
 
-        assertTrue(p.checkCollision(t));
+        assertTrue(p.collidesWith(t));
     }
 }

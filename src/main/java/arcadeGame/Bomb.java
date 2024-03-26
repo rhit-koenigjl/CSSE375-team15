@@ -42,18 +42,9 @@ public class Bomb extends Tile {
 	 * ensures: that the bomb is set for removal whenever a player touches it
 	 */
 	@Override
-	public void handleCollision(Player a, double ix, double iy) {
-		setRemove();
+	public void handleCollision(Actor a, double ix, double iy) {
+		if (a.isHero()) {
+			setRemove();
+		}
 	}
-
-	@Override
-	public void handleSeekerCollision(HunterSeeker a, double ix, double iy) {
-		return;
-	}
-
-	@Override
-	public void handleEnemyCollision(Enemy a, double ix, double iy) {
-		return;
-	}
-
 }

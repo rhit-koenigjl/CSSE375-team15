@@ -34,18 +34,15 @@ public class Player extends Actor {
 
 	/**
 	 * ensures the general running of the player class including moving the player, and calling the
-	 * controll() and handleCollision() methods
+	 * handleKeyAction() and handleCollision() methods
 	 * 
 	 * @param keys
 	 * @param tiles
 	 */
 	public void update(Map<Integer, Boolean> keys, List<Tile> tiles) {
-		controll(keys);
+		super.update(tiles);
+		handleKeyAction(keys);
 		vy += gravity;
-		x += vx;
-		handleCollisions(tiles, vx, 0);
-		y += vy;
-		handleCollisions(tiles, 0, vy);
 	}
 
 	/**
@@ -60,20 +57,6 @@ public class Player extends Actor {
 	}
 
 	/**
-	 * ensures all collisions with blocks work smoothly
-	 * 
-	 * @param tiles arraylist of tiles
-	 * @param ix the instance of vx
-	 * @param iy the instanve of vy
-	 */
-	public void handleCollisions(List<Tile> tiles, double ix, double iy) {
-		for (Tile t : tiles) {
-			if (checkCollision(t))
-				t.handleCollision(this, ix, iy);
-		}
-	}
-
-	/**
 	 * @param enemy
 	 * @param ix
 	 * @param iy
@@ -81,7 +64,7 @@ public class Player extends Actor {
 	 */
 	public int handleCollisions(Enemy enemy) {
 		int collisionType = 0; // 0 = No Collision, 1 = Enemy Won Collision, 2 = Player Won Collision
-		if (checkCollision(enemy)) {
+		if (collidesWith(enemy)) {
 			if (y + height * 3 / 4 - vy < enemy.getY() - enemy.getVy()) {
 				collisionType = 2;
 			} else {
@@ -112,11 +95,11 @@ public class Player extends Actor {
 	}
 
 	/**
-	 * Takes in keycodes and determines the corect velocity of the player
+	 * Takes in keycodes and determines the correct velocity of the player
 	 * 
 	 * @param keys
 	 */
-	public void controll(Map<Integer, Boolean> keys) {
+	public void handleKeyAction(Map<Integer, Boolean> keys) {
 		int desiredVelocity = 0;
 		desiredVelocity = 0;
 		if (findKey(keys, 39))
@@ -145,4 +128,8 @@ public class Player extends Actor {
 		g2.translate((int) -getX(), (int) -getY());
 	}
 
+	@Override
+	public boolean isHero() {
+		return true;
+	}
 }

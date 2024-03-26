@@ -1,6 +1,7 @@
 package arcadeGame;
 
 import java.awt.Graphics2D;
+import java.util.List;
 
 public abstract class Actor extends GameObject {
 	protected double approachFactor = 4;
@@ -42,5 +43,27 @@ public abstract class Actor extends GameObject {
 	public String toString() {
 		return "Actor [x=" + getX() + ", y=" + getY() + ", width=" + width + ", height=" + height
 				+ ", vx=" + getVx() + ", vy=" + getVy() + "]";
+	}
+
+	public void handleTileCollisions(List<Tile> tiles, double xVel, double yVel) {
+		for (Tile tile : tiles) {
+			if (collidesWith(tile))
+				tile.handleCollision(this, xVel, yVel);
+		}
+	}
+
+	public void update(List<Tile> tiles) {
+		x += vx;
+		handleTileCollisions(tiles, vx, 0);
+		y += vy;
+		handleTileCollisions(tiles, 0, vy);
+	}
+
+	public boolean isHero() {
+		return false;
+	}
+
+	public boolean isNonTrackingEnemy() {
+		return false;
 	}
 }

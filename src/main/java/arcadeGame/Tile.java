@@ -35,27 +35,9 @@ public abstract class Tile extends GameObject {
 	/**
 	 * ensures: how the player should collide with this tile.
 	 * 
-	 * @param a: the Player
+	 * @param a: the Actor
 	 * @param ix
 	 * @param iy
 	 */
-	public abstract void handleCollision(Player a, double ix, double iy);
-
-	/**
-	 * ensures: how HunterSeekers collide with this tile
-	 * 
-	 * @param a: the HunterSeeker
-	 * @param ix
-	 * @param iy
-	 */
-	public abstract void handleSeekerCollision(HunterSeeker a, double ix, double iy);
-
-	/**
-	 * ensures: how Enemies collide with this tile
-	 * 
-	 * @param a: the enemy colliding with this tile
-	 * @param ix
-	 * @param iy
-	 */
-	public abstract void handleEnemyCollision(Enemy a, double ix, double iy);
+	public abstract void handleCollision(Actor a, double ix, double iy);
 }
