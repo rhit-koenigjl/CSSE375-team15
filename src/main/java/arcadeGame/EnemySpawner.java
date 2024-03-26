@@ -2,7 +2,6 @@ package arcadeGame;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
 import java.util.List;
 
 public class EnemySpawner extends Enemy {
@@ -65,7 +64,7 @@ public class EnemySpawner extends Enemy {
 	/**
 	 * ensures: the addition of new enemies into the game
 	 */
-	public void update(ArrayList<Tile> tiles) {
+	public void update(List<Tile> tiles) {
 		super.update(tiles);
 		timeInc += 0.1;
 		if (timeInc > Math.PI * 2) {
