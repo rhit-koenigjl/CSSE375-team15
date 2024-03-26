@@ -1,11 +1,11 @@
 package arcadeGame;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import javax.swing.JFrame;
 import org.easymock.EasyMock;
 import org.junit.jupiter.api.Test;
 
@@ -21,9 +21,9 @@ public class TestGameComponentRefactor {
     }
     sc.close();
 
-    JFrame frame = EasyMock.createMock(JFrame.class);
-    GameComponent component = new GameComponent(frame);
-    List<String> actual = component.loadLevel(filePath);
+    Player hero = EasyMock.createMock(Player.class);
+    Level level = new Level(new File(filePath), hero);
+    List<String> actual = level.loadLevel();
     assertEquals(expected, actual);
   }
 
@@ -32,9 +32,9 @@ public class TestGameComponentRefactor {
   public void testGenerateLevel_withValidFilePath_returnsGameObjects() {
     String filePath = "levels/level00";
 
-    JFrame frame = EasyMock.createMock(JFrame.class);
-    GameComponent component = new GameComponent(frame);
-    Object[] gameObjects = component.generateLevel(filePath);
+    Player hero = EasyMock.createMock(Player.class);
+    Level level = new Level(new File(filePath), hero);
+    Object[] gameObjects = level.generateLevel();
 
     assertEquals(3, gameObjects.length);
 
@@ -45,33 +45,5 @@ public class TestGameComponentRefactor {
     assertEquals(92, tiles.size());
     assertEquals(410, player.getX());
     assertEquals(6, enemies.size());
-  }
-
-  @Test
-  public void testGenerateLevel_withValidFilePath_callsLoadLevel() throws IOException {
-    String filePath = "levels/level00";
-
-    JFrame frame = EasyMock.createMock(JFrame.class);
-    GameComponent component = EasyMock.partialMockBuilder(GameComponent.class)
-        .addMockedMethod("loadLevel").withConstructor(frame).createMock();
-    EasyMock.expect(component.loadLevel(filePath)).andReturn(new ArrayList<String>() {{ add(""); }});
-
-    EasyMock.replay(component);
-    component.generateLevel(filePath);
-    EasyMock.verify(component);
-  }
-
-  @Test
-  public void testSwitchLevel_withValidFilePath_callsGenerateLevel() {
-    String filePath = "levels/level00";
-
-    JFrame frame = EasyMock.createMock(JFrame.class);
-    GameComponent component = EasyMock.partialMockBuilder(GameComponent.class)
-        .addMockedMethod("generateLevel").withConstructor(frame).createMock();
-    EasyMock.expect(component.generateLevel(filePath)).andReturn(new Object[0]);
-
-    EasyMock.replay(component);
-    component.switchLevel(filePath);
-    EasyMock.verify(component);
   }
 }

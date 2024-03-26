@@ -3,9 +3,10 @@ package arcadeGame;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.List;
 
 public class EnemySpawner extends Enemy {
-	private ArrayList<Enemy> enemies;
+	private List<Enemy> enemies;
 	private Player p;
 	private double timeInc = 0;
 	private int spawnType = 0;
@@ -21,7 +22,7 @@ public class EnemySpawner extends Enemy {
 	 * @param player
 	 */
 	public EnemySpawner(double startX, double startY, double width, double height,
-			ArrayList<Enemy> enemies, Player player) {
+			List<Enemy> enemies, Player player) {
 		super(startX, startY, width, height);
 		this.enemies = enemies;
 		this.p = player;
@@ -30,7 +31,7 @@ public class EnemySpawner extends Enemy {
 	}
 
 	public EnemySpawner(double startX, double startY, double width, double height,
-			ArrayList<Enemy> enemies, Player player, int enemySpawnType) {
+			List<Enemy> enemies, Player player, int enemySpawnType) {
 		super(startX, startY, width, height);
 		this.enemies = enemies;
 		this.p = player;
@@ -40,7 +41,7 @@ public class EnemySpawner extends Enemy {
 	}
 
 	public EnemySpawner(double startX, double startY, double width, double height, double velocityX,
-			double velocityY, ArrayList<Enemy> enemies, Player player, int enemySpawnType) {
+			double velocityY, List<Enemy> enemies, Player player, int enemySpawnType) {
 		super(startX, startY, width, height);
 		this.enemies = enemies;
 		this.p = player;
