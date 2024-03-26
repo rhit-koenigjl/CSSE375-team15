@@ -25,24 +25,4 @@ public class Wall extends Tile {
 		g.fillRect(0, 0, (int) width, (int) height);
 		g.translate(-getX(), -getY());
 	}
-
-	@Override
-	public void handleCollision(Actor a, double ix, double iy) {
-		if (ix > 0) {
-			a.setX(x - a.getWidth());
-			a.setVx(a.isNonTrackingEnemy() ? a.getVx() * -1 : 0);
-		}
-		if (ix < 0) {
-			a.setX(x + width);
-			a.setVx(a.isNonTrackingEnemy() ? a.getVx() * -1 : 0);
-		}
-		if (iy > 0) {
-			a.setY(y - a.getHeight());
-			a.setVy(a.isNonTrackingEnemy() ? a.getVy() * -1 : 0);
-		}
-		if (iy < 0) {
-			a.setY(y + height);
-			a.setVy(a.isNonTrackingEnemy() ? a.getVy() * -1 : 0);
-		}
-	}
 }

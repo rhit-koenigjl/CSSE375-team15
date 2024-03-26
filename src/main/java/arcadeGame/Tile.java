@@ -39,5 +39,23 @@ public abstract class Tile extends GameObject {
 	 * @param ix
 	 * @param iy
 	 */
-	public abstract void handleCollision(Actor a, double ix, double iy);
+	public boolean handleCollision(Actor a, double ix, double iy) {
+		if (ix > 0) {
+			a.setX(x - a.getWidth());
+			a.setVx(a.isNonTrackingEnemy() ? a.getVx() * -1 : 0);
+		}
+		if (ix < 0) {
+			a.setX(x + width);
+			a.setVx(a.isNonTrackingEnemy() ? a.getVx() * -1 : 0);
+		}
+		if (iy > 0) {
+			a.setY(y - a.getHeight());
+			a.setVy(a.isNonTrackingEnemy() ? a.getVy() * -1 : 0);
+		}
+		if (iy < 0) {
+			a.setY(y + height);
+			a.setVy(a.isNonTrackingEnemy() ? a.getVy() * -1 : 0);
+		}
+		return (ix != 0 || iy != 0);
+	}
 }

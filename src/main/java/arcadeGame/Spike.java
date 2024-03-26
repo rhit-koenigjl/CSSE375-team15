@@ -30,26 +30,11 @@ public class Spike extends Tile {
 	}
 
 	@Override
-	public void handleCollision(Actor a, double ix, double iy) {
-		if (ix > 0) {
-			a.setX(x - a.getWidth());
-			a.setVx(a.isNonTrackingEnemy() ? a.getVx() * -1 : 0);
+	public boolean handleCollision(Actor a, double ix, double iy) {
+		if (super.handleCollision(a, ix, iy)) {
 			a.didCollideWithSpikes = true;
+			return true;
 		}
-		if (ix < 0) {
-			a.setX(x + width);
-			a.setVx(a.isNonTrackingEnemy() ? a.getVx() * -1 : 0);
-			a.didCollideWithSpikes = true;
-		}
-		if (iy > 0) {
-			a.setY(y - a.getHeight());
-			a.setVy(a.isNonTrackingEnemy() ? a.getVy() * -1 : 0);
-			a.didCollideWithSpikes = true;
-		}
-		if (iy < 0) {
-			a.setY(y + height);
-			a.setVy(a.isNonTrackingEnemy() ? a.getVy() * -1 : 0);
-			a.didCollideWithSpikes = true;
-		}
+		return false;
 	}
 }
