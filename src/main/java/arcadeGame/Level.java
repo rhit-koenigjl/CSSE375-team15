@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Level {
-  private int levelIndex = 0;
+  private int levelIndex;
   private File levelFile;
   private List<String> levelLayout = new ArrayList<String>();
   private int levelHeight;
@@ -22,8 +22,9 @@ public class Level {
   private List<Enemy> enemies = new ArrayList<Enemy>();
   private int numBombs = 0;
 
-  public Level(File levelFile, Player hero) {
+  public Level(File levelFile, int index, Player hero) {
     this.levelFile = levelFile;
+    this.levelIndex = index;
     this.hero = hero;
   }
 

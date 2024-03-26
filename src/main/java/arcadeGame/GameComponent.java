@@ -36,7 +36,7 @@ public class GameComponent extends JComponent {
 	 */
 	public GameComponent(JFrame frame) {
 		this.frame = frame;
-		this.currentLevel = new Level(new File(levelFiles[0]), hero);
+		this.currentLevel = new Level(new File(levelFiles[0]), 0, hero);
 	}
 
 	public void loadLevelByIndex(int index) {
@@ -163,10 +163,8 @@ public class GameComponent extends JComponent {
 			currentLevel.reset();
 			return;
 		} else {
-			currentLevel = new Level(new File(newLevel), hero);
+			this.currentLevel = new Level(new File(newLevel), index, hero);
 			currentLevel.generateLevel();
-			sizeFrame(this.frame);
-			frame.repaint();
 		}
 		sizeFrame(this.frame);
 		frame.repaint();

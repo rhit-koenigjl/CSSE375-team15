@@ -22,7 +22,7 @@ public class TestGameComponentRefactor {
     sc.close();
 
     Player hero = EasyMock.createMock(Player.class);
-    Level level = new Level(new File(filePath), hero);
+    Level level = new Level(new File(filePath), 0, hero);
     List<String> actual = level.loadLevel();
     assertEquals(expected, actual);
   }
@@ -33,7 +33,7 @@ public class TestGameComponentRefactor {
     String filePath = "levels/level00";
 
     Player hero = EasyMock.createMock(Player.class);
-    Level level = new Level(new File(filePath), hero);
+    Level level = new Level(new File(filePath), 0, hero);
     Object[] gameObjects = level.generateLevel();
 
     assertEquals(3, gameObjects.length);
