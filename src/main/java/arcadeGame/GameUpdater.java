@@ -2,7 +2,6 @@ package arcadeGame;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.Map;
 
@@ -10,7 +9,6 @@ public class GameUpdater extends SceneUpdater{
     
     private Map<Integer, Boolean> keys;
     private UpdateState state;
-    private Level level;
 
     public GameUpdater(SceneManager sm, Level level, Map<Integer, Boolean> k, UpdateState state) {
         super(sm);
@@ -31,5 +29,9 @@ public class GameUpdater extends SceneUpdater{
 
         level.draw(g2, score);
         g2.setColor(previousColor);
+    }
+
+    public void changeLevel(Level level) {
+        this.level = level;
     }
 }

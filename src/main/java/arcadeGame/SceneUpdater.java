@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 
 public abstract class SceneUpdater {
     protected SceneManager sceneManager;
+    protected Level level = null;
 
     public SceneUpdater(SceneManager sceneManager) {
         this.sceneManager = sceneManager;

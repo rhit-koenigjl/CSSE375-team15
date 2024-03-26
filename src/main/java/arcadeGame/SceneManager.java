@@ -23,4 +23,8 @@ public class SceneManager {
     public SceneUpdater getCurrentScene() {
         return this.scene;
     }
+
+    public void setLevel(Level level) {
+        this.scene.level = level;
+    }
 }

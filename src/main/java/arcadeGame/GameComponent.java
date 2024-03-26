@@ -114,6 +114,7 @@ public class GameComponent extends JComponent {
 			return;
 		} else {
 			this.currentLevel = new Level(new File(newLevel), index, hero);
+			this.sceneManager.setLevel(currentLevel);
 			currentLevel.generateLevel();
 		}
 		sizeFrame(this.frame);
