@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import org.easymock.EasyMock;
 import org.junit.jupiter.api.Test;
 
-public class GameComponentRefactorTest {
+public class TestGameComponentRefactor {
   @Test
   public void testLoadLevel_withValidFilePath_returnsLayoutObject() throws IOException {
     String filePath = "levels/level00";
