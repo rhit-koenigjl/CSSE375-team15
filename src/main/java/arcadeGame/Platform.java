@@ -22,7 +22,7 @@ public class Platform extends Tile {
 	public void display(Graphics2D g) {
 		g.translate(getX(), getY());
 		g.setColor(Color.gray);
-		g.fillRect(0, 0, (int) width,(int)  height);
+		g.fillRect(0, 0, (int) width, (int) height);
 		g.translate(-getX(), -getY());
 	}
 

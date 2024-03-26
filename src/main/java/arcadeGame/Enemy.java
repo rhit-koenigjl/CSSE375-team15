@@ -2,7 +2,7 @@ package arcadeGame;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author koenigjl
@@ -66,7 +66,7 @@ public class Enemy extends Actor {
 	 * 
 	 * @param tiles
 	 */
-	public void update(ArrayList<Tile> tiles) {
+	public void update(List<Tile> tiles) {
 		// updates position based on vx and vy, is basically the same code as hero but simplified
 		controll();
 		x += vx;
@@ -83,7 +83,7 @@ public class Enemy extends Actor {
 	 * @param ix
 	 * @param iy
 	 */
-	public void handleCollisions(ArrayList<Tile> tiles, double ix, double iy) {
+	public void handleCollisions(List<Tile> tiles, double ix, double iy) {
 		// same as hero code but with different actions taken after collision
 		for (Tile t : tiles) {
 			if (checkCollision(t))

@@ -2,8 +2,8 @@ package arcadeGame;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author welchtj
@@ -39,7 +39,7 @@ public class Player extends Actor {
 	 * @param keys
 	 * @param tiles
 	 */
-	public void update(HashMap<Integer, Boolean> keys, ArrayList<Tile> tiles) {
+	public void update(Map<Integer, Boolean> keys, List<Tile> tiles) {
 		controll(keys);
 		vy += gravity;
 		x += vx;
@@ -55,7 +55,7 @@ public class Player extends Actor {
 	 * @param val the keycode being examined
 	 * @return the boolean value associating to whether a key is being pressed or not
 	 */
-	public boolean findKey(HashMap<Integer, Boolean> keys, int val) {
+	public boolean findKey(Map<Integer, Boolean> keys, int val) {
 		return keys.getOrDefault(val, false);
 	}
 
@@ -66,7 +66,7 @@ public class Player extends Actor {
 	 * @param ix the instance of vx
 	 * @param iy the instanve of vy
 	 */
-	public void handleCollisions(ArrayList<Tile> tiles, double ix, double iy) {
+	public void handleCollisions(List<Tile> tiles, double ix, double iy) {
 		for (Tile t : tiles) {
 			if (checkCollision(t))
 				t.handleCollision(this, ix, iy);
@@ -116,7 +116,7 @@ public class Player extends Actor {
 	 * 
 	 * @param keys
 	 */
-	public void controll(HashMap<Integer, Boolean> keys) {
+	public void controll(Map<Integer, Boolean> keys) {
 		int desiredVelocity = 0;
 		desiredVelocity = 0;
 		if (findKey(keys, 39))
