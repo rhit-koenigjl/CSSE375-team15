@@ -72,7 +72,7 @@ public class Level {
             enemies.add(enemy);
             break;
           case 'S':
-            int[] addedHunterSeeker = {x * 50 + 10, y * 50, 40, 40};
+            int[] addedHunterSeeker = { x * 50 + 10, y * 50, 40, 40 };
             hunterSeekersToAdd.add(addedHunterSeeker); // adds HunterSeeker info to a ArrayList to
                                                        // be created after everything else
             break;
@@ -94,14 +94,15 @@ public class Level {
     }
     for (int[] HSInfo : hunterSeekersToAdd) {
       // HunterSeeker needs a hero to track, so it cannot be created before the hero
-      // Therefore, the HunterSeekers are added after everything else to guarantee the hero has been
+      // Therefore, the HunterSeekers are added after everything else to guarantee the
+      // hero has been
       // created beforehand
       HunterSeeker h = new HunterSeeker(HSInfo[0], HSInfo[1], HSInfo[2], HSInfo[3], hero);
       enemies.add(h);
     }
     levelHeight = l.size();
     levelWidth = l.get(0).length();
-    return new Object[] {tiles, hero, enemies};
+    return new Object[] { tiles, hero, enemies };
   }
 
   /**
@@ -129,7 +130,7 @@ public class Level {
     return levelLayout;
   } // readFile
 
-  public void update(Map<Integer, Boolean> keys, UpdateState state) {
+  public void update(Map<Integer, Boolean> keys, UpdateState state, SceneManager sceneManager) {
     boolean heroHurt = false;
     // code that creates a level at the game's start
     if (tiles.size() == 0) {
@@ -190,7 +191,7 @@ public class Level {
       state.incrementScore(100);
       if (levelIndex == state.getLevelCount() - 1) {
         // switch to endscreen
-        state.setScene("win");
+        sceneManager.switchScene(new WinUpdater(sceneManager));
       } else {
         state.setNextLevel(levelIndex + 1);
       }
@@ -206,13 +207,13 @@ public class Level {
       keys.put(68, false);
     }
     if (keys.getOrDefault(27, false)) {
-      state.setScene("pause");
+      sceneManager.switchScene(new PauseUpdater(sceneManager, sceneManager.getCurrentScene(), keys, this));
       keys.remove(27);
     }
 
     // switch to screen if you lose
     if (!hero.checkLives()) {
-      state.setScene("loss");
+      sceneManager.switchScene(new LossUpdater(sceneManager, this));
     }
     if (heroHurt) {
       state.heroLostLife();
