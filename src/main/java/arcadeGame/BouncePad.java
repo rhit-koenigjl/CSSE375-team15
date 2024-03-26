@@ -21,7 +21,7 @@ public class BouncePad extends Tile {
 	public void display(Graphics2D g2) {
 		g2.translate(x, y);
 		g2.setColor(Color.pink);
-		g2.fillRect(0, 0, width, height);
+		g2.fillRect(0, 0, (int) width, (int) height);
 		g2.translate(-x, -y);
 	}
 

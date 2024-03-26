@@ -29,8 +29,8 @@ public class Bomb extends Tile {
 		g.setColor(Color.black);
 		g.translate(x + width / 2, currentY);
 		g.rotate(0.5);
-		g.fillOval(0, 0, width, width);
-		g.fillRect(width / 2 - 5, -7, 10, 20);
+		g.fillOval(0, 0, (int) width, (int) width);
+		g.fillRect((int) width / 2 - 5, -7, 10, 20);
 		g.rotate(-0.5);
 		g.translate(-(x + width / 2), -currentY);
 

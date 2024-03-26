@@ -20,10 +20,10 @@ public class Spike extends Tile {
 	public void display(Graphics2D g2) {
 		g2.translate(x, y);
 		g2.setColor(Color.gray);
-		g2.fillRect(0, 0, width, height);
+		g2.fillRect(0, 0, (int) width, (int) height);
 		g2.translate(width / 2, -(height * Math.sqrt(2) / 2 - height / 2));
 		g2.rotate(Math.PI / 4);
-		g2.fillRect(0, 0, width, height);
+		g2.fillRect(0, 0, (int) width, (int) height);
 		g2.rotate(-Math.PI / 4);
 		g2.translate(-width / 2, (height * Math.sqrt(2) / 2 - height / 2));
 		g2.translate(-x, -y);
