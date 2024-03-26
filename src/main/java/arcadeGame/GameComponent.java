@@ -303,7 +303,7 @@ public class GameComponent extends JComponent {
 		}
 		levelHeight = l.size();
 		levelWidth = l.get(0).length();
-		return new Object[] { tiles, hero, enemies };
+		return new Object[] {tiles, hero, enemies};
 	}
 
 	/**

@@ -2,7 +2,7 @@ package arcadeGame;
 
 import java.awt.Graphics2D;
 
-public abstract class Actor extends GameObject{
+public abstract class Actor extends GameObject {
 	protected double approachFactor = 4;
 	protected double speed = 5;
 
