@@ -13,9 +13,9 @@ public class GameComponent extends JComponent {
 	private int score = 0;
 
 	// Fields for level management and creation
-	private String levelFiles[] = {"levels/level00", "levels/level01", "levels/level02", "levels/level03",
-			"levels/level04", "levels/level05", "levels/level06", "levels/level07", "levels/level08",
-			"levels/level09", "levels/level10", "levels/level11", "levels/level12",};
+	private String levelFiles[] = {"levels/level00", "levels/level01", "levels/level02",
+			"levels/level03", "levels/level04", "levels/level05", "levels/level06", "levels/level07",
+			"levels/level08", "levels/level09", "levels/level10", "levels/level11", "levels/level12",};
 	private Level currentLevel;
 	private UpdateState state = new UpdateState(this);
 
@@ -33,7 +33,7 @@ public class GameComponent extends JComponent {
 	 */
 	public GameComponent(JFrame frame) {
 		this.frame = frame;
-		this.currentLevel = new Level(new File(levelFiles[0]), 0, hero); 
+		this.currentLevel = new Level(new File(levelFiles[0]), 0, hero);
 		this.sceneManager = new SceneManager(new GameUpdater(sceneManager, currentLevel, keys, state));
 	}
 
@@ -131,4 +131,5 @@ public class GameComponent extends JComponent {
 	public void incrementScore(int score) {
 		this.score += score;
 	}
+
 }

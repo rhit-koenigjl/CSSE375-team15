@@ -70,4 +70,5 @@ public abstract class EnemySpawner extends Enemy {
 	public boolean isNonTrackingEnemy() {
 		return false;
 	}
+
 }

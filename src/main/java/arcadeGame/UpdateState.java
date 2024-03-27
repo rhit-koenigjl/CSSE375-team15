@@ -22,4 +22,5 @@ public class UpdateState {
   public int getLevelCount() {
     return gameComponent.getLevelCount();
   }
+
 }

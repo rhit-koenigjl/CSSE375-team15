@@ -5,18 +5,12 @@ import java.awt.Graphics2D;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author welchtj
- *
- */
 public class Player extends Actor {
 	// determines how much of the distance to max speed the player moves
 	// e.g. 5 means each frame the displacement between the velocity and max speed will be reduced by
 	// 1/5
-
 	private double gravity = 0.5;
 	private double jumpHeight = 0.75;
-
 	private double speed = 8;
 	private int lives = 3;
 
@@ -131,4 +125,5 @@ public class Player extends Actor {
 	public boolean isHero() {
 		return true;
 	}
+
 }

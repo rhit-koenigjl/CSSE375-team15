@@ -81,5 +81,5 @@ public class HunterSeeker extends Enemy {
 	public boolean isNonTrackingEnemy() {
 		return false;
 	}
-}
 
+}

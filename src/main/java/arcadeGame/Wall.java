@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Wall extends Tile {
+
 	/**
 	 * ensures: the correct initialization of a Wall
 	 * 
@@ -25,4 +26,5 @@ public class Wall extends Tile {
 		g.fillRect(0, 0, (int) width, (int) height);
 		g.translate(-getX(), -getY());
 	}
+
 }

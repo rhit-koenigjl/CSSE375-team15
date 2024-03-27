@@ -37,8 +37,8 @@ public class Level {
   public Object[] generateLevel() {
     tiles.clear();
     enemies.clear();
-    List<int[]> hunterSeekersToAdd = new ArrayList<int[]>(); // HunterSeekers to be added after
-                                                             // hero added
+    // HunterSeekers to be added after hero added
+    List<int[]> hunterSeekersToAdd = new ArrayList<int[]>();
     List<String> l = loadLevel();
     for (int y = 0; y < l.size(); y++) { // reads line number
       for (int x = 0; x < l.get(y).length(); x++) { // reads line length
@@ -280,4 +280,5 @@ public class Level {
   public int getIndex() {
     return levelIndex;
   }
+
 }

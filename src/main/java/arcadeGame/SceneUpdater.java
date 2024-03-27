@@ -11,5 +11,7 @@ public abstract class SceneUpdater {
     }
 
     public abstract void updateScene();
-    public abstract void drawScene(Graphics2D g, String showString, int xMiddle, int yMiddle, int score);
+
+    public abstract void drawScene(Graphics2D g, String showString, int xMiddle, int yMiddle,
+            int score);
 }

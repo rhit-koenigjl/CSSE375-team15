@@ -5,8 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.Map;
 
-public class GameUpdater extends SceneUpdater{
-    
+public class GameUpdater extends SceneUpdater {
     private Map<Integer, Boolean> keys;
     private UpdateState state;
 
@@ -25,7 +24,7 @@ public class GameUpdater extends SceneUpdater{
     @Override
     public void drawScene(Graphics2D g2, String showString, int xMiddle, int yMiddle, int score) {
         Color previousColor = g2.getColor();
-		g2.setFont(new Font("Monospaced", Font.BOLD, 28));
+        g2.setFont(new Font("Monospaced", Font.BOLD, 28));
 
         level.draw(g2, score);
         g2.setColor(previousColor);
@@ -34,4 +33,5 @@ public class GameUpdater extends SceneUpdater{
     public void changeLevel(Level level) {
         this.level = level;
     }
+
 }

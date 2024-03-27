@@ -10,7 +10,8 @@ public class PauseUpdater extends SceneUpdater {
     private Map<Integer, Boolean> keys;
     private Level level;
 
-    public PauseUpdater(SceneManager sceneManager, SceneUpdater gameUpdater, Map<Integer, Boolean> keys, Level level) {
+    public PauseUpdater(SceneManager sceneManager, SceneUpdater gameUpdater,
+            Map<Integer, Boolean> keys, Level level) {
         super(sceneManager);
         this.gameUpdater = gameUpdater;
         this.keys = keys;
@@ -30,8 +31,8 @@ public class PauseUpdater extends SceneUpdater {
         Color previousColor = g2.getColor();
         g2.setFont(new Font("Monospaced", Font.BOLD, 28));
         level.handlePause(g2, previousColor);
-		shownString = "Game Paused. Press Escape to Continue";
-		g2.drawString(shownString, xMiddle, yMiddle);
+        shownString = "Game Paused. Press Escape to Continue";
+        g2.drawString(shownString, xMiddle, yMiddle);
     }
-    
+
 }
