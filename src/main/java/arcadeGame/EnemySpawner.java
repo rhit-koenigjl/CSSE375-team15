@@ -73,8 +73,7 @@ public class EnemySpawner extends Enemy {
 		}
 	}
 
-	@Override
-	public void controll() {
+	public void control() {
 		double goalSpeed = 0;
 		vx += (goalSpeed - vx) / (approachFactor * 12);
 		vy += (goalSpeed - vy) / (approachFactor * 12);
@@ -103,4 +102,7 @@ public class EnemySpawner extends Enemy {
 		}
 	}
 
+	public boolean isNonTrackingEnemy() {
+		return false;
+	}
 }

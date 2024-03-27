@@ -52,16 +52,15 @@ public class HunterSeeker extends Enemy {
 	 */
 	public void handleCollisions(ArrayList<Tile> tiles, double ix, double iy) {
 		for (Tile t : tiles) {
-			if (checkCollision(t))
-				t.handleSeekerCollision(this, ix, iy);
+			if (collidesWith(t))
+				t.handleCollision(this, ix, iy);
 		}
 	}
 
 	/**
 	 * ensures: the HunterSeeker's velocity it set so that it follows the player.
 	 */
-	@Override
-	public void controll() {
+	public void control() {
 		double goalSpeed = 0;
 		if (x + width < hero.getX()) {
 			goalSpeed = speed;
@@ -78,5 +77,9 @@ public class HunterSeeker extends Enemy {
 		vy += gravity;
 	}
 
+	@Override
+	public boolean isNonTrackingEnemy() {
+		return false;
+	}
 }
 

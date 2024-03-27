@@ -71,7 +71,7 @@ public class GameObject {
 		this.width = width;
 	}
 
-	public boolean checkCollision(GameObject o) {
+	public boolean collidesWith(GameObject o) {
 		return x + width > o.x && y + height > o.y && x < o.x + o.width && y < o.y + o.height;
 	}
 }

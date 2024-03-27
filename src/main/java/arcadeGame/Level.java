@@ -134,7 +134,7 @@ public class Level {
   private void handlePlayer(Map<Integer, Boolean> keys) {
     hero.update(keys, tiles);
 
-    if (hero.didCollideWithSpikes) {
+    if (hero.getSpikeCollision()) {
       heroHurt = true;
     }
   }
@@ -155,7 +155,7 @@ public class Level {
         enemy.setAdding(false);
         enemiesToAdd.add(enemy.returnNew());
       }
-      if (enemy.didCollideWithSpikes) {
+      if (enemy.getSpikeCollision()) {
         enemiesRemove.add(enemy);
       }
     }
