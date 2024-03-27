@@ -3,7 +3,7 @@ package arcadeGame;
 import java.awt.Graphics2D;
 
 public abstract class Tile extends GameObject {
-	protected boolean remove = false;
+	private boolean remove = false;
 
 	/**
 	 * ensures the correct creation of a Tile
@@ -33,29 +33,28 @@ public abstract class Tile extends GameObject {
 	public abstract void display(Graphics2D g2);
 
 	/**
-	 * ensures: how the player should collide with this tile.
+	 * ensures: how a default movable object should collide with this tile.
 	 * 
-	 * @param a: the Player
+	 * @param a: the Actor
 	 * @param ix
 	 * @param iy
 	 */
-	public abstract void handleCollision(Player a, double ix, double iy);
-
-	/**
-	 * ensures: how HunterSeekers collide with this tile
-	 * 
-	 * @param a: the HunterSeeker
-	 * @param ix
-	 * @param iy
-	 */
-	public abstract void handleSeekerCollision(HunterSeeker a, double ix, double iy);
-
-	/**
-	 * ensures: how Enemies collide with this tile
-	 * 
-	 * @param a: the enemy colliding with this tile
-	 * @param ix
-	 * @param iy
-	 */
-	public abstract void handleEnemyCollision(Enemy a, double ix, double iy);
+	public void handleCollision(Actor a, double ix, double iy) {
+		if (ix > 0) {
+			a.setX(x - a.getWidth());
+			a.setVx(a.isNonTrackingEnemy() ? a.getVx() * -1 : 0);
+		}
+		if (ix < 0) {
+			a.setX(x + width);
+			a.setVx(a.isNonTrackingEnemy() ? a.getVx() * -1 : 0);
+		}
+		if (iy > 0) {
+			a.setY(y - a.getHeight());
+			a.setVy(a.isNonTrackingEnemy() ? a.getVy() * -1 : 0);
+		}
+		if (iy < 0) {
+			a.setY(y + height);
+			a.setVy(a.isNonTrackingEnemy() ? a.getVy() * -1 : 0);
+		}
+	}
 }

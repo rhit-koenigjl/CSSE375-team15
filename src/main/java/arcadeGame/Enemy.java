@@ -2,7 +2,6 @@ package arcadeGame;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.List;
 
 /**
  * @author koenigjl
@@ -10,8 +9,7 @@ import java.util.List;
  */
 public class Enemy extends Actor {
 
-	protected int patrolDistance = 300;
-	protected Color enemyColor = new Color(255, 0, 0);
+	private Color enemyColor = new Color(255, 0, 0);
 	protected boolean adding = false;
 
 	/**
@@ -61,37 +59,6 @@ public class Enemy extends Actor {
 		super.drawActor(g2);
 	}
 
-	/**
-	 * ensures: the handling of the movement in relation to it's velocity and calls all collision code
-	 * 
-	 * @param tiles
-	 */
-	public void update(List<Tile> tiles) {
-		// updates position based on vx and vy, is basically the same code as hero but simplified
-		controll();
-		x += vx;
-		handleCollisions(tiles, vx, 0);
-		y += vy;
-		handleCollisions(tiles, 0, vy);
-
-	}
-
-	/**
-	 * ensures: the running of the collision code related to an enemy class
-	 * 
-	 * @param tiles
-	 * @param ix
-	 * @param iy
-	 */
-	public void handleCollisions(List<Tile> tiles, double ix, double iy) {
-		// same as hero code but with different actions taken after collision
-		for (Tile t : tiles) {
-			if (checkCollision(t))
-				t.handleEnemyCollision(this, ix, iy);
-		}
-
-	}
-
 	public boolean getAdding() {
 		return adding;
 	}
@@ -104,6 +71,8 @@ public class Enemy extends Actor {
 		return null;
 	}
 
-	public void controll() {}
-
+	@Override
+	public boolean isNonTrackingEnemy() {
+		return true;
+	}
 }
