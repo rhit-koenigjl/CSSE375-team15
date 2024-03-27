@@ -21,6 +21,7 @@ public class Level {
   private List<Tile> tiles = new ArrayList<Tile>();
   private List<Enemy> enemies = new ArrayList<Enemy>();
   private int numBombs = 0;
+  private boolean heroHurt = false;
 
   public Level(File levelFile, int index, Player hero) {
     this.levelFile = levelFile;
@@ -130,21 +131,15 @@ public class Level {
     return levelLayout;
   } // readFile
 
-  public void update(Map<Integer, Boolean> keys, UpdateState state, SceneManager sceneManager) {
-    boolean heroHurt = false;
-    // code that creates a level at the game's start
-    if (tiles.size() == 0) {
-      generateLevel();
-    }
-
-    // handling of the hero
+  private void handlePlayer(Map<Integer, Boolean> keys) {
     hero.update(keys, tiles);
 
     if (hero.didCollideWithSpikes) {
       heroHurt = true;
     }
+  }
 
-    // handles the updating and removing of enemies
+  private void handleEnemies(UpdateState state) {
     List<Enemy> enemiesRemove = new ArrayList<Enemy>();
     List<Enemy> enemiesToAdd = new ArrayList<Enemy>();
     for (Enemy enemy : enemies) {
@@ -171,8 +166,9 @@ public class Level {
     for (Enemy e : enemiesToAdd) {
       enemies.add(e);
     }
+  }
 
-    // handles the updating of the tiles and the removal of bombs
+  private void handleTiles(UpdateState state) {
     List<Tile> toRemove = new ArrayList<Tile>();
     for (Tile t : tiles) {
       if (t.shouldRemove()) {
@@ -184,9 +180,9 @@ public class Level {
       state.incrementScore(25);
       numBombs--;
     }
+  }
 
-    // handles the switching of a level when all bombs are collected,
-    // and moves you to the win screen if there are no more levels
+  private void handleBombs(UpdateState state, SceneManager sceneManager) {
     if (numBombs == 0) {
       state.incrementScore(100);
       if (levelIndex == state.getLevelCount() - 1) {
@@ -196,8 +192,9 @@ public class Level {
         state.setNextLevel(levelIndex + 1);
       }
     }
+  }
 
-    // manual keystroke level change code
+  private void handleDebugControls(Map<Integer, Boolean> keys, UpdateState state, SceneManager sceneManager) {
     if (keys.getOrDefault(85, false) && levelIndex < state.getLevelCount() - 1) {
       state.setNextLevel(levelIndex + 1);
       keys.put(85, false);
@@ -210,7 +207,22 @@ public class Level {
       sceneManager.switchScene(new PauseUpdater(sceneManager, sceneManager.getCurrentScene(), keys, this));
       keys.remove(27);
     }
+  }
 
+  private void generateStarterLevel() {
+    if (tiles.size() == 0) {
+      generateLevel();
+    }
+  }
+
+  public void update(Map<Integer, Boolean> keys, UpdateState state, SceneManager sceneManager) {
+    generateStarterLevel();
+    handlePlayer(keys);
+    handleEnemies(state);
+    handleTiles(state);
+    handleBombs(state, sceneManager);
+    handleDebugControls(keys, state, sceneManager);
+    
     if (heroHurt) {
       state.heroLostLife();
     }
