@@ -62,19 +62,6 @@ public abstract class EnemySpawner extends Enemy {
 	 * ensures: returns a new enemy that runs towards the players current position
 	 */
 	public abstract Enemy returnNew();
-	// public Enemy returnNew() {
-	// 	if (spawnType == 0) {
-	// 		EnemyGenerator
-	// 	} else if (spawnType == 1) {
-	// 		HunterSeekerGenerator
-	// 	} else if (spawnType == 2) {
-	// 		EnemySpawnerGenerator
-	// 	} else if (spawnType == 3) {
-	// 		RecursiveEnemySpawnerGenerator
-	// 	} else {
-	// 		return new Enemy();
-	// 	}
-	// }
 
 	protected double getAngle() {
 		return Math.atan2(p.getY() - y, p.getX() - x);

@@ -85,11 +85,10 @@ public class Level {
             tiles.add(new BouncePad(x * 50, y * 50 + 30, 50, 20));
             break;
           case 'C':
-            enemies.add(
-                new EnemySpawnerGenerator(x * 50 + 10, y * 50 + 10, 30, 30, 0, 0, enemies, hero));
+            enemies.add(new EnemySpawnerGenerator(x * 50 + 10, y * 50 + 10, 30, 30, enemies, hero));
             break;
           case 'D':
-            enemies.add(new RecursiveEnemySpawnerGenerator(x * 50 + 10, y * 50 + 10, 30, 30, 0, 0,
+            enemies.add(new RecursiveEnemySpawnerGenerator(x * 50 + 10, y * 50 + 10, 30, 30,
                 enemies, hero));
             break;
         }
