@@ -42,7 +42,7 @@ public class TestActorsAndTilesForBasicData {
         p.update(new HashMap<Integer, Boolean>(), new ArrayList<Tile>());
 
         assertEquals(7.5, p.getX()); // vx will be minimized by 1/4 since the key isn't being held
-        assertEquals(7.5, p.getX()); // vy will be increased by 0.5 because of gravity
+        assertEquals(7.5, p.getY()); // vy will be increased by 0.5 because of gravity
         assertEquals(10, p.getWidth());
         assertEquals(10, p.getHeight());
     }

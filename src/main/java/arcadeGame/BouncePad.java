@@ -26,7 +26,7 @@ public class BouncePad extends Tile {
 	}
 
 	@Override
-	public boolean handleCollision(Actor a, double ix, double iy) {
+	public void handleCollision(Actor a, double ix, double iy) {
 		if (ix > 0) {
 			a.setX(x - a.getWidth());
 			a.setVx(0);
@@ -43,6 +43,5 @@ public class BouncePad extends Tile {
 			a.setY(y + height);
 			a.setVy(0);
 		}
-		return (ix != 0 || iy != 0);
 	}
 }

@@ -53,7 +53,7 @@ public abstract class Actor extends GameObject {
 	}
 
 	public void update(List<Tile> tiles) {
-		x += vx;
+		x += vx * (isHero() ? 0.75 : 1);
 		handleTileCollisions(tiles, vx, 0);
 		y += vy;
 		handleTileCollisions(tiles, 0, vy);

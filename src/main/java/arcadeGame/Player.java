@@ -40,9 +40,9 @@ public class Player extends Actor {
 	 * @param tiles
 	 */
 	public void update(Map<Integer, Boolean> keys, List<Tile> tiles) {
+		vy += gravity;
 		super.update(tiles);
 		handleKeyAction(keys);
-		vy += gravity;
 	}
 
 	/**

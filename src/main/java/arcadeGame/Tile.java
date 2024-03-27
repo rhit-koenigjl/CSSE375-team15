@@ -33,13 +33,13 @@ public abstract class Tile extends GameObject {
 	public abstract void display(Graphics2D g2);
 
 	/**
-	 * ensures: how the player should collide with this tile.
+	 * ensures: how a default movable object should collide with this tile.
 	 * 
 	 * @param a: the Actor
 	 * @param ix
 	 * @param iy
 	 */
-	public boolean handleCollision(Actor a, double ix, double iy) {
+	public void handleCollision(Actor a, double ix, double iy) {
 		if (ix > 0) {
 			a.setX(x - a.getWidth());
 			a.setVx(a.isNonTrackingEnemy() ? a.getVx() * -1 : 0);
@@ -56,6 +56,5 @@ public abstract class Tile extends GameObject {
 			a.setY(y + height);
 			a.setVy(a.isNonTrackingEnemy() ? a.getVy() * -1 : 0);
 		}
-		return (ix != 0 || iy != 0);
 	}
 }
