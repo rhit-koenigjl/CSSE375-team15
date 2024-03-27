@@ -19,10 +19,6 @@ public class UpdateState {
     gameComponent.loadLevelByIndex(level);
   }
 
-  public void setScene(String scene) {
-    gameComponent.switchScene(scene);
-  }
-
   public int getLevelCount() {
     return gameComponent.getLevelCount();
   }
