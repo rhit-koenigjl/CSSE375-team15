@@ -11,8 +11,7 @@ import java.util.Map;
 import javax.swing.*;
 
 public class GameComponent extends JComponent {
-	private String scene = "menu";
-	private int transitionTimer = 0;
+	private SceneManager sceneManager;
 	private int score = 0;
 
 	// Fields for level management and creation
@@ -36,7 +35,8 @@ public class GameComponent extends JComponent {
 	 */
 	public GameComponent(JFrame frame) {
 		this.frame = frame;
-		this.currentLevel = new Level(new File(levelFiles[0]), 0, hero);
+		this.currentLevel = new Level(new File(levelFiles[0]), 0, hero); 
+		this.sceneManager = new SceneManager(new GameUpdater(sceneManager, currentLevel, keys, state));
 	}
 
 	public void loadLevelByIndex(int index) {
@@ -57,31 +57,7 @@ public class GameComponent extends JComponent {
 	 * ensures: the actions of the game that must take place every frame
 	 */
 	public void updateState() {
-		switch (scene) {
-			case "game":
-				currentLevel.update(this.keys, state);
-				break;
-			case "menu":
-				// ensures you can start the game from the menu
-				if (keys.getOrDefault(32, false)) {
-					switchScene("game");
-				}
-				break;
-			case "reset":
-				transitionTimer++;
-				if (transitionTimer > 350) {
-					transitionTimer = 0;
-					switchScene("game");
-					break;
-				}
-			case "pause":
-				if (keys.getOrDefault(27, false)) {
-					transitionTimer = 0;
-					switchScene("game");
-					keys.remove(27);
-				}
-				break;
-		}
+		sceneManager.runScene();
 	}
 
 	/**
@@ -92,56 +68,19 @@ public class GameComponent extends JComponent {
 	}
 
 	/**
-	 * allows the switching of states
-	 * 
-	 * @param newState
-	 */
-	public void switchScene(String newState) {
-		scene = newState;
-	}
-
-	/**
 	 * ensures: the drawing of all the objects onto the JFrame
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+
 		Graphics2D g2 = (Graphics2D) g;
-		Color previousColor = g2.getColor();
-		int fontSize = 28;
-		g2.setFont(new Font("Monospaced", Font.BOLD, fontSize));
+
 		int xMiddle = 50;
 		int yMiddle = (currentLevel.getHeight() * 50 + 37) / 2;
-		String shownString;
-		switch (scene) {
-			case "game":
-				currentLevel.draw(g2, score);
-				g2.setColor(previousColor);
-				break;
-			case "menu":
-				shownString = "Press Spacebar to Start";
-				g2.drawString(shownString, xMiddle, yMiddle - 50);
-				g2.drawString("Use the Arrow Keys to move", xMiddle, yMiddle);
-				g2.drawString("Use Escape to pause the game", xMiddle, yMiddle + 50);
-				break;
-			case "win":
-				shownString = "Congrats! You Won! Your score was: " + score;
-				g2.drawString(shownString, xMiddle, yMiddle);
-				break;
-			case "loss":
-				shownString = "You ran out of lives on level " + currentLevel.getIndex() + ", Your score was: " + score;
-				g2.drawString(shownString, xMiddle, yMiddle);
-				break;
-			case "reset":
-				shownString = "You got hit! Restarting the level in " + (350 - transitionTimer) / 100;
-				g2.drawString(shownString, xMiddle, yMiddle);
-				break;
-			case "pause":
-				currentLevel.handlePause(g2, previousColor);
-				shownString = "Game Paused. Press Escape to Continue";
-				g2.drawString(shownString, xMiddle, yMiddle);
-				break;
-		}
+
+		String shownString = "";
+		sceneManager.drawScene(g2, shownString, xMiddle, yMiddle, score);
 	}
 
 	/**
@@ -164,6 +103,7 @@ public class GameComponent extends JComponent {
 			return;
 		} else {
 			this.currentLevel = new Level(new File(newLevel), index, hero);
+			this.sceneManager.setLevel(currentLevel);
 			currentLevel.generateLevel();
 		}
 		sizeFrame(this.frame);
@@ -180,7 +120,9 @@ public class GameComponent extends JComponent {
 		levelReset();
 		System.out.println("You Died! Lives left: " + hero.getNumberOfLives());
 		if (hero.checkLives()) {
-			switchScene("reset");
+			sceneManager.switchScene(new ResetUpdater(sceneManager, sceneManager.getCurrentScene()));
+		} else {
+			sceneManager.switchScene(new LossUpdater(sceneManager, currentLevel));
 		}
 	}
 
