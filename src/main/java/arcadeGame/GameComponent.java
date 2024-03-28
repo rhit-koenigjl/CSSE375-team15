@@ -34,7 +34,9 @@ public class GameComponent extends JComponent {
 	public GameComponent(JFrame frame) {
 		this.frame = frame;
 		this.currentLevel = new Level(new File(levelFiles[0]), 0, hero);
-		this.sceneManager = new SceneManager(new GameUpdater(sceneManager, currentLevel, keys, state));
+		this.sceneManager = new SceneManager(null);
+		SceneUpdater s = new GameUpdater(sceneManager, currentLevel, keys, state);
+		this.sceneManager.switchScene(s);
 	}
 
 	public void loadLevelByIndex(int index) {
