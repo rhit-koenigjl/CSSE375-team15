@@ -44,4 +44,5 @@ public class BouncePad extends Tile {
 			a.setVy(0);
 		}
 	}
+
 }

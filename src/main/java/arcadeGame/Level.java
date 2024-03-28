@@ -37,8 +37,8 @@ public class Level {
   public Object[] generateLevel() {
     tiles.clear();
     enemies.clear();
-    List<int[]> hunterSeekersToAdd = new ArrayList<int[]>(); // HunterSeekers to be added after
-                                                             // hero added
+    // HunterSeekers to be added after hero added
+    List<int[]> hunterSeekersToAdd = new ArrayList<int[]>();
     List<String> l = loadLevel();
     for (int y = 0; y < l.size(); y++) { // reads line number
       for (int x = 0; x < l.get(y).length(); x++) { // reads line length
@@ -54,7 +54,7 @@ public class Level {
             tiles.add(new Spike(x * 50, y * 50, 50));
             break;
           case 'P':
-             hero.setX(x * 50 + 10);
+            hero.setX(x * 50 + 10);
             hero.setY(y * 50);
             hero.setWidth(30);
             hero.setHeight(40);
@@ -73,7 +73,7 @@ public class Level {
             enemies.add(enemy);
             break;
           case 'S':
-            int[] addedHunterSeeker = { x * 50 + 10, y * 50, 40, 40 };
+            int[] addedHunterSeeker = {x * 50 + 10, y * 50, 40, 40};
             hunterSeekersToAdd.add(addedHunterSeeker); // adds HunterSeeker info to a ArrayList to
                                                        // be created after everything else
             break;
@@ -85,10 +85,11 @@ public class Level {
             tiles.add(new BouncePad(x * 50, y * 50 + 30, 50, 20));
             break;
           case 'C':
-            enemies.add(new EnemySpawner(x * 50 + 10, y * 50 + 10, 30, 30, enemies, hero, 0));
+            enemies.add(new EnemySpawnerGenerator(x * 50 + 10, y * 50 + 10, 30, 30, enemies, hero));
             break;
           case 'D':
-            enemies.add(new EnemySpawner(x * 50 + 10, y * 50 + 10, 30, 30, enemies, hero, 3));
+            enemies.add(new RecursiveEnemySpawnerGenerator(x * 50 + 10, y * 50 + 10, 30, 30,
+                enemies, hero));
             break;
         }
       }
@@ -103,7 +104,7 @@ public class Level {
     }
     levelHeight = l.size();
     levelWidth = l.get(0).length();
-    return new Object[] { tiles, hero, enemies };
+    return new Object[] {tiles, hero, enemies};
   }
 
   /**
@@ -194,7 +195,8 @@ public class Level {
     }
   }
 
-  private void handleDebugControls(Map<Integer, Boolean> keys, UpdateState state, SceneManager sceneManager) {
+  private void handleDebugControls(Map<Integer, Boolean> keys, UpdateState state,
+      SceneManager sceneManager) {
     if (keys.getOrDefault(85, false) && levelIndex < state.getLevelCount() - 1) {
       state.setNextLevel(levelIndex + 1);
       keys.put(85, false);
@@ -204,7 +206,8 @@ public class Level {
       keys.put(68, false);
     }
     if (keys.getOrDefault(27, false)) {
-      sceneManager.switchScene(new PauseUpdater(sceneManager, sceneManager.getCurrentScene(), keys, this));
+      sceneManager
+          .switchScene(new PauseUpdater(sceneManager, sceneManager.getCurrentScene(), keys, this));
       keys.remove(27);
     }
   }
@@ -222,7 +225,7 @@ public class Level {
     handleTiles(state);
     handleBombs(state, sceneManager);
     handleDebugControls(keys, state, sceneManager);
-    
+
     if (heroHurt) {
       state.heroLostLife();
     }
@@ -277,4 +280,5 @@ public class Level {
   public int getIndex() {
     return levelIndex;
   }
+
 }

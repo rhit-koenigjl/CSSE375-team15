@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Spike extends Tile {
+
 	/**
 	 * ensures: calls the Tile constructor for the bouncepad
 	 * 
@@ -34,4 +35,5 @@ public class Spike extends Tile {
 		super.handleCollision(a, ix, iy);
 		a.setSpikeCollision(true);
 	}
+
 }

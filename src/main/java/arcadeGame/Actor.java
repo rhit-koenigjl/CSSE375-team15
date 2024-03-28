@@ -6,7 +6,6 @@ import java.util.List;
 public abstract class Actor extends GameObject {
 	protected double approachFactor = 4;
 	protected double speed = 5;
-
 	private boolean didCollideWithSpikes = false;
 
 	/**
@@ -74,4 +73,5 @@ public abstract class Actor extends GameObject {
 	public boolean getSpikeCollision() {
 		return didCollideWithSpikes;
 	}
+
 }

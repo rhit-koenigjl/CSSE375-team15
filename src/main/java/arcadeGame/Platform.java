@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Platform extends Tile {
+
 	/**
 	 * ensures: the correct initialization of the platform instance
 	 * 
@@ -25,4 +26,5 @@ public class Platform extends Tile {
 		g.fillRect(0, 0, (int) width, (int) height);
 		g.translate(-getX(), -getY());
 	}
+
 }

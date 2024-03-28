@@ -57,4 +57,5 @@ public abstract class Tile extends GameObject {
 			a.setVy(a.isNonTrackingEnemy() ? a.getVy() * -1 : 0);
 		}
 	}
+
 }

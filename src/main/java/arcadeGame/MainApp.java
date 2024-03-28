@@ -37,6 +37,7 @@ public class MainApp {
 		timer.start();
 
 		gameFrame.addKeyListener(new KeyListener() {
+
 			@Override
 			public void keyTyped(KeyEvent e) {
 				return;

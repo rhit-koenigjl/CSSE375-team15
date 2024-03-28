@@ -5,7 +5,6 @@ public class GameObject {
 	protected double y;
 	protected double width;
 	protected double height;
-
 	protected double vx = 0;
 	protected double vy = 0;
 
@@ -74,4 +73,5 @@ public class GameObject {
 	public boolean collidesWith(GameObject o) {
 		return x + width > o.x && y + height > o.y && x < o.x + o.width && y < o.y + o.height;
 	}
+
 }

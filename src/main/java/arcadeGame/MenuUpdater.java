@@ -8,7 +8,8 @@ public class MenuUpdater extends SceneUpdater {
     private GameUpdater gameUpdater;
     private Map<Integer, Boolean> keys;
 
-    public MenuUpdater(SceneManager sceneManager, GameUpdater gameUpdater, Map<Integer, Boolean> keys) {
+    public MenuUpdater(SceneManager sceneManager, GameUpdater gameUpdater,
+            Map<Integer, Boolean> keys) {
         super(sceneManager);
         this.gameUpdater = gameUpdater;
         this.keys = keys;
@@ -29,5 +30,5 @@ public class MenuUpdater extends SceneUpdater {
         g2.drawString("Use the Arrow Keys to move", xMiddle, yMiddle);
         g2.drawString("Use Escape to pause the game", xMiddle, yMiddle + 50);
     }
-    
+
 }

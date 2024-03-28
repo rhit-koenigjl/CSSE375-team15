@@ -3,12 +3,7 @@ package arcadeGame;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-/**
- * @author koenigjl
- *
- */
 public class Enemy extends Actor {
-
 	private Color enemyColor = new Color(255, 0, 0);
 	protected boolean adding = false;
 
@@ -75,4 +70,5 @@ public class Enemy extends Actor {
 	public boolean isNonTrackingEnemy() {
 		return true;
 	}
+
 }
