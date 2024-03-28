@@ -1,0 +1,217 @@
+@startuml ArcadeGame
+package presentation {
+  class GameViewer {
+    + {static} main(args: String[]): void
+  }
+  class GameAdvanceListener {
+    - {static} {final} NUM_TICKS: int
+    + nextTick(): void
+  }
+  class StartScreen {
+    - {static} {final} LEVEL_FILES_LOCATION: String
+    - handleStartGame(): void
+    - handleDisplayControls(): void
+    + draw(): void
+  }
+  class GameOverScreen {
+    - handleQuitGame(): void
+    - handleRestartGame(): void
+    + draw(): void
+  }
+  class GameWonScreen {
+    - handleQuitGame(): void
+    - handleRestartGame(): void
+    + draw(): void
+  }
+  class LevelViewer {
+    - level: Level
+    - gameObjects: List<Drawable>
+    + LevelViewer(level: Level)
+    - nextLevel(): void
+    - handleGameWon(): void
+    - handleGameLost(): void
+    + draw(): void
+  }
+  abstract Drawable {
+    # image: ImageReader
+    + draw(): void
+    # handleCollision(other: Drawable): void
+  }
+  class DrawablePlayer {
+    - {static} {final} PLAYER_IMAGE: String
+    - player: Player
+    + DrawablePlayer(player: Player)
+    + draw(): void
+    ~ moveLeft(): void
+    ~ moveRight(): void
+    ~ jump(): void
+  }
+  class DrawableEnemy {
+    - {static} {final} ENEMY_IMAGE: String
+    - enemy: Enemy
+    + DrawableEnemy(enemy: Enemy)
+    + draw(): void
+  }
+  class DrawableBarrier {
+    - {static} {final} BARRIER_IMAGE: String
+    - barrier: Barrier
+    + DrawableBarrier(barrier: Barrier)
+    + draw(): void
+  }
+  class DrawableSpike {
+    - {static} {final} SPIKE_IMAGE: String
+    - spike: Spike
+    + DrawableSpike(spike: Spike)
+    + draw(): void
+  }
+  class DrawableBouncePad {
+    - {static} {final} BOUNCE_PAD_IMAGE: String
+    - bouncePad: BouncePad
+    + DrawableBouncePad(bouncePad: BouncePad)
+    + draw(): void
+  }
+  class DrawableCoin {
+    - {static} {final} COIN_IMAGE: String
+    - coin: Coin
+    + DrawableCoin(coin: Coin)
+    + draw(): void
+  }
+  class DrawableEnemySpawner {
+    - {static} {final} ENEMY_SPAWNER_IMAGE: String
+    - enemySpawner: EnemySpawner
+    + DrawableEnemySpawner(enemySpawner: EnemySpawner)
+    + draw(): void
+  }
+
+  GameViewer .d.> StartScreen
+  GameViewer .u.> GameAdvanceListener
+  StartScreen -> LevelViewer
+  StartScreen .u.> GameAdvanceListener
+  LevelViewer .> GameWonScreen
+  LevelViewer .> GameOverScreen
+  LevelViewer .u.> GameAdvanceListener
+  GameWonScreen .u.> GameAdvanceListener
+  GameOverScreen .u.> GameAdvanceListener
+  LevelViewer -d->"*" Drawable
+  DrawablePlayer -u-|> Drawable
+  DrawableEnemy -u-|> Drawable
+  DrawableBarrier -u-|> Drawable
+  DrawableSpike -u-|> Drawable
+  DrawableBouncePad -u-|> Drawable
+  DrawableCoin -u-|> Drawable
+  DrawableEnemySpawner -u-|> Drawable
+}
+Drawable -l-> data.ImageReader
+DrawablePlayer -d-> domain.Player
+DrawableEnemy -d-> domain.Enemy
+DrawableBarrier -d-> domain.Barrier
+DrawableSpike -d-> domain.Spike
+DrawableBouncePad -d-> domain.BouncePad
+DrawableCoin -d-> domain.Coin
+DrawableEnemySpawner -d-> domain.EnemySpawner
+LevelViewer -u-> domain.Level
+
+package domain {
+  class Level {
+    - reader: LevelReader
+    - gameObjects: List<GameObject>
+    - name: String
+    - lives: int
+    - score: int
+    + Level(fileName: String)
+    - load(): void
+    + getObjects(): List<GameObject>
+  }
+  abstract GameObject {
+    # xPos: int
+    # yPos: int
+    # xVel: int
+    # yVel: int
+    + GameObject(xPos: int, yPos: int)
+    # getPosition(): int[]
+    # setVelocity(xVel: int, yVel: int): void
+    ~ {abstract} collidesWith(other: GameObject): boolean
+    ~ {abstract} collisionAction(): void
+  }
+  class Player {
+    - {static} {final} X_VELOCITY: int
+    - {static} {final} Y_VELOCITY: int
+    + Player(xPos: int, yPos: int)
+    ~ moveLeft(): void
+    ~ moveRight(): void
+    ~ jump(): void
+    - loseLife(): void
+    ~ collidesWith(other: GameObject): boolean
+    ~ collisionAction(): void
+  }
+  class Enemy {
+    + Enemy(xPos: int, yPos: int)
+    ~ move(): void
+    ~ collidesWith(other: GameObject): boolean
+    ~ collisionAction(): void
+  }
+  class Barrier {
+    + Barrier(xPos: int, yPos: int)
+    ~ collidesWith(other: GameObject): boolean
+    ~ collisionAction(): void
+  }
+  class Spike {
+    - direction: SpikeDirection
+    + Spike(xPos: int, yPos: int)
+    ~ setDirection(direction: SpikeDirection): void
+    ~ collidesWith(other: GameObject): boolean
+    ~ collisionAction(): void
+  }
+  class BouncePad {
+    + BouncePad(xPos: int, yPos: int)
+    ~ collidesWith(other: GameObject): boolean
+    ~ collisionAction(): void
+  }
+  class Coin {
+    + Coin(xPos: int, yPos: int)
+    ~ collect(): void
+    ~ collidesWith(other: GameObject): boolean
+    ~ collisionAction(): void
+  }
+  class EnemySpawner {
+    - spawnRate: int
+    + EnemySpawner(xPos: int, yPos: int)
+    ~ spawn(): void
+    ~ collidesWith(other: GameObject): boolean
+    ~ collisionAction(): void
+  }
+  enum SpikeDirection {
+    UP
+    DOWN
+    LEFT
+    RIGHT
+  }
+
+  Level -d->"*" GameObject
+  Player -u-|> GameObject
+  Enemy -u-|> GameObject
+  Barrier -u-|> GameObject
+  Spike -u-|> GameObject
+  Spike -d-> SpikeDirection
+  BouncePad -u-|> GameObject
+  Coin -u-|> GameObject
+  EnemySpawner -u-|> GameObject
+}
+domain.Level -u-> data.LevelReader
+
+package data {
+  interface FileReader {
+    + read(): String
+  }
+  class LevelReader {
+    + read(): String
+    - parseJson(): Object
+  }
+  class ImageReader {
+    + read(): String
+  }
+
+  LevelReader .u.|> FileReader
+  ImageReader .u.|> FileReader
+}
+@enduml

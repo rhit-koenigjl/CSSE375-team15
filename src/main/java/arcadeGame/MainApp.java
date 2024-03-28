@@ -1,31 +1,24 @@
-package mainApp;
+package arcadeGame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
-
-import java.nio.file.*;
 
 /**
  * Class: MainApp
  * 
  * @author Team 103 | JL Koenig & Tommy Welch <br>
- *         Purpose: Top level class for CSSE220 Project containing main method
- *         <br>
+ *         Purpose: Top level class for CSSE220 Project containing main method <br>
  *         Restrictions: None
  */
 public class MainApp {
-	public static final int DELAY = 10;
+	private static final int DELAY = 10;
 	private GameComponent component;
 	private JFrame gameFrame;
-	private Timer timer;
 
 	/**
 	 * ensures: runs the app
@@ -35,6 +28,7 @@ public class MainApp {
 		gameFrame.setSize(800, 600);
 
 		component = new GameComponent(gameFrame);
+		component.loadLevelByIndex(0);
 		gameFrame.add(component, BorderLayout.CENTER);
 		gameFrame.getContentPane().setBackground(new Color(206, 214, 237));
 		GameAdvanceListener advanceListener = new GameAdvanceListener(component);
@@ -43,6 +37,7 @@ public class MainApp {
 		timer.start();
 
 		gameFrame.addKeyListener(new KeyListener() {
+
 			@Override
 			public void keyTyped(KeyEvent e) {
 				return;
@@ -65,7 +60,7 @@ public class MainApp {
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameFrame.setResizable(false);
 	} // runApp
-	
+
 	/**
 	 * ensures: creates and runs the app
 	 * 
