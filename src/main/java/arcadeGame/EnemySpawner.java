@@ -44,6 +44,7 @@ public abstract class EnemySpawner extends Enemy {
 	 * ensures: the addition of new enemies into the game
 	 */
 	public void update(List<Tile> tiles) {
+		control();
 		super.update(tiles);
 		timeInc += 0.1;
 		if (timeInc > Math.PI * 2) {

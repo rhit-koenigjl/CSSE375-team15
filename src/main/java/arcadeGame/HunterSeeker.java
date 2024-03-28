@@ -3,6 +3,7 @@ package arcadeGame;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.List;
 
 public class HunterSeeker extends Enemy {
 	private Player hero;
@@ -55,6 +56,12 @@ public class HunterSeeker extends Enemy {
 			if (collidesWith(t))
 				t.handleCollision(this, ix, iy);
 		}
+	}
+
+	@Override
+	public void update(List<Tile> tiles) {
+		control();
+		super.update(tiles);
 	}
 
 	/**
