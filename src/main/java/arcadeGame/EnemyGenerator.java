@@ -4,6 +4,11 @@ import java.util.List;
 
 public class EnemyGenerator extends EnemySpawner {
 
+  public EnemyGenerator(double startX, double startY, double width, double height,
+      List<Enemy> enemies, Player player) {
+    super(startX, startY, width, height, 0, 0, enemies, player);
+  }
+
   public EnemyGenerator(double startX, double startY, double width, double height, double velocityX,
       double velocityY, List<Enemy> enemies, Player player) {
     super(startX, startY, width, height, velocityX, velocityY, enemies, player);

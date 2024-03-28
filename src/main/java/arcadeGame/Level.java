@@ -59,6 +59,7 @@ public class Level {
             hero.setWidth(30);
             hero.setHeight(40);
             hero.clearMovementSpeed();
+            heroHurt = false;
             break;
           case 'E':
             Enemy enemy = new Enemy(x * 50 + 10, y * 50, 40, 40);
@@ -85,10 +86,10 @@ public class Level {
             tiles.add(new BouncePad(x * 50, y * 50 + 30, 50, 20));
             break;
           case 'C':
-            enemies.add(new EnemySpawnerGenerator(x * 50 + 10, y * 50 + 10, 30, 30, enemies, hero));
+            enemies.add(new EnemyGenerator(x * 50 + 10, y * 50 + 10, 30, 30, enemies, hero));
             break;
           case 'D':
-            enemies.add(new RecursiveEnemySpawnerGenerator(x * 50 + 10, y * 50 + 10, 30, 30,
+            enemies.add(new EnemySpawnerGenerator(x * 50 + 10, y * 50 + 10, 30, 30,
                 enemies, hero));
             break;
         }
@@ -187,7 +188,6 @@ public class Level {
     if (numBombs == 0) {
       state.incrementScore(100);
       if (levelIndex == state.getLevelCount() - 1) {
-        // switch to endscreen
         sceneManager.switchScene(new WinUpdater(sceneManager));
       } else {
         state.setNextLevel(levelIndex + 1);
