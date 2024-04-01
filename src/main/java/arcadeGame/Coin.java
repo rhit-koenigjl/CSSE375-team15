@@ -23,13 +23,7 @@ public class Coin extends Tile {
 	 */
 	@Override
 	public void display(Graphics2D g) {
-		double originalY = y;
-		y += Math.sin(floatManager) * 10 + 10;
 		drawImage(g, "coin.gif");
-		y = originalY;
-
-		floatManager += 0.05;
-		floatManager %= 360;
 	}
 
 	/**
