@@ -7,7 +7,7 @@ public class Coin extends Tile {
 	private double floatManager;
 
 	/**
-	 * ensures: the correct initialization of the Bomb class
+	 * ensures: the correct initialization of the Coin class
 	 * 
 	 * @param x
 	 * @param y
@@ -20,7 +20,7 @@ public class Coin extends Tile {
 	}
 
 	/**
-	 * ensures: the correct drawing of the bomb tile
+	 * ensures: the correct drawing of the coin tile
 	 */
 	@Override
 	public void display(Graphics2D g) {
@@ -39,7 +39,7 @@ public class Coin extends Tile {
 	}
 
 	/**
-	 * ensures: that the bomb is set for removal whenever a player touches it
+	 * ensures: that the coin is set for removal whenever a player touches it
 	 */
 	@Override
 	public void handleCollision(Actor a, double ix, double iy) {

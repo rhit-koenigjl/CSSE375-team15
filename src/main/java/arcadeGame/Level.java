@@ -20,7 +20,7 @@ public class Level {
   private Player hero;
   private List<Tile> tiles = new ArrayList<Tile>();
   private List<Enemy> enemies = new ArrayList<Enemy>();
-  private int numBombs = 0;
+  private int numCoins = 0;
   private boolean heroHurt = false;
 
   public Level(File levelFile, int index, Player hero) {
@@ -80,7 +80,7 @@ public class Level {
             break;
           case 'B':
             tiles.add(new Coin(x * 50 + 10, y * 50, 30, 50));
-            numBombs++;
+            numCoins++;
             break;
           case 'M':
             tiles.add(new BouncePad(x * 50, y * 50 + 30, 50, 20));
@@ -180,12 +180,12 @@ public class Level {
     for (Tile t : toRemove) {
       tiles.remove(t);
       state.incrementScore(25);
-      numBombs--;
+      numCoins--;
     }
   }
 
-  private void handleBombs(UpdateState state, SceneManager sceneManager) {
-    if (numBombs == 0) {
+  private void handleCoins(UpdateState state, SceneManager sceneManager) {
+    if (numCoins == 0) {
       state.incrementScore(100);
       if (levelIndex == state.getLevelCount() - 1) {
         sceneManager.switchScene(new WinUpdater(sceneManager));
@@ -223,7 +223,7 @@ public class Level {
     handlePlayer(keys);
     handleEnemies(state);
     handleTiles(state);
-    handleBombs(state, sceneManager);
+    handleCoins(state, sceneManager);
     handleDebugControls(keys, state, sceneManager);
 
     if (heroHurt) {
@@ -262,7 +262,7 @@ public class Level {
   }
 
   public void reset() {
-    numBombs = 0;
+    numCoins = 0;
     enemies.clear();
     tiles.clear();
     levelLayout.clear();
