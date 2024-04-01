@@ -3,7 +3,7 @@ package arcadeGame;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Bomb extends Tile {
+public class Coin extends Tile {
 	private double floatManager;
 
 	/**
@@ -14,7 +14,7 @@ public class Bomb extends Tile {
 	 * @param width
 	 * @param height
 	 */
-	public Bomb(int x, int y, int width, int height) {
+	public Coin(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		floatManager = Math.random() * 360;
 	}
