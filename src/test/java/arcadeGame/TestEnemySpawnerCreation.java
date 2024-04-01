@@ -33,7 +33,6 @@ public class TestEnemySpawnerCreation {
     assertEquals(STARTING_POSITION, enemy.getX());
     assertEquals(STARTING_POSITION, enemy.getY());
     assertEquals(enemyType, enemy.getClass());
-    assertEquals(enemyType, enemy.getClass());
   }
 
   @Test
