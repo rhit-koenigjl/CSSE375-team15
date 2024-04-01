@@ -3,7 +3,6 @@ package arcadeGame;
 import java.awt.Graphics2D;
 
 public class Coin extends Tile {
-	private double floatManager;
 
 	/**
 	 * ensures: the correct initialization of the Coin class
@@ -15,7 +14,6 @@ public class Coin extends Tile {
 	 */
 	public Coin(int x, int y, int width, int height) {
 		super(x, y, width, height);
-		floatManager = Math.random() * 360;
 	}
 
 	/**

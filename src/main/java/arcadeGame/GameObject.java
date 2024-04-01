@@ -78,12 +78,9 @@ public class GameObject {
 		return x + width > o.x && y + height > o.y && x < o.x + o.width && y < o.y + o.height;
 	}
 
-	// The `drawImage(g2, "player_right.gif");` method call is responsible for drawing the image of the
-	// player character facing right on the screen using Java Swing graphics. The method likely takes the
-	// `Graphics2D` object `g2` as a parameter and uses it to render the image stored in the file
-	// "player_right.gif" onto the game screen at the player's current position.
 	public void drawImage(Graphics2D g, String path) {
-		Image icon = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/" + path)).getImage();
+		Image icon =
+				new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/" + path)).getImage();
 		g.drawImage(icon, (int) x, (int) y, (int) width, (int) height, null);
 	}
 

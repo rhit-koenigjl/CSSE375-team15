@@ -56,8 +56,8 @@ public class Level {
           case 'P':
             hero.setX(x * 50 + 10);
             hero.setY(y * 50);
-            hero.setWidth(30);
-            hero.setHeight(40);
+            hero.setWidth(50);
+            hero.setHeight(50);
             hero.clearMovementSpeed();
             heroHurt = false;
             break;

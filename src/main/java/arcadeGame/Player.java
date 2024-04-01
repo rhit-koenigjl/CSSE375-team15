@@ -112,7 +112,23 @@ public class Player extends Actor {
 	 */
 	@Override
 	public void drawActor(Graphics2D g2) {
+		performImageOffset();
 		drawImage(g2, "player_right.gif");
+		resetImageOffset();
+	}
+
+	private void performImageOffset() {
+		x -= 0.5 * width;
+		y -= 0.5 * height;
+		height *= 2.0;
+		width *= 2.0;
+	}
+
+	private void resetImageOffset() {
+		height /= 2.0;
+		width /= 2.0;
+		x += 0.5 * width;
+		y += 0.5 * height;
 	}
 
 	@Override
