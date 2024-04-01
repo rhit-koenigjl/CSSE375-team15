@@ -84,4 +84,18 @@ public class GameObject {
 		g.drawImage(icon, (int) x, (int) y, (int) width, (int) height, null);
 	}
 
+	protected void performImageOffset(double scale, double offset, boolean negativeDirection) {
+		x += offset * width * (negativeDirection ? -1.0 : 1.0);
+		y += offset * height * (negativeDirection ? -1.0 : 1.0);
+		height *= scale;
+		width *= scale;
+	}
+
+	protected void resetImageOffset(double scale, double offset, boolean negativeDirection) {
+		height /= scale;
+		width /= scale;
+		x += offset * width * (negativeDirection ? -1.0 : 1.0);
+		y += offset * height * (negativeDirection ? -1.0 : 1.0);
+	}
+
 }

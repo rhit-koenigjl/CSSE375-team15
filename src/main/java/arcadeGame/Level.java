@@ -79,7 +79,7 @@ public class Level {
                                                        // be created after everything else
             break;
           case 'B':
-            tiles.add(new Coin(x * 50 + 10, y * 50, 30, 50));
+            tiles.add(new Coin(x * 50 + 10, y * 50, 50, 50));
             numCoins++;
             break;
           case 'M':
