@@ -45,7 +45,7 @@ public class Level {
         char blockChar = l.get(y).charAt(x);
         switch (blockChar) {
           case '-':
-            tiles.add(new Platform(x * 50, y * 50, 50, 20));
+            tiles.add(new MossyWall(x * 50, y * 50, 50, 50));
             break;
           case '|':
             tiles.add(new Wall(x * 50, y * 50, 50, 50));

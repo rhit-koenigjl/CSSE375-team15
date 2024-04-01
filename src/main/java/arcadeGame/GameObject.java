@@ -78,7 +78,7 @@ public class GameObject {
 		return x + width > o.x && y + height > o.y && x < o.x + o.width && y < o.y + o.height;
 	}
 
-	public void drawImage(Graphics2D g, String path) {
+	protected void drawImage(Graphics2D g, String path) {
 		Image icon =
 				new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/" + path)).getImage();
 		g.drawImage(icon, (int) x, (int) y, (int) width, (int) height, null);

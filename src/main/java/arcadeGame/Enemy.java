@@ -47,7 +47,31 @@ public class Enemy extends Actor {
 
 	@Override
 	public void drawActor(Graphics2D g2) {
-		drawImage(g2, "ghost_right.png");
+		drawImage(g2, "ghost");
+	}
+
+	@Override
+	protected void drawImage(Graphics2D g2, String filename) {
+		String directedFile = String.format("%s_%s.png", filename, getDirection());
+		super.drawImage(g2, directedFile);
+	}
+
+	private String getDirection() {
+		if (vx == 0) {
+			return getVerticalDirection();
+		} else if (vy == 0) {
+			return getHorizontalDirection();
+		} else {
+			return String.format("%s_%s", getVerticalDirection(), getHorizontalDirection());
+		}
+	}
+
+	private String getHorizontalDirection() {
+		return (vx > 0) ? "right" : "left";
+	}
+
+	private String getVerticalDirection() {
+		return (vy > 0) ? "down" : "up";
 	}
 
 	public boolean getAdding() {
