@@ -8,6 +8,7 @@ import java.util.HashMap;
 import org.junit.jupiter.api.Test;
 
 public class TestActorsAndTilesForBasicData {
+
     @Test
     public void testBasicTile_testConstructor_expectGettersToGetExpectedValues() {
         Wall wall = new Wall(1, 2, 3, 4);
@@ -46,7 +47,6 @@ public class TestActorsAndTilesForBasicData {
         assertEquals(10, p.getWidth());
         assertEquals(10, p.getHeight());
     }
-
 
     @Test
     public void testTwoObjectCollisions_haveNoCollision_expectNoCollision() {
