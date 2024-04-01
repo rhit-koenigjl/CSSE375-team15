@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 
 public class Enemy extends Actor {
 	protected boolean adding = false;
+	private String direction;
 
 	/**
 	 * ensures: the correct initialization of an Enemy
@@ -57,13 +58,16 @@ public class Enemy extends Actor {
 	}
 
 	private String getDirection() {
-		if (vx == 0) {
-			return getVerticalDirection();
-		} else if (vy == 0) {
-			return getHorizontalDirection();
-		} else {
-			return String.format("%s_%s", getVerticalDirection(), getHorizontalDirection());
+		if (vx != 0 || vy != 0) {
+			if (vx == 0) {
+				direction = getVerticalDirection();
+			} else if (vy == 0) {
+				direction = getHorizontalDirection();
+			} else {
+				direction = String.format("%s_%s", getVerticalDirection(), getHorizontalDirection());
+			}
 		}
+		return direction;
 	}
 
 	private String getHorizontalDirection() {
