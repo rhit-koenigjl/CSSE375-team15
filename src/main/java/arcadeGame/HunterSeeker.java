@@ -1,6 +1,5 @@
 package arcadeGame;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.List;
 public class HunterSeeker extends Enemy {
 	private Player hero;
 	private double gravity = 0.5;
-	private Color c = new Color(130, 34, 21);
 
 	/**
 	 * ensures: the correct initialization of a Hunter Seeker
@@ -42,10 +40,7 @@ public class HunterSeeker extends Enemy {
 
 	@Override
 	public void drawActor(Graphics2D g2) {
-		g2.setColor(c);
-		g2.translate((int) getX(), (int) getY());
-		g2.fillRect(0, 0, (int) width, (int) height);
-		g2.translate((int) -getX(), (int) -getY());
+		drawImage(g2, "angry_ghost_right.png");
 	}
 
 	/**

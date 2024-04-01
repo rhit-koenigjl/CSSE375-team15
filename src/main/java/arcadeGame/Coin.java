@@ -1,6 +1,5 @@
 package arcadeGame;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Coin extends Tile {
@@ -24,15 +23,10 @@ public class Coin extends Tile {
 	 */
 	@Override
 	public void display(Graphics2D g) {
-		double currentY = y + Math.sin(floatManager) * 10 + 10;
-
-		g.setColor(Color.black);
-		g.translate(x + width / 2, currentY);
-		g.rotate(0.5);
-		g.fillOval(0, 0, (int) width, (int) width);
-		g.fillRect((int) width / 2 - 5, -7, 10, 20);
-		g.rotate(-0.5);
-		g.translate(-(x + width / 2), -currentY);
+		double originalY = y;
+		y += Math.sin(floatManager) * 10 + 10;
+		drawImage(g, "coin.gif");
+		y = originalY;
 
 		floatManager += 0.05;
 		floatManager %= 360;

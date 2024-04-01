@@ -1,6 +1,5 @@
 package arcadeGame;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
 import java.util.Map;
@@ -113,12 +112,7 @@ public class Player extends Actor {
 	 */
 	@Override
 	public void drawActor(Graphics2D g2) {
-		g2.setColor(new Color(0, 150, 0));
-		g2.translate((int) getX(), (int) getY());
-		g2.fillRect(0, 0, (int) width, (int) height);
-		g2.setColor(Color.black);
-		g2.fillRect(0, (int) ((height / 4) * 3), (int) width, (int) (height / 4));
-		g2.translate((int) -getX(), (int) -getY());
+		drawImage(g2, "player_right.gif");
 	}
 
 	@Override

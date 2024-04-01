@@ -1,5 +1,9 @@
 package arcadeGame;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
 public class GameObject {
 	protected double x;
 	protected double y;
@@ -72,6 +76,11 @@ public class GameObject {
 
 	public boolean collidesWith(GameObject o) {
 		return x + width > o.x && y + height > o.y && x < o.x + o.width && y < o.y + o.height;
+	}
+
+	public void drawImage(Graphics2D g, String path) {
+		Image icon = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/" + path)).getImage();
+		g.drawImage(icon, (int) x, (int) y, (int) width, (int) height, null);
 	}
 
 }

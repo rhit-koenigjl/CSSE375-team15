@@ -1,10 +1,8 @@
 package arcadeGame;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Enemy extends Actor {
-	private Color enemyColor = new Color(255, 0, 0);
 	protected boolean adding = false;
 
 	/**
@@ -49,9 +47,7 @@ public class Enemy extends Actor {
 
 	@Override
 	public void drawActor(Graphics2D g2) {
-		// Draws the enemy, not much more to say
-		g2.setColor(enemyColor);
-		super.drawActor(g2);
+		drawImage(g2, "ghost_right.png");
 	}
 
 	public boolean getAdding() {
