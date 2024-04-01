@@ -25,11 +25,7 @@ public abstract class Actor extends GameObject {
 	 * 
 	 * @param g2: the graphics package being used
 	 */
-	public void drawActor(Graphics2D g2) {
-		g2.translate((int) getX(), (int) getY());
-		g2.fillRect(0, 0, (int) width, (int) height);
-		g2.translate((int) -getX(), (int) -getY());
-	}
+	abstract void drawActor(Graphics2D g2);
 
 	/**
 	 * ensures: returns a true or false value whether or not this actor is colliding with a tile
@@ -44,33 +40,33 @@ public abstract class Actor extends GameObject {
 				+ ", vx=" + getVx() + ", vy=" + getVy() + "]";
 	}
 
-	public void handleTileCollisions(List<Tile> tiles, double xVel, double yVel) {
+	protected void handleTileCollisions(List<Tile> tiles, double xVel, double yVel) {
 		for (Tile tile : tiles) {
 			if (collidesWith(tile))
 				tile.handleCollision(this, xVel, yVel);
 		}
 	}
 
-	public void update(List<Tile> tiles) {
+	protected void update(List<Tile> tiles) {
 		x += vx * (isHero() ? 0.75 : 1);
 		handleTileCollisions(tiles, vx, 0);
 		y += vy;
 		handleTileCollisions(tiles, 0, vy);
 	}
 
-	public boolean isHero() {
+	protected boolean isHero() {
 		return false;
 	}
 
-	public boolean isNonTrackingEnemy() {
+	protected boolean isNonTrackingEnemy() {
 		return false;
 	}
 
-	public void setSpikeCollision(boolean didCollideWithSpikes) {
+	protected void setSpikeCollision(boolean didCollideWithSpikes) {
 		this.didCollideWithSpikes = didCollideWithSpikes;
 	}
 
-	public boolean getSpikeCollision() {
+	protected boolean getSpikeCollision() {
 		return didCollideWithSpikes;
 	}
 

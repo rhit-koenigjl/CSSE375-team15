@@ -11,6 +11,8 @@ public class GameObject {
 	protected double height;
 	protected double vx = 0;
 	protected double vy = 0;
+	private String currentImagePath;
+	private Image objectImage;
 
 	public GameObject(double x, double y, double width, double height) {
 		this.x = x;
@@ -79,9 +81,12 @@ public class GameObject {
 	}
 
 	protected void drawImage(Graphics2D g, String path) {
-		Image icon =
-				new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/" + path)).getImage();
-		g.drawImage(icon, (int) x, (int) y, (int) width, (int) height, null);
+		if (!path.equals(currentImagePath)) {
+			currentImagePath = path;
+			objectImage = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/" + path))
+					.getImage();
+		}
+		g.drawImage(objectImage, (int) x, (int) y, (int) width, (int) height, null);
 	}
 
 	protected void performImageOffset(double scale, double offset, boolean negativeDirection) {

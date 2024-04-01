@@ -10,9 +10,7 @@ public class Enemy extends Actor {
 	 * ensures: the correct initialization of an Enemy
 	 */
 	public Enemy() {
-		super(100, 100, 40, 40); // viable arbitrary starting values
-		vx = Math.random() * speed;
-		vy = Math.random() * speed;
+		this(100, 100, 40, 40); // viable arbitrary starting values
 	}
 
 	/**
@@ -47,7 +45,7 @@ public class Enemy extends Actor {
 	}
 
 	@Override
-	public void drawActor(Graphics2D g2) {
+	void drawActor(Graphics2D g2) {
 		drawImage(g2, "ghost");
 	}
 
@@ -86,7 +84,7 @@ public class Enemy extends Actor {
 		adding = newAdding;
 	}
 
-	public Enemy returnNew() {
+	protected Enemy returnNew() {
 		return null;
 	}
 

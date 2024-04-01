@@ -18,7 +18,7 @@ public class BouncePad extends Tile {
 	}
 
 	@Override
-	public void display(Graphics2D g2) {
+	protected void display(Graphics2D g2) {
 		g2.translate(x, y);
 		g2.setColor(new Color(188, 233, 84));
 		g2.fillRect(0, 0, (int) width, (int) height);

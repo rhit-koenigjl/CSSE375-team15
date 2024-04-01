@@ -20,7 +20,7 @@ public class Coin extends Tile {
 	 * ensures: the correct drawing of the coin tile
 	 */
 	@Override
-	public void display(Graphics2D g) {
+	void display(Graphics2D g) {
 		performImageOffset(0.75, 0.125, false);
 		drawImage(g, "coin.gif");
 		resetImageOffset(0.75, 0.125, true);
@@ -30,7 +30,7 @@ public class Coin extends Tile {
 	 * ensures: that the coin is set for removal whenever a player touches it
 	 */
 	@Override
-	public void handleCollision(Actor a, double ix, double iy) {
+	void handleCollision(Actor a, double ix, double iy) {
 		if (a.isHero()) {
 			setRemove();
 		}
