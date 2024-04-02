@@ -40,7 +40,7 @@ public class HunterSeeker extends Enemy {
 
 	@Override
 	public void drawActor(Graphics2D g2) {
-		drawImage(g2, "angry_ghost");
+		drawDirectedImage(g2, "angry_ghost");
 	}
 
 	/**

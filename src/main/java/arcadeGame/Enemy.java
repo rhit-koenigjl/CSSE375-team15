@@ -46,11 +46,10 @@ public class Enemy extends Actor {
 
 	@Override
 	void drawActor(Graphics2D g2) {
-		drawImage(g2, "ghost");
+		drawDirectedImage(g2, "ghost");
 	}
 
-	@Override
-	protected void drawImage(Graphics2D g2, String filename) {
+	protected void drawDirectedImage(Graphics2D g2, String filename) {
 		String directedFile = String.format("%s_%s.png", filename, getDirection());
 		super.drawImage(g2, directedFile);
 	}
