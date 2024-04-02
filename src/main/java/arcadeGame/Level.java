@@ -2,12 +2,15 @@ package arcadeGame;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
+import javax.swing.ImageIcon;
 
 public class Level {
   private int levelIndex;
@@ -20,13 +23,17 @@ public class Level {
   private Player hero;
   private List<Tile> tiles = new ArrayList<Tile>();
   private List<Enemy> enemies = new ArrayList<Enemy>();
-  private int numBombs = 0;
+  private int numCoins = 0;
   private boolean heroHurt = false;
+
+  private Image backgroundImage;
 
   public Level(File levelFile, int index, Player hero) {
     this.levelFile = levelFile;
     this.levelIndex = index;
     this.hero = hero;
+    this.backgroundImage = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/background.png"))
+					.getImage();
   }
 
   /**
@@ -45,7 +52,7 @@ public class Level {
         char blockChar = l.get(y).charAt(x);
         switch (blockChar) {
           case '-':
-            tiles.add(new Platform(x * 50, y * 50, 50, 20));
+            tiles.add(new MossyWall(x * 50, y * 50, 50, 50));
             break;
           case '|':
             tiles.add(new Wall(x * 50, y * 50, 50, 50));
@@ -56,7 +63,7 @@ public class Level {
           case 'P':
             hero.setX(x * 50 + 10);
             hero.setY(y * 50);
-            hero.setWidth(30);
+            hero.setWidth(40);
             hero.setHeight(40);
             hero.clearMovementSpeed();
             heroHurt = false;
@@ -79,8 +86,8 @@ public class Level {
                                                        // be created after everything else
             break;
           case 'B':
-            tiles.add(new Bomb(x * 50 + 10, y * 50, 30, 50));
-            numBombs++;
+            tiles.add(new Coin(x * 50 + 10, y * 50, 50, 50));
+            numCoins++;
             break;
           case 'M':
             tiles.add(new BouncePad(x * 50, y * 50 + 30, 50, 20));
@@ -180,12 +187,12 @@ public class Level {
     for (Tile t : toRemove) {
       tiles.remove(t);
       state.incrementScore(25);
-      numBombs--;
+      numCoins--;
     }
   }
 
-  private void handleBombs(UpdateState state, SceneManager sceneManager) {
-    if (numBombs == 0) {
+  private void handleCoins(UpdateState state, SceneManager sceneManager) {
+    if (numCoins == 0) {
       state.incrementScore(100);
       if (levelIndex == state.getLevelCount() - 1) {
         sceneManager.switchScene(new WinUpdater(sceneManager));
@@ -223,7 +230,7 @@ public class Level {
     handlePlayer(keys);
     handleEnemies(state);
     handleTiles(state);
-    handleBombs(state, sceneManager);
+    handleCoins(state, sceneManager);
     handleDebugControls(keys, state, sceneManager);
 
     if (heroHurt) {
@@ -232,6 +239,11 @@ public class Level {
   }
 
   public void draw(Graphics2D g2, int score) {
+    for (int i = 0;i < levelWidth;i ++) {
+      for (int j = 0;j < levelHeight;j ++) {
+        g2.drawImage(this.backgroundImage, i * 100, j * 100,100, 100, null);
+      }
+    }
     for (Tile t : tiles) {
       t.display(g2);
     }
@@ -262,7 +274,7 @@ public class Level {
   }
 
   public void reset() {
-    numBombs = 0;
+    numCoins = 0;
     enemies.clear();
     tiles.clear();
     levelLayout.clear();

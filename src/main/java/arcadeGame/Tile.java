@@ -17,11 +17,11 @@ public abstract class Tile extends GameObject {
 		super(x, y, width, height);
 	}
 
-	public void setRemove() {
+	protected void setRemove() {
 		remove = true;
 	}
 
-	public boolean shouldRemove() {
+	boolean shouldRemove() {
 		return remove;
 	}
 
@@ -30,7 +30,7 @@ public abstract class Tile extends GameObject {
 	 * 
 	 * @param g2
 	 */
-	public abstract void display(Graphics2D g2);
+	abstract void display(Graphics2D g2);
 
 	/**
 	 * ensures: how a default movable object should collide with this tile.
@@ -39,7 +39,7 @@ public abstract class Tile extends GameObject {
 	 * @param ix
 	 * @param iy
 	 */
-	public void handleCollision(Actor a, double ix, double iy) {
+	void handleCollision(Actor a, double ix, double iy) {
 		if (ix > 0) {
 			a.setX(x - a.getWidth());
 			a.setVx(a.isNonTrackingEnemy() ? a.getVx() * -1 : 0);

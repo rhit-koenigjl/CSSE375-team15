@@ -1,5 +1,9 @@
 package arcadeGame;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
 public class GameObject {
 	protected double x;
 	protected double y;
@@ -7,6 +11,8 @@ public class GameObject {
 	protected double height;
 	protected double vx = 0;
 	protected double vy = 0;
+	private String currentImagePath;
+	private Image objectImage;
 
 	public GameObject(double x, double y, double width, double height) {
 		this.x = x;
@@ -72,6 +78,29 @@ public class GameObject {
 
 	public boolean collidesWith(GameObject o) {
 		return x + width > o.x && y + height > o.y && x < o.x + o.width && y < o.y + o.height;
+	}
+
+	protected void drawImage(Graphics2D g, String path) {
+		if (!path.equals(currentImagePath)) {
+			currentImagePath = path;
+			objectImage = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/" + path))
+					.getImage();
+		}
+		g.drawImage(objectImage, (int) x, (int) y, (int) width, (int) height, null);
+	}
+
+	protected void performImageOffset(double scale, double offset, boolean negativeDirection) {
+		x += offset * width * (negativeDirection ? -1.0 : 1.0);
+		y += offset * height * (negativeDirection ? -1.0 : 1.0);
+		height *= scale;
+		width *= scale;
+	}
+
+	protected void resetImageOffset(double scale, double offset, boolean negativeDirection) {
+		height /= scale;
+		width /= scale;
+		x += offset * width * (negativeDirection ? -1.0 : 1.0);
+		y += offset * height * (negativeDirection ? -1.0 : 1.0);
 	}
 
 }

@@ -1,6 +1,5 @@
 package arcadeGame;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
 
@@ -29,15 +28,12 @@ public abstract class EnemySpawner extends Enemy {
 	}
 
 	/**
-	 * ensures: the drawing of hte EnemySpawner
+	 * ensures: the drawing of the EnemySpawner
 	 */
 	public void drawActor(Graphics2D g2) {
-		g2.setColor(Color.red);
-		g2.translate((int) (x + width / 2), (int) (y + height / 2));
-		g2.rotate(timeInc);
-		g2.drawRect((int) (-width / 2), (int) (-height / 2), (int) width, (int) height);
-		g2.rotate(-timeInc);
-		g2.translate((int) (-x - width / 2), (int) (-y - height / 2));
+		performImageOffset(1.25, 0.125, true);
+		drawImage(g2, "spawner.gif");
+		resetImageOffset(1.25, 0.125, false);
 	}
 
 	/**

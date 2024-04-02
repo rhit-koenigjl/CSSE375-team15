@@ -1,19 +1,16 @@
 package arcadeGame;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Enemy extends Actor {
-	private Color enemyColor = new Color(255, 0, 0);
 	protected boolean adding = false;
+	private String direction = "right";
 
 	/**
 	 * ensures: the correct initialization of an Enemy
 	 */
 	public Enemy() {
-		super(100, 100, 40, 40); // viable arbitrary starting values
-		vx = Math.random() * speed;
-		vy = Math.random() * speed;
+		this(100, 100, 40, 40); // viable arbitrary starting values
 	}
 
 	/**
@@ -48,10 +45,34 @@ public class Enemy extends Actor {
 	}
 
 	@Override
-	public void drawActor(Graphics2D g2) {
-		// Draws the enemy, not much more to say
-		g2.setColor(enemyColor);
-		super.drawActor(g2);
+	void drawActor(Graphics2D g2) {
+		drawDirectedImage(g2, "ghost");
+	}
+
+	protected void drawDirectedImage(Graphics2D g2, String filename) {
+		String directedFile = String.format("%s_%s.png", filename, getDirection());
+		super.drawImage(g2, directedFile);
+	}
+
+	private String getDirection() {
+		if (vx != 0 || vy != 0) {
+			if (vx == 0) {
+				direction = getVerticalDirection();
+			} else if (vy == 0) {
+				direction = getHorizontalDirection();
+			} else {
+				direction = String.format("%s_%s", getVerticalDirection(), getHorizontalDirection());
+			}
+		}
+		return direction;
+	}
+
+	private String getHorizontalDirection() {
+		return (vx > 0) ? "right" : "left";
+	}
+
+	private String getVerticalDirection() {
+		return (vy > 0) ? "down" : "up";
 	}
 
 	public boolean getAdding() {
@@ -62,7 +83,7 @@ public class Enemy extends Actor {
 		adding = newAdding;
 	}
 
-	public Enemy returnNew() {
+	protected Enemy returnNew() {
 		return null;
 	}
 
