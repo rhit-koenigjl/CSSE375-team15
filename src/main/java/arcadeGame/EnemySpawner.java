@@ -28,10 +28,12 @@ public abstract class EnemySpawner extends Enemy {
 	}
 
 	/**
-	 * ensures: the drawing of hte EnemySpawner
+	 * ensures: the drawing of the EnemySpawner
 	 */
 	public void drawActor(Graphics2D g2) {
-		super.drawImage(g2, "coin.gif");
+		performImageOffset(0.75, 0.125, false);
+		drawImage(g2, "spawner.gif");
+		resetImageOffset(0.75, 0.125, true);
 	}
 
 	/**
