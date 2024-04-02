@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 
 public class Enemy extends Actor {
 	protected boolean adding = false;
-	private String direction;
+	private String direction = "right";
 
 	/**
 	 * ensures: the correct initialization of an Enemy
