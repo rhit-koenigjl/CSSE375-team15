@@ -2,12 +2,15 @@ package arcadeGame;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
+import javax.swing.ImageIcon;
 
 public class Level {
   private int levelIndex;
@@ -23,10 +26,14 @@ public class Level {
   private int numCoins = 0;
   private boolean heroHurt = false;
 
+  private Image backgroundImage;
+
   public Level(File levelFile, int index, Player hero) {
     this.levelFile = levelFile;
     this.levelIndex = index;
     this.hero = hero;
+    this.backgroundImage = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/background.png"))
+					.getImage();
   }
 
   /**
@@ -232,6 +239,11 @@ public class Level {
   }
 
   public void draw(Graphics2D g2, int score) {
+    for (int i = 0;i < levelWidth;i ++) {
+      for (int j = 0;j < levelHeight;j ++) {
+        g2.drawImage(this.backgroundImage, i * 100, j * 100,100, 100, null);
+      }
+    }
     for (Tile t : tiles) {
       t.display(g2);
     }
