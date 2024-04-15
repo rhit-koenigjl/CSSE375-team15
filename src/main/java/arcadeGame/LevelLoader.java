@@ -1,6 +1,6 @@
 package arcadeGame;
 
-import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.simple.JSONObject;
@@ -34,9 +34,11 @@ public class LevelLoader {
     public JSONObject getJsonObject() {
         Object obj = null;
         try {
-            obj = new JSONParser().parse(new FileReader(ClassLoader.getSystemClassLoader().getResource(this.filePath).getFile()));
+            obj = new JSONParser().parse(new InputStreamReader(
+                    ClassLoader.getSystemClassLoader().getResourceAsStream(this.filePath)));
         } catch (Exception e) {
-            System.err.println("Could not load level, issue parsing level file at: " + this.filePath);
+            System.err
+                    .println("Could not load level, issue parsing level file at: " + this.filePath);
             System.err.println(e.toString());
             e.printStackTrace();
         }
@@ -70,11 +72,12 @@ public class LevelLoader {
                 enemies.add(new Enemy(xPos * this.size, yPos * this.size, this.size, this.size));
                 break;
             case '@':
-                enemies.add(new HunterSeeker(xPos * this.size, yPos * this.size, this.size, this.size, this.player));
+                enemies.add(new HunterSeeker(xPos * this.size, yPos * this.size, this.size,
+                        this.size, this.player));
                 break;
             case 'c':
                 tiles.add(new Coin(xPos * this.size, yPos * this.size, this.size, this.size));
-                numCoins ++;
+                numCoins++;
                 break;
             case 'P':
                 player = new Player(xPos * this.size, yPos * this.size, this.size, this.size);

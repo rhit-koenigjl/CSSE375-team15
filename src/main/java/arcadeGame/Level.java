@@ -28,8 +28,9 @@ public class Level {
     this.levelPath = levelPath;
     this.levelIndex = index;
     this.hero = hero;
-    this.backgroundImage = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/background.png"))
-        .getImage();
+    this.backgroundImage =
+        new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/background.png"))
+            .getImage();
   }
 
   /**
@@ -145,9 +146,9 @@ public class Level {
   }
 
   public void draw(Graphics2D g2, int score) {
-    for (int i = 0; i < levelWidth; i += 100) {
-      for (int j = 0; j < levelHeight; j += 100) {
-        g2.drawImage(this.backgroundImage, i, j, 100, 100, null);
+    for (int i = 0; i < levelWidth; i++) {
+      for (int j = 0; j < levelHeight; j++) {
+        g2.drawImage(this.backgroundImage, i * 100, j * 100, 100, 100, null);
       }
     }
     for (Tile t : tiles) {
