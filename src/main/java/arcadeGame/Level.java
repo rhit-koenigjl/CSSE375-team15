@@ -29,7 +29,7 @@ public class Level {
     this.levelIndex = index;
     this.hero = hero;
     this.backgroundImage = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/background.png"))
-					.getImage();
+        .getImage();
   }
 
   /**
@@ -46,7 +46,11 @@ public class Level {
     numCoins = ll.getNumCoins();
     levelHeight = ll.getHeight();
     levelWidth = ll.getWidth();
-    return new Object[] {tiles, hero, enemies};
+    System.out.println(levelHeight);
+    System.out.println(levelWidth);
+    System.out.println(tiles.size());
+    System.out.println(enemies.size());
+    return new Object[] { tiles, hero, enemies };
   }
 
   private void handlePlayer(Map<Integer, Boolean> keys) {
@@ -128,14 +132,7 @@ public class Level {
     }
   }
 
-  private void generateStarterLevel() {
-    if (tiles.size() == 0) {
-      generateLevel();
-    }
-  }
-
   public void update(Map<Integer, Boolean> keys, UpdateState state, SceneManager sceneManager) {
-    generateStarterLevel();
     handlePlayer(keys);
     handleEnemies(state);
     handleTiles(state);
@@ -148,9 +145,9 @@ public class Level {
   }
 
   public void draw(Graphics2D g2, int score) {
-    for (int i = 0;i < levelWidth;i ++) {
-      for (int j = 0;j < levelHeight;j ++) {
-        g2.drawImage(this.backgroundImage, i * 100, j * 100,100, 100, null);
+    for (int i = 0; i < levelWidth; i += 100) {
+      for (int j = 0; j < levelHeight; j += 100) {
+        g2.drawImage(this.backgroundImage, i, j, 100, 100, null);
       }
     }
     for (Tile t : tiles) {

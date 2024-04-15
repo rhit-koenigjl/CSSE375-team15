@@ -10,9 +10,10 @@ import javax.swing.*;
 public class GameComponent extends JComponent {
 	private SceneManager sceneManager;
 	private int score = 0;
+	private int lives = 3;
 
 	// Fields for level management and creation
-	private String levelFiles[] = {"levels/testLevels/test_level_1.json", "levels/testLevels/test_level_2.json", "levels/testLevels/test_level_3.json", };
+	private String levelFiles[] = {"levels/testLevels/test_level_11.json", "levels/testLevels/test_level_0.json", "levels/testLevels/test_level_1.json", "levels/testLevels/test_level_2.json", "levels/testLevels/test_level_3.json", };
 	private Level currentLevel;
 	private UpdateState state = new UpdateState(this);
 
