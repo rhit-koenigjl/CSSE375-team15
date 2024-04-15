@@ -3,6 +3,9 @@ package arcadeGame;
 import java.awt.Graphics2D;
 import java.util.List;
 import java.util.Map;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
 
 public class Player extends Actor {
 	// determines how much of the distance to max speed the player moves
@@ -12,6 +15,10 @@ public class Player extends Actor {
 	private double jumpHeight = 0.75;
 	private double speed = 8;
 	private int lives = 3;
+
+	private Image leftImage;
+	private Image rightImage;
+	private Direction dir;
 
 	/**
 	 * ensures the correct constructor for the Player class
@@ -23,6 +30,9 @@ public class Player extends Actor {
 	 */
 	public Player(double startX, double startY, double width, double height) {
 		super(startX, startY, width, height);
+		this.leftImage = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/player-left.gif")).getImage();
+		this.rightImage = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/player_right.gif")).getImage();
+		this.dir = Direction.RIGHT;
 	}
 
 	/**
@@ -105,6 +115,13 @@ public class Player extends Actor {
 		}
 
 		this.setVx(this.getVx() + (desiredVelocity - this.getVx()) / approachFactor);
+
+		if (this.vx > 0) {
+			this.dir = Direction.RIGHT;
+		}
+		if (this.vx < 0) {
+			this.dir = Direction.LEFT;
+		}
 	}
 
 	/**
@@ -112,9 +129,12 @@ public class Player extends Actor {
 	 */
 	@Override
 	public void drawActor(Graphics2D g2) {
-		performImageOffset(2.0, 0.5, true);
-		drawImage(g2, "player_right.gif");
-		resetImageOffset(2.0, 0.5, false);
+
+		if (this.dir == Direction.RIGHT) {
+			g2.drawImage(this.rightImage, (int) x - 25, (int) y - 25, (int) width * 2, (int) height * 2, null);
+		} else {
+			g2.drawImage(this.leftImage, (int) x - 25, (int) y - 25, (int) width * 2, (int) height * 2, null);
+		}
 	}
 
 	@Override

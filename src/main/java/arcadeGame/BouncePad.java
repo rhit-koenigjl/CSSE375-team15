@@ -19,10 +19,11 @@ public class BouncePad extends Tile {
 
 	@Override
 	protected void display(Graphics2D g2) {
-		g2.translate(x, y);
-		g2.setColor(new Color(188, 233, 84));
-		g2.fillRect(0, 0, (int) width, (int) height);
-		g2.translate(-x, -y);
+		this.y -= 30;
+		this.height = 50;
+		drawImage(g2, "bounce_pad.gif");
+		this.height = 20;
+		this.y += 30;
 	}
 
 	@Override
