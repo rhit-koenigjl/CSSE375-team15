@@ -29,8 +29,12 @@ public class PauseUpdater extends SceneUpdater {
     @Override
     public void drawScene(Graphics2D g2, String shownString, int xMiddle, int yMiddle, int score) {
         Color previousColor = g2.getColor();
+        level.draw(g2, score);
+        Color pauseColor = new Color(0, 0, 0, 75);
+        g2.setColor(pauseColor);
+        g2.fillRect(0, 0, level.getWidth() + 14, level.getHeight() + 37);
+        g2.setColor(new Color(255, 0, 0));
         g2.setFont(new Font("Monospaced", Font.BOLD, 28));
-        level.handlePause(g2, previousColor);
         shownString = "Game Paused. Press Escape to Continue";
         g2.drawString(shownString, xMiddle, yMiddle);
     }

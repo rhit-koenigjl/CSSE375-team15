@@ -6,15 +6,14 @@ import java.util.Map;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
-
 public class Player extends Actor {
 	// determines how much of the distance to max speed the player moves
-	// e.g. 5 means each frame the displacement between the velocity and max speed will be reduced by
+	// e.g. 5 means each frame the displacement between the velocity and max speed
+	// will be reduced by
 	// 1/5
 	private double gravity = 0.5;
 	private double jumpHeight = 0.75;
 	private double speed = 8;
-	private int lives = 3;
 
 	private Image leftImage;
 	private Image rightImage;
@@ -25,18 +24,21 @@ public class Player extends Actor {
 	 * 
 	 * @param startX the initial x location
 	 * @param startY the initial y location
-	 * @param width the players width
+	 * @param width  the players width
 	 * @param height the players height
 	 */
 	public Player(double startX, double startY, double width, double height) {
 		super(startX, startY, width, height);
-		this.leftImage = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/player-left.gif")).getImage();
-		this.rightImage = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/player_right.gif")).getImage();
+		this.leftImage = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/player-left.gif"))
+				.getImage();
+		this.rightImage = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/player_right.gif"))
+				.getImage();
 		this.dir = Direction.RIGHT;
 	}
 
 	/**
-	 * ensures the general running of the player class including moving the player, and calling the
+	 * ensures the general running of the player class including moving the player,
+	 * and calling the
 	 * handleKeyAction() and handleCollision() methods
 	 * 
 	 * @param keys
@@ -52,8 +54,9 @@ public class Player extends Actor {
 	 * Helper function to tell if a key is being pressed
 	 * 
 	 * @param keys a hashmap of keycodes and true or false values
-	 * @param val the keycode being examined
-	 * @return the boolean value associating to whether a key is being pressed or not
+	 * @param val  the keycode being examined
+	 * @return the boolean value associating to whether a key is being pressed or
+	 *         not
 	 */
 	public boolean findKey(Map<Integer, Boolean> keys, int val) {
 		return keys.getOrDefault(val, false);
@@ -78,17 +81,7 @@ public class Player extends Actor {
 	}
 
 	public void loseLife() {
-		System.out.println(lives);
-		lives--;
 		setSpikeCollision(false);
-	}
-
-	public boolean checkLives() {
-		return lives > 0;
-	}
-
-	public int getNumberOfLives() {
-		return lives;
 	}
 
 	public void clearMovementSpeed() {
@@ -129,12 +122,8 @@ public class Player extends Actor {
 	 */
 	@Override
 	public void drawActor(Graphics2D g2) {
-
-		if (this.dir == Direction.RIGHT) {
-			g2.drawImage(this.rightImage, (int) x - 25, (int) y - 25, (int) width * 2, (int) height * 2, null);
-		} else {
-			g2.drawImage(this.leftImage, (int) x - 25, (int) y - 25, (int) width * 2, (int) height * 2, null);
-		}
+		g2.drawImage(this.dir == Direction.RIGHT ? rightImage : leftImage, (int) (x - width / 2.0),
+				(int) (y - height / 2.0), (int) width * 2, (int) height * 2, null);
 	}
 
 	@Override

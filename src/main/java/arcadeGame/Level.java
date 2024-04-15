@@ -158,30 +158,14 @@ public class Level {
       e.drawActor(g2);
     }
     hero.drawActor(g2);
-    g2.setColor(Color.blue);
-    g2.drawString("Lives: " + hero.getNumberOfLives() + "      Level: " + levelIndex
-        + "         Score: " + score, 25, 30);
-  }
 
-  public void handlePause(Graphics2D g2, Color previousColor) {
-    Color pauseColor = new Color(0, 0, 0, 75);
-    for (Tile t : tiles) {
-      t.display(g2);
-    }
-    for (Enemy e : enemies) {
-      e.drawActor(g2);
-    }
-    hero.drawActor(g2);
-    g2.setColor(pauseColor);
-    g2.fillRect(0, 0, levelWidth * 50 + 14, levelHeight * 50 + 37);
-    g2.setColor(previousColor);
     g2.setColor(Color.blue);
-    g2.drawString("Lives: " + hero.getNumberOfLives() + "      Level: " + levelIndex, 25, 30);
-    g2.setColor(previousColor);
+		g2.drawString("Level: " + levelIndex, 160, 30);
   }
 
   public void reset() {
     numCoins = 0;
+    heroHurt = false;
     generateLevel();
   }
 

@@ -1,5 +1,6 @@
 package arcadeGame;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.HashMap;
@@ -13,7 +14,9 @@ public class GameComponent extends JComponent {
 	private int lives = 3;
 
 	// Fields for level management and creation
-	private String levelFiles[] = {"levels/testLevels/test_level_11.json", "levels/testLevels/test_level_0.json", "levels/testLevels/test_level_1.json", "levels/testLevels/test_level_2.json", "levels/testLevels/test_level_3.json", };
+	private String levelFiles[] = { "levels/testLevels/test_level_0.json",
+			"levels/testLevels/test_level_1.json", "levels/testLevels/test_level_2.json",
+			"levels/testLevels/test_level_3.json", };
 	private Level currentLevel;
 	private UpdateState state = new UpdateState(this);
 
@@ -27,7 +30,8 @@ public class GameComponent extends JComponent {
 	/**
 	 * Ensures the creation of the Game Component and initializes the first level
 	 * 
-	 * @param frame the frame that the game is taking place in, used for resizing to fit each level.
+	 * @param frame the frame that the game is taking place in, used for resizing to
+	 *              fit each level.
 	 */
 	public GameComponent(JFrame frame) {
 		this.frame = frame;
@@ -45,7 +49,7 @@ public class GameComponent extends JComponent {
 	 * ensures: the editing of the keys HashMap to update what keys are pressed
 	 * 
 	 * @param keyCode: the key being pressed or released
-	 * @param newVal: the new value to be associated with that keyCode
+	 * @param newVal:  the new value to be associated with that keyCode
 	 */
 	public void handleKey(int keyCode, boolean newVal) {
 		keys.put(keyCode, newVal);
@@ -79,6 +83,9 @@ public class GameComponent extends JComponent {
 
 		String shownString = "";
 		sceneManager.drawScene(g2, shownString, xMiddle, yMiddle, score);
+
+		g2.setColor(Color.blue);
+		g2.drawString("Lives: " + lives, 25, 30);
 	}
 
 	/**
@@ -116,8 +123,8 @@ public class GameComponent extends JComponent {
 	public void loseLife() {
 		hero.loseLife();
 		levelReset();
-		System.out.println("You Died! Lives left: " + hero.getNumberOfLives());
-		if (hero.checkLives()) {
+		System.out.println("You Died! Lives left: " + lives);
+		if (lives > 0) {
 			sceneManager.switchScene(new ResetUpdater(sceneManager, sceneManager.getCurrentScene()));
 		} else {
 			sceneManager.switchScene(new LossUpdater(sceneManager, currentLevel));
