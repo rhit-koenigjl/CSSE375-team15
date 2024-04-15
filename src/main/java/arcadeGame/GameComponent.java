@@ -2,7 +2,6 @@ package arcadeGame;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,9 +12,7 @@ public class GameComponent extends JComponent {
 	private int score = 0;
 
 	// Fields for level management and creation
-	private String levelFiles[] = {"levels/level00", "levels/level01", "levels/level02",
-			"levels/level03", "levels/level04", "levels/level05", "levels/level06", "levels/level07",
-			"levels/level08", "levels/level09", "levels/level10", "levels/level11", "levels/level12",};
+	private String levelFiles[] = {"levels/testLevels/test_level_1.json", "levels/testLevels/test_level_2.json", "levels/testLevels/test_level_3.json", };
 	private Level currentLevel;
 	private UpdateState state = new UpdateState(this);
 
@@ -33,7 +30,7 @@ public class GameComponent extends JComponent {
 	 */
 	public GameComponent(JFrame frame) {
 		this.frame = frame;
-		this.currentLevel = new Level(new File(levelFiles[0]), 0, hero);
+		this.currentLevel = new Level(levelFiles[0], 0, hero);
 		this.sceneManager = new SceneManager(null);
 		SceneUpdater s = new GameUpdater(sceneManager, currentLevel, keys, state);
 		this.sceneManager.switchScene(s);
@@ -89,7 +86,7 @@ public class GameComponent extends JComponent {
 	 * @param frame: the JFrame to get resized
 	 */
 	public void sizeFrame(JFrame frame) {
-		frame.setSize(currentLevel.getWidth() * 50 + 14, currentLevel.getHeight() * 50 + 37);
+		frame.setSize(currentLevel.getWidth() + 14, currentLevel.getHeight() + 37);
 	}
 
 	/**
@@ -102,7 +99,7 @@ public class GameComponent extends JComponent {
 			currentLevel.reset();
 			return;
 		} else {
-			this.currentLevel = new Level(new File(newLevel), index, hero);
+			this.currentLevel = new Level(newLevel, index, hero);
 			this.sceneManager.setLevel(currentLevel);
 			currentLevel.generateLevel();
 		}

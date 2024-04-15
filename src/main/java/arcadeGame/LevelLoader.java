@@ -2,7 +2,6 @@ package arcadeGame;
 
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
@@ -18,6 +17,7 @@ public class LevelLoader {
     private int size;
     private int levelWidth;
     private int levelHeight;
+    private int numCoins;
 
     public LevelLoader(String path) {
         this.tiles = new ArrayList<Tile>();
@@ -26,6 +26,7 @@ public class LevelLoader {
         this.size = -1;
         this.levelWidth = -1;
         this.levelHeight = -1;
+        this.numCoins = 0;
 
         this.filePath = path;
     }
@@ -33,7 +34,7 @@ public class LevelLoader {
     public JSONObject getJsonObject() {
         Object obj = null;
         try {
-            obj = new JSONParser().parse(new FileReader(this.filePath));
+            obj = new JSONParser().parse(new FileReader(ClassLoader.getSystemClassLoader().getResource(this.filePath).getFile()));
         } catch (Exception e) {
             System.err.println("Could not load level, issue parsing level file at: " + this.filePath);
             System.err.println(e.toString());
@@ -73,6 +74,10 @@ public class LevelLoader {
                 break;
             case 'c':
                 tiles.add(new Coin(xPos * this.size, yPos * this.size, this.size, this.size));
+                numCoins ++;
+                break;
+            case 'P':
+                player = new Player(xPos * this.size, yPos * this.size, this.size, this.size);
         }
     }
 
@@ -112,11 +117,11 @@ public class LevelLoader {
     }
 
     public int getWidth() {
-        return this.levelWidth;
+        return levelWidth * size;
     }
 
     public int getHeight() {
-        return this.levelHeight;
+        return levelHeight * size;
     }
 
     public int getSize() {
@@ -125,5 +130,9 @@ public class LevelLoader {
 
     public String getDataString() {
         return this.dataString;
+    }
+
+    public int getNumCoins() {
+        return numCoins;
     }
 }

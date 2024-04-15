@@ -61,4 +61,15 @@ public class TestLevelLoader {
         testLoader.loadLevel();
         assertEquals(15, testLoader.getTiles().size());
     }
+
+    @Test
+    public void testLevelLoader_createLevel_expectDesiredPlayer () {
+        LevelLoader testLoader = new LevelLoader("src\\main\\resources\\levels\\testLevels\\player_test.json");
+        assertEquals(null, testLoader.getPlayer());
+        testLoader.loadLevel();
+        assertEquals(70, (int) testLoader.getPlayer().getX());
+        assertEquals(280, (int) testLoader.getPlayer().getY());
+        assertEquals(35, (int) testLoader.getPlayer().getWidth());
+        assertEquals(35, (int) testLoader.getPlayer().getHeight());
+    }
 }
