@@ -1,6 +1,8 @@
 package arcadeGame;
 
+import java.io.File;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.simple.JSONObject;
@@ -11,7 +13,7 @@ public class LevelLoader {
     private List<Enemy> enemies;
     private Player player;
 
-    private String filePath;
+    private URL filePath;
     private String dataString;
 
     private int size;
@@ -28,18 +30,21 @@ public class LevelLoader {
         this.levelHeight = -1;
         this.numCoins = 0;
 
-        this.filePath = path;
+        try {
+            this.filePath = new File(path).toURI().toURL();
+        } catch (Exception e) {
+            System.err.println("Could not load level " + path);
+            e.printStackTrace();
+        }
     }
 
     public JSONObject getJsonObject() {
         Object obj = null;
+
         try {
-            obj = new JSONParser().parse(new InputStreamReader(
-                    ClassLoader.getSystemClassLoader().getResourceAsStream(this.filePath)));
+            obj = new JSONParser().parse(new InputStreamReader(this.filePath.openStream()));
         } catch (Exception e) {
-            System.err
-                    .println("Could not load level, issue parsing level file at: " + this.filePath);
-            System.err.println(e.toString());
+            System.err.println("Could not load level " + this.filePath.getPath());
             e.printStackTrace();
         }
 
@@ -85,7 +90,6 @@ public class LevelLoader {
     }
 
     public void loadLevel() {
-        System.out.println("here");
         JSONObject jo = getJsonObject();
         setupInternalValues(jo);
 

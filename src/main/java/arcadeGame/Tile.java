@@ -13,8 +13,8 @@ public abstract class Tile extends GameObject {
 	 * @param width
 	 * @param height
 	 */
-	public Tile(int x, int y, int width, int height) {
-		super(x, y, width, height);
+	public Tile(int x, int y, int width, int height, GameImage gameImage) {
+		super(x, y, width, height, gameImage);
 	}
 
 	protected void setRemove() {

@@ -20,7 +20,7 @@ public abstract class EnemySpawner extends Enemy {
 	 */
 	public EnemySpawner(double startX, double startY, double width, double height, double velocityX,
 			double velocityY, List<Enemy> enemies, Player player) {
-		super(startX, startY, width, height);
+		super(startX, startY, width, height, GameImage.SPAWNER);
 		this.enemies = enemies;
 		this.p = player;
 		this.vx = velocityX;
@@ -31,9 +31,7 @@ public abstract class EnemySpawner extends Enemy {
 	 * ensures: the drawing of the EnemySpawner
 	 */
 	public void drawActor(Graphics2D g2) {
-		performImageOffset(1.25, 0.125, true);
-		drawImage(g2, "spawner.gif");
-		resetImageOffset(1.25, 0.125, false);
+		drawImage(g2, 1.25, 0.125, true);
 	}
 
 	/**
@@ -51,8 +49,8 @@ public abstract class EnemySpawner extends Enemy {
 
 	public void control() {
 		double goalSpeed = 0;
-		vx += (goalSpeed - vx) / (approachFactor * 12);
-		vy += (goalSpeed - vy) / (approachFactor * 12);
+		vx += (goalSpeed - vx) / (APPROACH_FACTOR * 12);
+		vy += (goalSpeed - vy) / (APPROACH_FACTOR * 12);
 	}
 
 	/**

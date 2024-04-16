@@ -2,14 +2,19 @@ package arcadeGame;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
 import java.util.List;
 import org.easymock.EasyMock;
 import org.junit.jupiter.api.Test;
 
 public class TestGameComponentRefactor {
+  private static final String LEVEL_DIRECTORY = "levels/testLevels/";
+
   @Test
-  public void testLoadLevel_withValidFilePath_returnsLayoutObject() throws IOException {
-    String filePath = "levels/testLevels/test_level_0.json";
+  public void testLoadLevel_withValidFilePath_returnsLayoutObject() throws IOException, URISyntaxException {
+    String filePath = Path.of(ClassLoader.getSystemClassLoader()
+        .getResource(LEVEL_DIRECTORY + "test_level_0.json").toURI()).toFile().getPath();
 
     LevelLoader loader = new LevelLoader(filePath);
     loader.loadLevel();
@@ -18,8 +23,9 @@ public class TestGameComponentRefactor {
 
   @SuppressWarnings("unchecked")
   @Test
-  public void testGenerateLevel_withValidFilePath_returnsGameObjects() {
-    String filePath = "levels/testLevels/test_level_0.json";
+  public void testGenerateLevel_withValidFilePath_returnsGameObjects() throws URISyntaxException {
+    String filePath = Path.of(ClassLoader.getSystemClassLoader()
+        .getResource(LEVEL_DIRECTORY + "test_level_0.json").toURI()).toFile().getPath();
 
     Player hero = EasyMock.createMock(Player.class);
     Level level = new Level(filePath, 0, hero);

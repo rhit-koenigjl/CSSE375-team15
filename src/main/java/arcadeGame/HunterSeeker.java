@@ -1,6 +1,5 @@
 package arcadeGame;
 
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,17 +17,12 @@ public class HunterSeeker extends Enemy {
 	 * @param h
 	 */
 	public HunterSeeker(double startX, double startY, double width, double height, Player h) {
-		this.x = startX;
-		this.y = startY;
-		this.width = width;
-		this.height = height;
-		this.vx = 0;
-		this.vy = 0;
-		hero = h;
+		this(startX, startY, width, height, 0, 0, h);
 	}
 
 	public HunterSeeker(double startX, double startY, double width, double height, double velocityX,
 			double velocityY, Player h) {
+		super(startX, startY, width, height, velocityX, velocityY, GameImage.TRACKER);
 		this.x = startX;
 		this.y = startY;
 		this.width = width;
@@ -36,11 +30,7 @@ public class HunterSeeker extends Enemy {
 		this.vx = velocityX;
 		this.vy = velocityY;
 		hero = h;
-	}
-
-	@Override
-	public void drawActor(Graphics2D g2) {
-		drawDirectedImage(g2, "angry_ghost");
+		this.gameImage = GameImage.TRACKER;
 	}
 
 	/**
@@ -65,17 +55,17 @@ public class HunterSeeker extends Enemy {
 	public void control() {
 		double goalSpeed = 0;
 		if (x + width < hero.getX()) {
-			goalSpeed = speed;
+			goalSpeed = SPEED;
 		}
 		if (x > hero.getX() + hero.getWidth()) {
-			goalSpeed = -speed;
+			goalSpeed = -SPEED;
 		}
 
 		if (y > hero.getY() + hero.getHeight() / 2) {
 			this.vy -= 0.75;
 		}
 
-		vx += (goalSpeed - vx) / approachFactor;
+		vx += (goalSpeed - vx) / APPROACH_FACTOR;
 		vy += gravity;
 	}
 

@@ -13,14 +13,14 @@ public class MossyWall extends Wall {
 	 * @param height
 	 */
 	public MossyWall(int x, int y, int width, int height) {
-		super(x, y, width, height);
+		super(x, y, width, height, GameImage.MOSSY_BRICK);
 	}
 
 	/**
 	 * ensures: the platform is correctly drawn
 	 */
 	public void display(Graphics2D g) {
-		drawImage(g, "mossy_brick.png");
+		drawImage(g);
 	}
 
 }

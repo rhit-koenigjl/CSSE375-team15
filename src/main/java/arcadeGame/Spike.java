@@ -13,12 +13,13 @@ public class Spike extends Tile {
 	 * @param height
 	 */
 	public Spike(int x, int y, int sideLength) {
-		super(x, y, sideLength, sideLength);
+		super(x, y, sideLength, sideLength, GameImage.SPIKE);
+		this.dir = Direction.UP;
 	}
 
 	@Override
 	public void display(Graphics2D g2) {
-		drawImage(g2, "upward_spike.png");
+		drawImage(g2);
 	}
 
 	@Override
