@@ -103,5 +103,5 @@ public class GameObject {
 		y += offset * height * (negativeDirection ? -1.0 : 1.0);
 	}
 
-	
+
 }

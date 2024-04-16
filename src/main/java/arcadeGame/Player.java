@@ -107,7 +107,7 @@ public class Player extends Actor {
 			vy += jumpHeight;
 		}
 
-		this.setVx(this.getVx() + (desiredVelocity - this.getVx()) / approachFactor);
+		this.setVx(this.getVx() + (desiredVelocity - this.getVx()) / APPROACH_FACTOR);
 
 		if (this.vx > 0) {
 			this.dir = Direction.RIGHT;

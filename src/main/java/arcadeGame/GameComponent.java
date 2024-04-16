@@ -3,20 +3,23 @@ package arcadeGame;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.File;
+import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.*;
 
 public class GameComponent extends JComponent {
+	private static final String LEVEL_DIRECTORY = "levels/gameLevels/";
+
 	private SceneManager sceneManager;
 	private int score = 0;
 	private int lives = 3;
 
 	// Fields for level management and creation
-	private String levelFiles[] = { "levels/testLevels/test_level_0.json",
-			"levels/testLevels/test_level_1.json", "levels/testLevels/test_level_2.json",
-			"levels/testLevels/test_level_3.json", };
+	private String levelFiles[];
 	private Level currentLevel;
 	private UpdateState state = new UpdateState(this);
 
@@ -30,15 +33,27 @@ public class GameComponent extends JComponent {
 	/**
 	 * Ensures the creation of the Game Component and initializes the first level
 	 * 
-	 * @param frame the frame that the game is taking place in, used for resizing to
-	 *              fit each level.
+	 * @param frame the frame that the game is taking place in, used for resizing to fit each level.
 	 */
 	public GameComponent(JFrame frame) {
+		buildLevelsList();
 		this.frame = frame;
 		this.currentLevel = new Level(levelFiles[0], 0, hero);
 		this.sceneManager = new SceneManager(null);
 		SceneUpdater s = new GameUpdater(sceneManager, currentLevel, keys, state);
 		this.sceneManager.switchScene(s);
+	}
+
+	private void buildLevelsList() {
+		try {
+			Path levelDir =
+					Path.of(ClassLoader.getSystemClassLoader().getResource(LEVEL_DIRECTORY).toURI());
+			levelFiles = Arrays.asList(levelDir.toFile().listFiles()).stream().map(File::getPath)
+					.toArray(String[]::new);
+		} catch (Exception e) {
+			System.err.println("Could not load levels");
+			e.printStackTrace();
+		}
 	}
 
 	public void loadLevelByIndex(int index) {
@@ -49,7 +64,7 @@ public class GameComponent extends JComponent {
 	 * ensures: the editing of the keys HashMap to update what keys are pressed
 	 * 
 	 * @param keyCode: the key being pressed or released
-	 * @param newVal:  the new value to be associated with that keyCode
+	 * @param newVal: the new value to be associated with that keyCode
 	 */
 	public void handleKey(int keyCode, boolean newVal) {
 		keys.put(keyCode, newVal);

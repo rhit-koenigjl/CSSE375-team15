@@ -1,19 +1,12 @@
 package arcadeGame;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public enum Direction {
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT,
-    UP_LEFT,
-    UP_RIGHT,
-    DOWN_LEFT,
-    DOWN_RIGHT,
-    NONE;
+    UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT, NONE;
 
-    private static HashMap<String, Direction> stringMap = new HashMap<String, Direction>() {
+    private static Map<String, Direction> stringMap = new HashMap<String, Direction>() {
         {
             put("U", UP);
             put("UR", UP_RIGHT);
@@ -26,7 +19,8 @@ public enum Direction {
             put("", NONE);
         }
     };
-    public Direction fromString(String str) {
-        return stringMap.get(str);
+
+    public Direction fromString(String keyString) {
+        return stringMap.get(keyString);
     }
 }

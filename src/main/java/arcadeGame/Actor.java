@@ -4,8 +4,9 @@ import java.awt.Graphics2D;
 import java.util.List;
 
 public abstract class Actor extends GameObject {
-	protected double approachFactor = 4;
-	protected double speed = 5;
+	protected static final double APPROACH_FACTOR = 4;
+	protected static final double SPEED = 5;
+
 	private boolean didCollideWithSpikes = false;
 
 	/**

@@ -51,8 +51,8 @@ public abstract class EnemySpawner extends Enemy {
 
 	public void control() {
 		double goalSpeed = 0;
-		vx += (goalSpeed - vx) / (approachFactor * 12);
-		vy += (goalSpeed - vy) / (approachFactor * 12);
+		vx += (goalSpeed - vx) / (APPROACH_FACTOR * 12);
+		vy += (goalSpeed - vy) / (APPROACH_FACTOR * 12);
 	}
 
 	/**

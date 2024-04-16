@@ -3,6 +3,11 @@ package arcadeGame;
 import java.awt.Graphics2D;
 
 public class Enemy extends Actor {
+	private static final int STARTING_X = 100;
+	private static final int STARTING_Y = 100;
+	private static final int WIDTH = 40;
+	private static final int HEIGHT = 40;
+
 	protected boolean adding = false;
 	private String direction = "right";
 
@@ -10,7 +15,7 @@ public class Enemy extends Actor {
 	 * ensures: the correct initialization of an Enemy
 	 */
 	public Enemy() {
-		this(100, 100, 40, 40); // viable arbitrary starting values
+		this(STARTING_X, STARTING_Y, WIDTH, HEIGHT); // viable arbitrary starting values
 	}
 
 	/**
@@ -23,8 +28,8 @@ public class Enemy extends Actor {
 	 */
 	public Enemy(double startX, double startY, double width, double height) {
 		super(startX, startY, width, height);
-		vx = Math.random() * speed;
-		vy = Math.random() * speed;
+		vx = Math.random() * SPEED;
+		vy = Math.random() * SPEED;
 	}
 
 	/**

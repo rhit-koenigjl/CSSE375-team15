@@ -30,8 +30,8 @@ public class Coin extends Tile {
 	 * ensures: that the coin is set for removal whenever a player touches it
 	 */
 	@Override
-	void handleCollision(Actor a, double ix, double iy) {
-		if (a.isHero()) {
+	void handleCollision(Actor actor, double xPos, double yPos) {
+		if (actor.isHero()) {
 			setRemove();
 		}
 	}

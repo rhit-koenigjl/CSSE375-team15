@@ -65,17 +65,17 @@ public class HunterSeeker extends Enemy {
 	public void control() {
 		double goalSpeed = 0;
 		if (x + width < hero.getX()) {
-			goalSpeed = speed;
+			goalSpeed = SPEED;
 		}
 		if (x > hero.getX() + hero.getWidth()) {
-			goalSpeed = -speed;
+			goalSpeed = -SPEED;
 		}
 
 		if (y > hero.getY() + hero.getHeight() / 2) {
 			this.vy -= 0.75;
 		}
 
-		vx += (goalSpeed - vx) / approachFactor;
+		vx += (goalSpeed - vx) / APPROACH_FACTOR;
 		vy += gravity;
 	}
 
