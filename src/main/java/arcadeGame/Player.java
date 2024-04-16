@@ -24,6 +24,7 @@ public class Player extends Actor {
 	public Player(double startX, double startY, double width, double height) {
 		super(startX, startY, width, height, GameImage.PLAYER);
 		this.dir = Direction.RIGHT;
+		this.speed = this.width * DEFAULT_SPEED * 8.0/5.0;
 	}
 
 	/**

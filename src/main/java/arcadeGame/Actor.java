@@ -8,6 +8,7 @@ public abstract class Actor extends GameObject {
 	protected static final double SPEED = 5;
 
 	private boolean didCollideWithSpikes = false;
+	protected static final double DEFAULT_SPEED = 1.0 / 10.0;
 
 	/**
 	 * ensures: the proper construction of an Actor instance

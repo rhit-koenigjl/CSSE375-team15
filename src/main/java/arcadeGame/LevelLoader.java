@@ -58,34 +58,46 @@ public class LevelLoader {
         String blockStream = (String) jo.get("data");
         this.levelHeight = Integer.parseInt(h);
         this.levelWidth = Integer.parseInt(w);
-        this.size = Integer.parseInt(s);
+        size = Integer.parseInt(s);
         this.dataString = blockStream;
     }
 
-    private void addBlock(int xPos, int yPos, char blockType) {
+    private void addBlock(int xPos, int yPos, char blockType, Direction dir) {
+        int actorSize = (int) (size * 4.0 / 5.0);
+        int actorXPos = (int) ((xPos + 0.2) * size);
+        int actorYPos = (int) ((yPos + 0.2) * size);
+
         switch (blockType) {
             case 'b':
-                tiles.add(new Wall(xPos * this.size, yPos * this.size, this.size, this.size));
+                tiles.add(new Wall(xPos * size, yPos * size, size, size));
                 break;
             case 'm':
-                tiles.add(new MossyWall(xPos * this.size, yPos * this.size, this.size, this.size));
+                tiles.add(new MossyWall(xPos * size, yPos * size, size, size));
                 break;
             case 'S':
-                tiles.add(new Spike(xPos * this.size, yPos * this.size, this.size));
+                tiles.add(new Spike(xPos * size, yPos * size, size, dir));
                 break;
             case '&':
-                enemies.add(new Enemy(xPos * this.size, yPos * this.size, this.size, this.size));
+                enemies.add(new Enemy(actorXPos, actorYPos, actorSize, actorSize, dir));
                 break;
             case '@':
-                enemies.add(new HunterSeeker(xPos * this.size, yPos * this.size, this.size,
-                        this.size, this.player));
+                enemies.add(new HunterSeeker(actorXPos, actorYPos, actorSize, actorSize, this.player));
                 break;
             case 'c':
-                tiles.add(new Coin(xPos * this.size, yPos * this.size, this.size, this.size));
+                tiles.add(new Coin(xPos * size, yPos * size, size, size));
                 numCoins++;
                 break;
             case 'P':
-                player = new Player(xPos * this.size, yPos * this.size, this.size, this.size);
+                player.setX(actorXPos);
+                player.setY(actorYPos);
+                player.setWidth(actorSize);
+                player.setHeight(actorSize);
+                break;
+            case 'B':
+                tiles.add(new BouncePad(xPos * size, yPos * size, size, size));
+                break;
+            case 'G':
+                enemies.add(new EnemyGenerator(actorXPos, actorYPos, actorSize, actorSize, enemies, player));
         }
     }
 
@@ -93,16 +105,23 @@ public class LevelLoader {
         JSONObject jo = getJsonObject();
         setupInternalValues(jo);
 
+        this.player = new Player(0, 0, size, size);
+
         int xPos = 0;
         int yPos = 0;
         for (String blockSet : this.dataString.split("\\|")) {
             // throw new NullPointerException(blockSet);
             String[] blockData = blockSet.split("-");
+            String[] extraData = blockData[0].split("#");
+            Direction d = Direction.NONE;
+            if (extraData.length > 1) {
+                d = Direction.fromString(extraData[1]);
+            }
             char blockType = blockData[0].charAt(0);
             int blockQ = Integer.parseInt(blockData[1]);
 
             for (; blockQ > 0; blockQ--) {
-                addBlock(xPos, yPos, blockType);
+                addBlock(xPos, yPos, blockType, d);
                 xPos++;
                 if (xPos % this.levelWidth == 0) {
                     xPos = 0;
@@ -133,7 +152,7 @@ public class LevelLoader {
     }
 
     public int getSize() {
-        return this.size;
+        return size;
     }
 
     public String getDataString() {

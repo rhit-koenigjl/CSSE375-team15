@@ -5,7 +5,6 @@ import java.util.List;
 
 public class HunterSeeker extends Enemy {
 	private Player hero;
-	private double gravity = 0.5;
 
 	/**
 	 * ensures: the correct initialization of a Hunter Seeker
@@ -54,19 +53,22 @@ public class HunterSeeker extends Enemy {
 	 */
 	public void control() {
 		double goalSpeed = 0;
+		double goalLift = 0;
 		if (x + width < hero.getX()) {
-			goalSpeed = SPEED;
+			goalSpeed = width * DEFAULT_SPEED * 0.5;
 		}
 		if (x > hero.getX() + hero.getWidth()) {
-			goalSpeed = -SPEED;
+			goalSpeed = -width * DEFAULT_SPEED * 0.5;
 		}
 
 		if (y > hero.getY() + hero.getHeight() / 2) {
-			this.vy -= 0.75;
+			goalLift = -width * DEFAULT_SPEED * 0.5;
+		} else {
+			goalLift = width * DEFAULT_SPEED * 0.5;
 		}
 
-		vx += (goalSpeed - vx) / APPROACH_FACTOR;
-		vy += gravity;
+		vx += (goalSpeed - vx) / approachFactor;
+		vy += (goalLift - vy) / approachFactor;
 	}
 
 	@Override

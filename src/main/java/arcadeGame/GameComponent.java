@@ -21,6 +21,7 @@ public class GameComponent extends JComponent {
 	private int lives = 3;
 
 	// Fields for level management and creation
+
 	private String levelFiles[];
 	private Level currentLevel;
 	private UpdateState state = new UpdateState(this);
