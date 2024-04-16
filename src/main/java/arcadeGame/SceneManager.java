@@ -17,8 +17,8 @@ public class SceneManager {
         this.scene = newScene;
     }
 
-    public void drawScene(Graphics2D g, String showString, int xMiddle, int yMiddle, int score) {
-        this.scene.drawScene(g, showString, xMiddle, yMiddle, score);
+    public void drawScene(Graphics2D g, int score) {
+        this.scene.drawScene(g, score);
     }
 
     public SceneUpdater getCurrentScene() {

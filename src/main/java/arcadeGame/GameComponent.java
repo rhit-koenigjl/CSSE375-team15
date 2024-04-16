@@ -1,6 +1,7 @@
 package arcadeGame;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.io.File;
@@ -20,6 +21,8 @@ public class GameComponent extends JComponent {
 
 	// Fields for level management and creation
 	private String levelFiles[];
+	private String levelFiles[] = { "levels/testLevels/test_level_0.json",
+			"levels/testLevels/test_level_1.json"};
 	private Level currentLevel;
 	private UpdateState state = new UpdateState(this);
 
@@ -40,20 +43,9 @@ public class GameComponent extends JComponent {
 		this.frame = frame;
 		this.currentLevel = new Level(levelFiles[0], 0, hero);
 		this.sceneManager = new SceneManager(null);
-		SceneUpdater s = new GameUpdater(sceneManager, currentLevel, keys, state);
-		this.sceneManager.switchScene(s);
-	}
-
-	private void buildLevelsList() {
-		try {
-			Path levelDir =
-					Path.of(ClassLoader.getSystemClassLoader().getResource(LEVEL_DIRECTORY).toURI());
-			levelFiles = Arrays.asList(levelDir.toFile().listFiles()).stream().map(File::getPath)
-					.toArray(String[]::new);
-		} catch (Exception e) {
-			System.err.println("Could not load levels");
-			e.printStackTrace();
-		}
+		GameUpdater g = new GameUpdater(sceneManager, currentLevel, keys, state);
+		MenuUpdater m = new MenuUpdater(sceneManager, g, keys);
+		this.sceneManager.switchScene(m);
 	}
 
 	public void loadLevelByIndex(int index) {
@@ -90,17 +82,13 @@ public class GameComponent extends JComponent {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
 		Graphics2D g2 = (Graphics2D) g;
 
-		int xMiddle = 50;
-		int yMiddle = (currentLevel.getHeight() * 50 + 37) / 2;
-
-		String shownString = "";
-		sceneManager.drawScene(g2, shownString, xMiddle, yMiddle, score);
-
-		g2.setColor(Color.blue);
+		sceneManager.drawScene(g2, score);
+		g2.setFont(new Font("Monospaced", Font.BOLD, 28));
+		g2.setColor(new Color(200, 255, 200));
 		g2.drawString("Lives: " + lives, 25, 30);
+		g2.drawString("Score: " + score, 25, 60);
 	}
 
 	/**
@@ -137,6 +125,7 @@ public class GameComponent extends JComponent {
 
 	public void loseLife() {
 		hero.loseLife();
+		lives --;
 		levelReset();
 		System.out.println("You Died! Lives left: " + lives);
 		if (lives > 0) {

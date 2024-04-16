@@ -22,7 +22,7 @@ public class GameUpdater extends SceneUpdater {
     }
 
     @Override
-    public void drawScene(Graphics2D g2, String showString, int xMiddle, int yMiddle, int score) {
+    public void drawScene(Graphics2D g2, int score) {
         Color previousColor = g2.getColor();
         g2.setFont(new Font("Monospaced", Font.BOLD, 28));
 
