@@ -10,7 +10,7 @@ from level_setup import LevelSetup
 config_f = open('app-config.json')
 config_data = json.load(config_f)
 
-ls = LevelSetup('..\\src\\main\\resources\\levels\\testLevels')
+ls = LevelSetup('..\\src\\main\\resources\\levels\\level_set_1')
 level_data = ls.get_level_object()
 
 LEVEL_WIDTH, LEVEL_HEIGHT, BLOCK_SIZE, STREAM = int(level_data['width']), int(level_data['height']), int(level_data['block_size']), level_data['data']
