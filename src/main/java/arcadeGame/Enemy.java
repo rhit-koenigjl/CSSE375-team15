@@ -55,30 +55,14 @@ public class Enemy extends Actor {
 
 	@Override
 	void drawActor(Graphics2D g2) {
-		getDirection();
-		drawImage(g2);
-	}
-
-	private void getDirection() {
 		if (vx != 0 || vy != 0) {
-			String direction;
-			if (vx == 0) {
-				direction = getVerticalDirection();
-			} else if (vy == 0) {
-				direction = getHorizontalDirection();
-			} else {
-				direction = String.format("%s%s", getVerticalDirection(), getHorizontalDirection());
-			}
+			String horizontalDirection = (vx == 0) ? "" : (vx > 0) ? "R" : "L";
+			String verticalDirection = (vy == 0) ? "" : (vy > 0) ? "D" : "U";
+			String direction = String.format("%s%s", (vx != 0) ? verticalDirection : "",
+					(vy != 0) ? horizontalDirection : "");
 			this.dir = Direction.fromString(direction);
 		}
-	}
-
-	private String getHorizontalDirection() {
-		return (vx > 0) ? "R" : "L";
-	}
-
-	private String getVerticalDirection() {
-		return (vy > 0) ? "D" : "U";
+		drawImage(g2);
 	}
 
 	public boolean getAdding() {
