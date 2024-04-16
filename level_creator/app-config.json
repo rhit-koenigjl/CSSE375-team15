@@ -12,6 +12,12 @@
         ],
         [
             [
+                "B",
+                "assets\\bounce_pad.gif"
+            ]
+        ],
+        [
+            [
                 "S#U",
                 "assets\\upward_spike.png"
             ],
@@ -101,6 +107,9 @@
                 "@#UL",
                 "assets\\angry_ghost_up_left.png"
             ]
+        ],
+        [
+            ["G", "assets\\spawner.gif"]
         ],
         [
             [
