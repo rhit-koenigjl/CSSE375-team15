@@ -21,8 +21,6 @@ public class GameComponent extends JComponent {
 
 	// Fields for level management and creation
 	private String levelFiles[];
-	private String levelFiles[] = { "levels/testLevels/test_level_0.json",
-			"levels/testLevels/test_level_1.json"};
 	private Level currentLevel;
 	private UpdateState state = new UpdateState(this);
 
@@ -46,6 +44,18 @@ public class GameComponent extends JComponent {
 		GameUpdater g = new GameUpdater(sceneManager, currentLevel, keys, state);
 		MenuUpdater m = new MenuUpdater(sceneManager, g, keys);
 		this.sceneManager.switchScene(m);
+	}
+
+	private void buildLevelsList() {
+		try {
+			Path levelDir =
+					Path.of(ClassLoader.getSystemClassLoader().getResource(LEVEL_DIRECTORY).toURI());
+			levelFiles = Arrays.asList(levelDir.toFile().listFiles()).stream().map(File::getPath)
+					.toArray(String[]::new);
+		} catch (Exception e) {
+			System.err.println("Could not load levels");
+			e.printStackTrace();
+		}
 	}
 
 	public void loadLevelByIndex(int index) {
