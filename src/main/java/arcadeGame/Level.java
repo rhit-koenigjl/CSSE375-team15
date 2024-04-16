@@ -3,12 +3,9 @@ package arcadeGame;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.ImageIcon;
 
 public class Level {
   private int levelIndex;
@@ -22,16 +19,13 @@ public class Level {
   private List<Enemy> enemies;
   private int numCoins = 0;
   private boolean heroHurt = false;
-
-  private Image backgroundImage;
+  private GameImage gameImage;
 
   public Level(String levelPath, int index, Player hero) {
     this.levelPath = levelPath;
     this.levelIndex = index;
     this.hero = hero;
-    this.backgroundImage =
-        new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/background.png"))
-            .getImage();
+    this.gameImage = GameImage.BACKGROUND;
   }
 
   /**
@@ -52,7 +46,7 @@ public class Level {
     System.out.println(levelWidth);
     System.out.println(tiles.size());
     System.out.println(enemies.size());
-    return new Object[] { tiles, hero, enemies };
+    return new Object[] {tiles, hero, enemies};
   }
 
   private void handlePlayer(Map<Integer, Boolean> keys) {
@@ -149,7 +143,7 @@ public class Level {
   public void draw(Graphics2D g2, int score) {
     for (int i = 0; i < levelWidth; i += 100) {
       for (int j = 0; j < levelHeight; j += 100) {
-        g2.drawImage(this.backgroundImage, i, j, 100, 100, null);
+        g2.drawImage(gameImage.getImage(Direction.NONE), i, j, 100, 100, null);
       }
     }
     for (Tile t : tiles) {
@@ -165,7 +159,7 @@ public class Level {
   public void drawScore(Graphics2D g2, int score) {
     g2.setColor(new Color(200, 255, 200));
     g2.setFont(new Font("Monospaced", Font.BOLD, 28));
-		g2.drawString("Level: " + levelIndex, 200, 30);
+    g2.drawString("Level: " + levelIndex, 200, 30);
   }
 
   public void reset() {
