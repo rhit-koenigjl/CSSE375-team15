@@ -26,7 +26,26 @@ public enum Direction {
             put("", NONE);
         }
     };
+
+    private static HashMap<Direction, Double> angleMap = new HashMap<Direction, Double>() {
+        {
+            put(UP, 0.0);
+            put(UP_RIGHT, Math.PI / 4.0);
+            put(UP_LEFT, - Math.PI / 4.0);
+            put(LEFT, Math.PI / -2.0);
+            put(RIGHT, Math.PI / 2.0);
+            put(DOWN_LEFT, Math.PI * -3.0 / 4.0);
+            put(DOWN_RIGHT, Math.PI * 3.0 / 4.0);
+            put(DOWN, Math.PI);
+            put(NONE, 0.0);
+        }
+    };
+
     public static Direction fromString(String str) {
         return stringMap.get(str);
+    }
+
+    public static double toAngle(Direction d) {
+        return angleMap.get(d);
     }
 }

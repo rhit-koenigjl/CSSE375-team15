@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 public class Enemy extends Actor {
 	protected boolean adding = false;
 	private String direction = "right";
+	
+	
 
 	/**
 	 * ensures: the correct initialization of an Enemy
@@ -44,7 +46,14 @@ public class Enemy extends Actor {
 		vy = velocityY;
 	}
 
-	@Override
+	public Enemy(double startX, double startY, double width, double height, Direction dir) {
+		super(startX, startY, width, height);
+		double ang = Direction.toAngle(dir) + Math.PI / 2;
+		this.vx = Math.cos(ang) * width * DEFAULT_SPEED;
+		this.vy = Math.sin(ang) * height * DEFAULT_SPEED;
+    }
+
+    @Override
 	void drawActor(Graphics2D g2) {
 		drawDirectedImage(g2, "ghost");
 	}

@@ -34,6 +34,7 @@ public class Player extends Actor {
 		this.rightImage = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/player_right.gif"))
 				.getImage();
 		this.dir = Direction.RIGHT;
+		this.speed = this.width * DEFAULT_SPEED * 8.0/5.0;
 	}
 
 	/**

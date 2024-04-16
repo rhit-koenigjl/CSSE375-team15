@@ -69,7 +69,7 @@ public class LevelLoader {
                 tiles.add(new Spike(xPos * this.size, yPos * this.size, this.size, dir));
                 break;
             case '&':
-                enemies.add(new Enemy(xPos * this.size, yPos * this.size, this.size, this.size));
+                enemies.add(new Enemy(xPos * this.size, yPos * this.size, this.size, this.size, dir));
                 break;
             case '@':
                 enemies.add(new HunterSeeker(xPos * this.size, yPos * this.size, this.size,
