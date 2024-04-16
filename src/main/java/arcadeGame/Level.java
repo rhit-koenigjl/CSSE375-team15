@@ -1,6 +1,7 @@
 package arcadeGame;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.ArrayList;
@@ -158,9 +159,13 @@ public class Level {
       e.drawActor(g2);
     }
     hero.drawActor(g2);
+    drawScore(g2, score);
+  }
 
-    g2.setColor(Color.blue);
-		g2.drawString("Level: " + levelIndex, 160, 30);
+  public void drawScore(Graphics2D g2, int score) {
+    g2.setColor(new Color(200, 255, 200));
+    g2.setFont(new Font("Monospaced", Font.BOLD, 28));
+		g2.drawString("Level: " + levelIndex, 200, 30);
   }
 
   public void reset() {
