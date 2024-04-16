@@ -26,7 +26,7 @@ public enum Direction {
             put("", NONE);
         }
     };
-    public Direction fromString(String str) {
+    public static Direction fromString(String str) {
         return stringMap.get(str);
     }
 }

@@ -57,7 +57,7 @@ public class LevelLoader {
         this.dataString = blockStream;
     }
 
-    private void addBlock(int xPos, int yPos, char blockType) {
+    private void addBlock(int xPos, int yPos, char blockType, Direction dir) {
         switch (blockType) {
             case 'b':
                 tiles.add(new Wall(xPos * this.size, yPos * this.size, this.size, this.size));
@@ -66,7 +66,7 @@ public class LevelLoader {
                 tiles.add(new MossyWall(xPos * this.size, yPos * this.size, this.size, this.size));
                 break;
             case 'S':
-                tiles.add(new Spike(xPos * this.size, yPos * this.size, this.size));
+                tiles.add(new Spike(xPos * this.size, yPos * this.size, this.size, dir));
                 break;
             case '&':
                 enemies.add(new Enemy(xPos * this.size, yPos * this.size, this.size, this.size));
@@ -94,11 +94,16 @@ public class LevelLoader {
         for (String blockSet : this.dataString.split("\\|")) {
             // throw new NullPointerException(blockSet);
             String[] blockData = blockSet.split("-");
+            String[] extraData = blockData[0].split("#");
+            Direction d = Direction.NONE;
+            if (extraData.length > 1) {
+                d = Direction.fromString(extraData[1]);
+            }
             char blockType = blockData[0].charAt(0);
             int blockQ = Integer.parseInt(blockData[1]);
 
             for (; blockQ > 0; blockQ--) {
-                addBlock(xPos, yPos, blockType);
+                addBlock(xPos, yPos, blockType, d);
                 xPos++;
                 if (xPos % this.levelWidth == 0) {
                     xPos = 0;
