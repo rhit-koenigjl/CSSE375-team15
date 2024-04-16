@@ -134,7 +134,7 @@ public class GameComponent extends JComponent {
 
 	public void loseLife() {
 		hero.loseLife();
-		lives --;
+		lives--;
 		levelReset();
 		System.out.println("You Died! Lives left: " + lives);
 		if (lives > 0) {
@@ -150,6 +150,11 @@ public class GameComponent extends JComponent {
 
 	public void incrementScore(int score) {
 		this.score += score;
+	}
+
+	public void nextLevel() {
+		loadLevelByIndex(currentLevel.getIndex() + 1);
+		sceneManager.switchScene(new TransitionUpdater(sceneManager, new AiMessageGenerator()));
 	}
 
 }

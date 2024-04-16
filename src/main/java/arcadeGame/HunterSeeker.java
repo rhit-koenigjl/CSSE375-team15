@@ -22,6 +22,7 @@ public class HunterSeeker extends Enemy {
 
 	public HunterSeeker(double startX, double startY, double width, double height, double velocityX,
 			double velocityY, Player h) {
+		super(startX, startY, width, height, velocityX, velocityY, GameImage.TRACKER);
 		this.x = startX;
 		this.y = startY;
 		this.width = width;

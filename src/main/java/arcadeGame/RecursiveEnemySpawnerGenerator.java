@@ -6,7 +6,7 @@ public class RecursiveEnemySpawnerGenerator extends EnemySpawner {
 
   public RecursiveEnemySpawnerGenerator(double startX, double startY, double width, double height,
       List<Enemy> enemies, Player player) {
-    super(startX, startY, width, height, 0, 0, enemies, player);
+    this(startX, startY, width, height, 0, 0, enemies, player);
   }
 
   public RecursiveEnemySpawnerGenerator(double startX, double startY, double width, double height,

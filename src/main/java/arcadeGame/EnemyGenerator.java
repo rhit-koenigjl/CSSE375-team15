@@ -6,7 +6,7 @@ public class EnemyGenerator extends EnemySpawner {
 
   public EnemyGenerator(double startX, double startY, double width, double height,
       List<Enemy> enemies, Player player) {
-    super(startX, startY, width, height, 0, 0, enemies, player);
+    this(startX, startY, width, height, 0, 0, enemies, player);
   }
 
   public EnemyGenerator(double startX, double startY, double width, double height, double velocityX,

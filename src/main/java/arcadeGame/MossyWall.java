@@ -13,8 +13,7 @@ public class MossyWall extends Wall {
 	 * @param height
 	 */
 	public MossyWall(int x, int y, int width, int height) {
-		super(x, y, width, height);
-		this.gameImage = GameImage.MOSSY_BRICK;
+		super(x, y, width, height, GameImage.MOSSY_BRICK);
 	}
 
 	/**

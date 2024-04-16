@@ -29,6 +29,11 @@ public class Enemy extends Actor {
 		this(startX, startY, width, height, GameImage.GHOST);
 	}
 
+	public Enemy(double startX, double startY, double width, double height, double velocityX,
+			double velocityY) {
+		this(startX, startY, width, height, velocityX, velocityY, GameImage.GHOST);
+	}
+
 	/**
 	 * ensures: the correct creation of an enemy with a specified velocity
 	 * 
@@ -40,17 +45,15 @@ public class Enemy extends Actor {
 	 * @param velocityY
 	 */
 	public Enemy(double startX, double startY, double width, double height, double velocityX,
-			double velocityY) {
-		super(startX, startY, width, height, GameImage.GHOST);
+			double velocityY, GameImage gameImage) {
+		super(startX, startY, width, height, gameImage);
+		this.dir = Direction.RIGHT;
 		vx = velocityX;
 		vy = velocityY;
 	}
 
 	public Enemy(double startX, double startY, double width, double height, GameImage gameImage) {
-		super(startX, startY, width, height, gameImage);
-		this.dir = Direction.RIGHT;
-		vx = Math.random() * SPEED;
-		vy = Math.random() * SPEED;
+		this(startX, startY, width, height, Math.random() * SPEED, Math.random() * SPEED, gameImage);
 	}
 
 	@Override

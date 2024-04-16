@@ -13,7 +13,11 @@ public class Wall extends Tile {
 	 * @param height
 	 */
 	public Wall(int x, int y, int width, int height) {
-		super(x, y, width, height, GameImage.BRICK);
+		this(x, y, width, height, GameImage.BRICK);
+	}
+
+	public Wall(int x, int y, int width, int height, GameImage gameImage) {
+		super(x, y, width, height, gameImage);
 	}
 
 	/**

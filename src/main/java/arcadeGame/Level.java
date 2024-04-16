@@ -102,7 +102,7 @@ public class Level {
       if (levelIndex == state.getLevelCount() - 1) {
         sceneManager.switchScene(new WinUpdater(sceneManager));
       } else {
-        state.setNextLevel(levelIndex + 1);
+        state.transitionNextLevel();
       }
     }
   }
