@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 public class BouncePad extends Tile {
 
 	/**
-	 * ensures: calls the Tile constructor for the bouncepad
+	 * ensures: calls the Tile constructor for the bounce pad
 	 * 
 	 * @param x
 	 * @param y
@@ -13,33 +13,33 @@ public class BouncePad extends Tile {
 	 * @param height
 	 */
 	public BouncePad(int x, int y, int width, int height) {
-		super(x, (int) (y + 3.0/5.0 * height), width, height);
+		super(x, (int) (y + 3.0/5.0 * height), width, height, GameImage.BOUNCE_PAD);
 	}
 
 	@Override
 	protected void display(Graphics2D g2) {
 		this.y -= height * 0.5;
-		drawImage(g2, "bounce_pad.gif");
+		drawImage(g2);
 		this.y += height * 0.5;
 	}
 
 	@Override
-	public void handleCollision(Actor a, double ix, double iy) {
-		if (ix > 0) {
-			a.setX(x - a.getWidth());
-			a.setVx(0);
+	public void handleCollision(Actor actor, double xPos, double yPos) {
+		if (xPos > 0) {
+			actor.setX(x - actor.getWidth());
+			actor.setVx(0);
 		}
-		if (ix < 0) {
-			a.setX(x + width);
-			a.setVx(0);
+		if (xPos < 0) {
+			actor.setX(x + width);
+			actor.setVx(0);
 		}
-		if (iy > 0) {
-			a.setY(y - a.getHeight());
-			a.setVy(-30);
+		if (yPos > 0) {
+			actor.setY(y - actor.getHeight());
+			actor.setVy(-30);
 		}
-		if (iy < 0) {
-			a.setY(y + height);
-			a.setVy(0);
+		if (yPos < 0) {
+			actor.setY(y + height);
+			actor.setVy(0);
 		}
 	}
 

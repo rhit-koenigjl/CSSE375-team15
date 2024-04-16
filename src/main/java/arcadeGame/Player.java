@@ -3,8 +3,6 @@ package arcadeGame;
 import java.awt.Graphics2D;
 import java.util.List;
 import java.util.Map;
-import java.awt.Image;
-import javax.swing.ImageIcon;
 
 public class Player extends Actor {
 	// determines how much of the distance to max speed the player moves
@@ -15,31 +13,22 @@ public class Player extends Actor {
 	private double jumpHeight = 0.75;
 	private double speed = 8;
 
-	private Image leftImage;
-	private Image rightImage;
-	private Direction dir;
-
 	/**
 	 * ensures the correct constructor for the Player class
 	 * 
 	 * @param startX the initial x location
 	 * @param startY the initial y location
-	 * @param width  the players width
+	 * @param width the players width
 	 * @param height the players height
 	 */
 	public Player(double startX, double startY, double width, double height) {
-		super(startX, startY, width, height);
-		this.leftImage = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/player-left.gif"))
-				.getImage();
-		this.rightImage = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/player_right.gif"))
-				.getImage();
+		super(startX, startY, width, height, GameImage.PLAYER);
 		this.dir = Direction.RIGHT;
 		this.speed = this.width * DEFAULT_SPEED * 8.0/5.0;
 	}
 
 	/**
-	 * ensures the general running of the player class including moving the player,
-	 * and calling the
+	 * ensures the general running of the player class including moving the player, and calling the
 	 * handleKeyAction() and handleCollision() methods
 	 * 
 	 * @param keys
@@ -55,9 +44,8 @@ public class Player extends Actor {
 	 * Helper function to tell if a key is being pressed
 	 * 
 	 * @param keys a hashmap of keycodes and true or false values
-	 * @param val  the keycode being examined
-	 * @return the boolean value associating to whether a key is being pressed or
-	 *         not
+	 * @param val the keycode being examined
+	 * @return the boolean value associating to whether a key is being pressed or not
 	 */
 	public boolean findKey(Map<Integer, Boolean> keys, int val) {
 		return keys.getOrDefault(val, false);
@@ -108,7 +96,7 @@ public class Player extends Actor {
 			vy += jumpHeight;
 		}
 
-		this.setVx(this.getVx() + (desiredVelocity - this.getVx()) / approachFactor);
+		this.setVx(this.getVx() + (desiredVelocity - this.getVx()) / APPROACH_FACTOR);
 
 		if (this.vx > 0) {
 			this.dir = Direction.RIGHT;
@@ -123,8 +111,7 @@ public class Player extends Actor {
 	 */
 	@Override
 	public void drawActor(Graphics2D g2) {
-		g2.drawImage(this.dir == Direction.RIGHT ? rightImage : leftImage, (int) (x - width / 2.0),
-				(int) (y - height / 2.0), (int) width * 2, (int) height * 2, null);
+		drawImage(g2, 2.0, 0.5, true);
 	}
 
 	@Override

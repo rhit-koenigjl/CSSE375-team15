@@ -32,7 +32,7 @@ public class Spike extends Tile {
 
 	@Override
 	public void display(Graphics2D g2) {
-		drawImage(g2, imageMap.get(this.dir));
+		drawImage(g2);
 	}
 
 	@Override

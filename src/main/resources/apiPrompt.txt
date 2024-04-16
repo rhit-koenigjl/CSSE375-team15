@@ -1,0 +1,1 @@
+Write an encouraging message to someone playing a 2D platform game. The message must be no longer than 50 characters, and only generate a single message. Provide only the message with no additional output.

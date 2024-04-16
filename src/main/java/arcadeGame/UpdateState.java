@@ -23,4 +23,8 @@ public class UpdateState {
     return gameComponent.getLevelCount();
   }
 
+  public void transitionNextLevel() {
+    gameComponent.nextLevel();
+  }
+
 }
