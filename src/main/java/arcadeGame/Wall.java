@@ -13,14 +13,14 @@ public class Wall extends Tile {
 	 * @param height
 	 */
 	public Wall(int x, int y, int width, int height) {
-		super(x, y, width, height);
+		super(x, y, width, height, GameImage.BRICK);
 	}
 
 	/**
 	 * ensures: the drawing of the Wall
 	 */
 	public void display(Graphics2D g) {
-		drawImage(g, "brick.png");
+		drawImage(g);
 	}
 
 }

@@ -20,7 +20,7 @@ public enum Direction {
         }
     };
 
-    public Direction fromString(String keyString) {
+    public static Direction fromString(String keyString) {
         return stringMap.get(keyString);
     }
 }

@@ -17,8 +17,8 @@ public abstract class Actor extends GameObject {
 	 * @param width
 	 * @param height
 	 */
-	public Actor(double startX, double startY, double width, double height) {
-		super(startX, startY, width, height);
+	public Actor(double startX, double startY, double width, double height, GameImage gameImage) {
+		super(startX, startY, width, height, gameImage);
 	}
 
 	/**

@@ -13,7 +13,7 @@ public class Coin extends Tile {
 	 * @param height
 	 */
 	public Coin(int x, int y, int width, int height) {
-		super(x, y, width, height);
+		super(x, y, width, height, GameImage.COIN);
 	}
 
 	/**
@@ -22,7 +22,7 @@ public class Coin extends Tile {
 	@Override
 	void display(Graphics2D g) {
 		performImageOffset(0.75, 0.125, false);
-		drawImage(g, "coin.gif");
+		drawImage(g);
 		resetImageOffset(0.75, 0.125, true);
 	}
 

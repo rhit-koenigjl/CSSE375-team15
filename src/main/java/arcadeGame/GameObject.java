@@ -1,8 +1,6 @@
 package arcadeGame;
 
 import java.awt.Graphics2D;
-import java.awt.Image;
-import javax.swing.ImageIcon;
 
 public class GameObject {
 	protected double x;
@@ -11,21 +9,23 @@ public class GameObject {
 	protected double height;
 	protected double vx = 0;
 	protected double vy = 0;
-	private String currentImagePath;
-	private Image objectImage;
+	protected GameImage gameImage;
+	protected Direction dir = Direction.NONE;
 
-	public GameObject(double x, double y, double width, double height) {
+	public GameObject(double x, double y, double width, double height, GameImage gameImage) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		this.gameImage = gameImage;
 	}
 
-	public GameObject(int x, int y, int width, int height) {
+	public GameObject(int x, int y, int width, int height, GameImage gameImage) {
 		this.x = (double) x;
 		this.y = (double) y;
 		this.width = (double) width;
 		this.height = (double) height;
+		this.gameImage = gameImage;
 	}
 
 	public double getX() {
@@ -80,13 +80,8 @@ public class GameObject {
 		return x + width > o.x && y + height > o.y && x < o.x + o.width && y < o.y + o.height;
 	}
 
-	protected void drawImage(Graphics2D g, String path) {
-		if (!path.equals(currentImagePath)) {
-			currentImagePath = path;
-			objectImage = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/" + path))
-					.getImage();
-		}
-		g.drawImage(objectImage, (int) x, (int) y, (int) width, (int) height, null);
+	protected void drawImage(Graphics2D g) {
+		g.drawImage(gameImage.getImage(dir), (int) x, (int) y, (int) width, (int) height, null);
 	}
 
 	protected void performImageOffset(double scale, double offset, boolean negativeDirection) {

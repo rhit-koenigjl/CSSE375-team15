@@ -9,7 +9,6 @@ public class Enemy extends Actor {
 	private static final int HEIGHT = 40;
 
 	protected boolean adding = false;
-	private String direction = "right";
 
 	/**
 	 * ensures: the correct initialization of an Enemy
@@ -27,9 +26,7 @@ public class Enemy extends Actor {
 	 * @param height
 	 */
 	public Enemy(double startX, double startY, double width, double height) {
-		super(startX, startY, width, height);
-		vx = Math.random() * SPEED;
-		vy = Math.random() * SPEED;
+		this(startX, startY, width, height, GameImage.GHOST);
 	}
 
 	/**
@@ -44,40 +41,44 @@ public class Enemy extends Actor {
 	 */
 	public Enemy(double startX, double startY, double width, double height, double velocityX,
 			double velocityY) {
-		super(startX, startY, width, height);
+		super(startX, startY, width, height, GameImage.GHOST);
 		vx = velocityX;
 		vy = velocityY;
 	}
 
+	public Enemy(double startX, double startY, double width, double height, GameImage gameImage) {
+		super(startX, startY, width, height, gameImage);
+		this.dir = Direction.RIGHT;
+		vx = Math.random() * SPEED;
+		vy = Math.random() * SPEED;
+	}
+
 	@Override
 	void drawActor(Graphics2D g2) {
-		drawDirectedImage(g2, "ghost");
+		getDirection();
+		drawImage(g2);
 	}
 
-	protected void drawDirectedImage(Graphics2D g2, String filename) {
-		String directedFile = String.format("%s_%s.png", filename, getDirection());
-		super.drawImage(g2, directedFile);
-	}
-
-	private String getDirection() {
+	private void getDirection() {
 		if (vx != 0 || vy != 0) {
+			String direction;
 			if (vx == 0) {
 				direction = getVerticalDirection();
 			} else if (vy == 0) {
 				direction = getHorizontalDirection();
 			} else {
-				direction = String.format("%s_%s", getVerticalDirection(), getHorizontalDirection());
+				direction = String.format("%s%s", getVerticalDirection(), getHorizontalDirection());
 			}
+			this.dir = Direction.fromString(direction);
 		}
-		return direction;
 	}
 
 	private String getHorizontalDirection() {
-		return (vx > 0) ? "right" : "left";
+		return (vx > 0) ? "R" : "L";
 	}
 
 	private String getVerticalDirection() {
-		return (vy > 0) ? "down" : "up";
+		return (vy > 0) ? "D" : "U";
 	}
 
 	public boolean getAdding() {

@@ -13,14 +13,14 @@ public class BouncePad extends Tile {
 	 * @param height
 	 */
 	public BouncePad(int x, int y, int width, int height) {
-		super(x, y, width, height);
+		super(x, y, width, height, GameImage.BOUNCE_PAD);
 	}
 
 	@Override
 	protected void display(Graphics2D g2) {
 		this.y -= 30;
 		this.height = 50;
-		drawImage(g2, "bounce_pad.gif");
+		drawImage(g2);
 		this.height = 20;
 		this.y += 30;
 	}

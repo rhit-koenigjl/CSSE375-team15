@@ -20,7 +20,7 @@ public abstract class EnemySpawner extends Enemy {
 	 */
 	public EnemySpawner(double startX, double startY, double width, double height, double velocityX,
 			double velocityY, List<Enemy> enemies, Player player) {
-		super(startX, startY, width, height);
+		super(startX, startY, width, height, GameImage.SPAWNER);
 		this.enemies = enemies;
 		this.p = player;
 		this.vx = velocityX;
@@ -32,7 +32,7 @@ public abstract class EnemySpawner extends Enemy {
 	 */
 	public void drawActor(Graphics2D g2) {
 		performImageOffset(1.25, 0.125, true);
-		drawImage(g2, "spawner.gif");
+		drawImage(g2);
 		resetImageOffset(1.25, 0.125, false);
 	}
 
