@@ -62,7 +62,6 @@ public enum GameImage {
 
   private void createImages() {
     images = new HashMap<>();
-
     for (Direction direction : directions) {
       StringBuilder path = new StringBuilder(this.fileName);
       if (direction != Direction.NONE) {
@@ -72,6 +71,10 @@ public enum GameImage {
       images.put(direction,
           new ImageIcon(getClass().getResource("/images/" + path.toString())).getImage());
     }
+  }
+
+  public Image getImage() {
+    return this.images.get(Direction.NONE);
   }
 
   public Image getImage(Direction direction) {

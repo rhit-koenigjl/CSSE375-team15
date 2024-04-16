@@ -31,9 +31,7 @@ public abstract class EnemySpawner extends Enemy {
 	 * ensures: the drawing of the EnemySpawner
 	 */
 	public void drawActor(Graphics2D g2) {
-		performImageOffset(1.25, 0.125, true);
-		drawImage(g2);
-		resetImageOffset(1.25, 0.125, false);
+		drawImage(g2, 1.25, 0.125, true);
 	}
 
 	/**

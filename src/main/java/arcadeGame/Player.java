@@ -110,8 +110,7 @@ public class Player extends Actor {
 	 */
 	@Override
 	public void drawActor(Graphics2D g2) {
-		g2.drawImage(this.gameImage.getImage(this.dir), (int) (x - width / 2.0),
-				(int) (y - height / 2.0), (int) width * 2, (int) height * 2, null);
+		drawImage(g2, 2.0, 0.5, true);
 	}
 
 	@Override

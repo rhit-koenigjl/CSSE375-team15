@@ -139,7 +139,7 @@ public class Level {
   public void draw(Graphics2D g2, int score) {
     for (int i = 0; i < levelWidth; i += 100) {
       for (int j = 0; j < levelHeight; j += 100) {
-        g2.drawImage(gameImage.getImage(Direction.NONE), i, j, 100, 100, null);
+        g2.drawImage(gameImage.getImage(), i, j, 100, 100, null);
       }
     }
     for (Tile t : tiles) {

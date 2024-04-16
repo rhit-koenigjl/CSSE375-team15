@@ -21,9 +21,7 @@ public class Coin extends Tile {
 	 */
 	@Override
 	void display(Graphics2D g) {
-		performImageOffset(0.75, 0.125, false);
-		drawImage(g);
-		resetImageOffset(0.75, 0.125, true);
+		drawImage(g, 0.75, 0.125, false);
 	}
 
 	/**

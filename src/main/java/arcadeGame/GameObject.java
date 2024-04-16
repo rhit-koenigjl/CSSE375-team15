@@ -81,22 +81,15 @@ public class GameObject {
 	}
 
 	protected void drawImage(Graphics2D g) {
-		g.drawImage(gameImage.getImage(dir), (int) x, (int) y, (int) width, (int) height, null);
+		drawImage(g, 1.0, 0.0, false);
 	}
 
-	protected void performImageOffset(double scale, double offset, boolean negativeDirection) {
-		x += offset * width * (negativeDirection ? -1.0 : 1.0);
-		y += offset * height * (negativeDirection ? -1.0 : 1.0);
-		height *= scale;
-		width *= scale;
+	protected void drawImage(Graphics2D g, double scale, double offset, boolean negativeDirection) {
+		int x = (int) (this.x + offset * width * (negativeDirection ? -1 : 1));
+		int y = (int) (this.y + offset * height * (negativeDirection ? -1 : 1));
+		int width = (int) (this.width * scale);
+		int height = (int) (this.height * scale);
+		g.drawImage(gameImage.getImage(dir), x, y, width, height, null);
 	}
-
-	protected void resetImageOffset(double scale, double offset, boolean negativeDirection) {
-		height /= scale;
-		width /= scale;
-		x += offset * width * (negativeDirection ? -1.0 : 1.0);
-		y += offset * height * (negativeDirection ? -1.0 : 1.0);
-	}
-
 
 }
