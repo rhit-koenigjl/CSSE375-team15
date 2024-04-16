@@ -16,7 +16,7 @@ public class GameComponent extends JComponent {
 
 	// Fields for level management and creation
 	private String levelFiles[] = { "levels/level_set_1/level_1.json",
-			"levels/level_set_1/level_2.json", "levels/level_set_1/level_3.json"};
+			"levels/level_set_1/level_2.json", "levels/level_set_1/level_3.json", "levels/level_set_1/level_4.json"};
 	private Level currentLevel;
 	private UpdateState state = new UpdateState(this);
 
