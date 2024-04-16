@@ -1,39 +1,37 @@
 package arcadeGame;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 
 public class Level {
   private int levelIndex;
-  private File levelFile;
-  private List<String> levelLayout = new ArrayList<String>();
+  private String levelPath;
   private int levelHeight;
   private int levelWidth;
 
   // fields pertaining the current level
   private Player hero;
-  private List<Tile> tiles = new ArrayList<Tile>();
-  private List<Enemy> enemies = new ArrayList<Enemy>();
+  private List<Tile> tiles;
+  private List<Enemy> enemies;
   private int numCoins = 0;
   private boolean heroHurt = false;
 
   private Image backgroundImage;
 
-  public Level(File levelFile, int index, Player hero) {
-    this.levelFile = levelFile;
+  public Level(String levelPath, int index, Player hero) {
+    this.levelPath = levelPath;
     this.levelIndex = index;
     this.hero = hero;
-    this.backgroundImage = new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/background.png"))
-					.getImage();
+    this.backgroundImage =
+        new ImageIcon(ClassLoader.getSystemClassLoader().getResource("images/background.png"))
+            .getImage();
   }
 
   /**
@@ -42,103 +40,20 @@ public class Level {
    * @param inputFilename: the text file the level is taking data from
    */
   public Object[] generateLevel() {
-    tiles.clear();
-    enemies.clear();
-    // HunterSeekers to be added after hero added
-    List<int[]> hunterSeekersToAdd = new ArrayList<int[]>();
-    List<String> l = loadLevel();
-    for (int y = 0; y < l.size(); y++) { // reads line number
-      for (int x = 0; x < l.get(y).length(); x++) { // reads line length
-        char blockChar = l.get(y).charAt(x);
-        switch (blockChar) {
-          case '-':
-            tiles.add(new MossyWall(x * 50, y * 50, 50, 50));
-            break;
-          case '|':
-            tiles.add(new Wall(x * 50, y * 50, 50, 50));
-            break;
-          case '^':
-            tiles.add(new Spike(x * 50, y * 50, 50));
-            break;
-          case 'P':
-            hero.setX(x * 50 + 10);
-            hero.setY(y * 50);
-            hero.setWidth(40);
-            hero.setHeight(40);
-            hero.clearMovementSpeed();
-            heroHurt = false;
-            break;
-          case 'E':
-            Enemy enemy = new Enemy(x * 50 + 10, y * 50, 40, 40);
-            enemies.add(enemy);
-            break;
-          case 'V':
-            enemy = new Enemy(x * 50 + 10, y * 50, 40, 40, 0, 5);
-            enemies.add(enemy);
-            break;
-          case 'H':
-            enemy = new Enemy(x * 50 + 10, y * 50, 40, 40, 5, 0);
-            enemies.add(enemy);
-            break;
-          case 'S':
-            int[] addedHunterSeeker = {x * 50 + 10, y * 50, 40, 40};
-            hunterSeekersToAdd.add(addedHunterSeeker); // adds HunterSeeker info to a ArrayList to
-                                                       // be created after everything else
-            break;
-          case 'B':
-            tiles.add(new Coin(x * 50 + 10, y * 50, 50, 50));
-            numCoins++;
-            break;
-          case 'M':
-            tiles.add(new BouncePad(x * 50, y * 50 + 30, 50, 20));
-            break;
-          case 'C':
-            enemies.add(new EnemyGenerator(x * 50 + 10, y * 50 + 10, 30, 30, enemies, hero));
-            break;
-          case 'D':
-            enemies.add(new EnemySpawnerGenerator(x * 50 + 10, y * 50 + 10, 30, 30,
-                enemies, hero));
-            break;
-        }
-      }
-    }
-    for (int[] HSInfo : hunterSeekersToAdd) {
-      // HunterSeeker needs a hero to track, so it cannot be created before the hero
-      // Therefore, the HunterSeekers are added after everything else to guarantee the
-      // hero has been
-      // created beforehand
-      HunterSeeker h = new HunterSeeker(HSInfo[0], HSInfo[1], HSInfo[2], HSInfo[3], hero);
-      enemies.add(h);
-    }
-    levelHeight = l.size();
-    levelWidth = l.get(0).length();
-    return new Object[] {tiles, hero, enemies};
+    LevelLoader ll = new LevelLoader(levelPath);
+    ll.loadLevel();
+    tiles = ll.getTiles();
+    enemies = ll.getEnemies();
+    hero = ll.getPlayer();
+    numCoins = ll.getNumCoins();
+    levelHeight = ll.getHeight();
+    levelWidth = ll.getWidth();
+    System.out.println(levelHeight);
+    System.out.println(levelWidth);
+    System.out.println(tiles.size());
+    System.out.println(enemies.size());
+    return new Object[] { tiles, hero, enemies };
   }
-
-  /**
-   * @param inputFilename: the text file the level is pulling data from
-   * @return an ArrayList<String> of text that represents a level
-   */
-  protected List<String> loadLevel() {
-    List<String> levelLayout = new ArrayList<String>();
-    Scanner scanner = null;
-    try {
-      scanner = new Scanner(
-          ClassLoader.getSystemClassLoader().getResource(levelFile.toString()).openStream());
-      String title = scanner.nextLine();
-      System.out.println("Title: " + title);
-      while (scanner.hasNextLine()) {
-        String line = scanner.nextLine();
-        System.out.println(line);
-        levelLayout.add(line);
-      } // end while
-      scanner.close();
-    } catch (IOException e) {
-      System.out.println(e.getMessage());
-      System.exit(1);
-    } // end try-catch
-    return levelLayout;
-  } // readFile
 
   private void handlePlayer(Map<Integer, Boolean> keys) {
     hero.update(keys, tiles);
@@ -219,14 +134,7 @@ public class Level {
     }
   }
 
-  private void generateStarterLevel() {
-    if (tiles.size() == 0) {
-      generateLevel();
-    }
-  }
-
   public void update(Map<Integer, Boolean> keys, UpdateState state, SceneManager sceneManager) {
-    generateStarterLevel();
     handlePlayer(keys);
     handleEnemies(state);
     handleTiles(state);
@@ -239,9 +147,9 @@ public class Level {
   }
 
   public void draw(Graphics2D g2, int score) {
-    for (int i = 0;i < levelWidth;i ++) {
-      for (int j = 0;j < levelHeight;j ++) {
-        g2.drawImage(this.backgroundImage, i * 100, j * 100,100, 100, null);
+    for (int i = 0; i < levelWidth; i += 100) {
+      for (int j = 0; j < levelHeight; j += 100) {
+        g2.drawImage(this.backgroundImage, i, j, 100, 100, null);
       }
     }
     for (Tile t : tiles) {
@@ -251,33 +159,18 @@ public class Level {
       e.drawActor(g2);
     }
     hero.drawActor(g2);
-    g2.setColor(Color.blue);
-    g2.drawString("Lives: " + hero.getNumberOfLives() + "      Level: " + levelIndex
-        + "         Score: " + score, 25, 30);
+    drawScore(g2, score);
   }
 
-  public void handlePause(Graphics2D g2, Color previousColor) {
-    Color pauseColor = new Color(0, 0, 0, 75);
-    for (Tile t : tiles) {
-      t.display(g2);
-    }
-    for (Enemy e : enemies) {
-      e.drawActor(g2);
-    }
-    hero.drawActor(g2);
-    g2.setColor(pauseColor);
-    g2.fillRect(0, 0, levelWidth * 50 + 14, levelHeight * 50 + 37);
-    g2.setColor(previousColor);
-    g2.setColor(Color.blue);
-    g2.drawString("Lives: " + hero.getNumberOfLives() + "      Level: " + levelIndex, 25, 30);
-    g2.setColor(previousColor);
+  public void drawScore(Graphics2D g2, int score) {
+    g2.setColor(new Color(200, 255, 200));
+    g2.setFont(new Font("Monospaced", Font.BOLD, 28));
+		g2.drawString("Level: " + levelIndex, 200, 30);
   }
 
   public void reset() {
     numCoins = 0;
-    enemies.clear();
-    tiles.clear();
-    levelLayout.clear();
+    heroHurt = false;
     generateLevel();
   }
 

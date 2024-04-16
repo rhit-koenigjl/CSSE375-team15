@@ -1,5 +1,4 @@
 {
-    "block-size": 32,
     "assets": [
         [
             [
@@ -13,19 +12,19 @@
         ],
         [
             [
-                "^",
+                "S#U",
                 "assets\\upward_spike.png"
             ],
             [
-                "v",
+                "S#D",
                 "assets\\downward_spike.png"
             ],
             [
-                "<",
+                "S#L",
                 "assets\\leftward_spike.png"
             ],
             [
-                ">",
+                "S#R",
                 "assets\\rightward_spike.png"
             ]
         ],
@@ -36,27 +35,78 @@
             ]
         ],
         [
-            ["&#U", "assets\\ghost_up.png"],
-            ["&#UR", "assets\\ghost_up_right.png"],
-            ["&#R", "assets\\ghost_right.png"],
-            ["&#DR", "assets\\ghost_down_right.png"],
-            ["&#D", "assets\\ghost_down.png"],
-            ["&#DL", "assets\\ghost_down_left.png"],
-            ["&#L", "assets\\ghost_left.png"],
-            ["&#UL", "assets\\ghost_up_left.png"]
+            [
+                "&#U",
+                "assets\\ghost_up.png"
+            ],
+            [
+                "&#UR",
+                "assets\\ghost_up_right.png"
+            ],
+            [
+                "&#R",
+                "assets\\ghost_right.png"
+            ],
+            [
+                "&#DR",
+                "assets\\ghost_down_right.png"
+            ],
+            [
+                "&#D",
+                "assets\\ghost_down.png"
+            ],
+            [
+                "&#DL",
+                "assets\\ghost_down_left.png"
+            ],
+            [
+                "&#L",
+                "assets\\ghost_left.png"
+            ],
+            [
+                "&#UL",
+                "assets\\ghost_up_left.png"
+            ]
         ],
         [
-            ["@#U", "assets\\angry_ghost_up.png"],
-            ["@#UR", "assets\\angry_ghost_up_right.png"],
-            ["@#R", "assets\\angry_ghost_right.png"],
-            ["@#DR", "assets\\angry_ghost_down_right.png"],
-            ["@#D", "assets\\angry_ghost_down.png"],
-            ["@#DL", "assets\\angry_ghost_down_left.png"],
-            ["@#L", "assets\\angry_ghost_left.png"],
-            ["@#UL", "assets\\angry_ghost_up_left.png"]
+            [
+                "@#U",
+                "assets\\angry_ghost_up.png"
+            ],
+            [
+                "@#UR",
+                "assets\\angry_ghost_up_right.png"
+            ],
+            [
+                "@#R",
+                "assets\\angry_ghost_right.png"
+            ],
+            [
+                "@#DR",
+                "assets\\angry_ghost_down_right.png"
+            ],
+            [
+                "@#D",
+                "assets\\angry_ghost_down.png"
+            ],
+            [
+                "@#DL",
+                "assets\\angry_ghost_down_left.png"
+            ],
+            [
+                "@#L",
+                "assets\\angry_ghost_left.png"
+            ],
+            [
+                "@#UL",
+                "assets\\angry_ghost_up_left.png"
+            ]
         ],
         [
-            ["P", "assets\\player_right.gif"]
+            [
+                "P",
+                "assets\\player_right.gif"
+            ]
         ],
         [
             [

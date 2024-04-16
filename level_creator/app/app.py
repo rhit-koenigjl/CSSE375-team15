@@ -10,11 +10,10 @@ from level_setup import LevelSetup
 config_f = open('app-config.json')
 config_data = json.load(config_f)
 
-ls = LevelSetup('temp_level_folder')
+ls = LevelSetup('..\\src\\main\\resources\\levels\\testLevels')
 level_data = ls.get_level_object()
 
-BLOCK_SIZE = config_data['block-size']
-LEVEL_WIDTH, LEVEL_HEIGHT, STREAM = int(level_data['width']), int(level_data['height']), level_data['data']
+LEVEL_WIDTH, LEVEL_HEIGHT, BLOCK_SIZE, STREAM = int(level_data['width']), int(level_data['height']), int(level_data['block_size']), level_data['data']
 
 grid = Grid(LEVEL_WIDTH, LEVEL_HEIGHT, BLOCK_SIZE, STREAM)
 image_manager = ImageManager("app-config.json")

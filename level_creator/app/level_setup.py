@@ -13,6 +13,7 @@ class LevelSetup():
 
         new_level = [
             inquirer.Text('name', message="Level name"),
+            inquirer.Text('block_size', message="Block size"),
             inquirer.Text('width', message="Level width"),
             inquirer.Text('height', message="Level height"),
         ]
@@ -31,6 +32,7 @@ class LevelSetup():
             l_object = {
                 'width': l_data['width'],
                 'height': l_data['height'],
+                'block_size': l_data['block_size'],
                 'data': 'none-' + str(int(l_data['width']) * int(l_data['height']))
             }
             json.dump(l_object, open(self.file_path, 'w'))

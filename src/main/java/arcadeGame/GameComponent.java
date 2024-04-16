@@ -1,8 +1,9 @@
 package arcadeGame;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,11 +12,11 @@ import javax.swing.*;
 public class GameComponent extends JComponent {
 	private SceneManager sceneManager;
 	private int score = 0;
+	private int lives = 3;
 
 	// Fields for level management and creation
-	private String levelFiles[] = {"levels/level00", "levels/level01", "levels/level02",
-			"levels/level03", "levels/level04", "levels/level05", "levels/level06", "levels/level07",
-			"levels/level08", "levels/level09", "levels/level10", "levels/level11", "levels/level12",};
+	private String levelFiles[] = { "levels/testLevels/test_level_0.json",
+			"levels/testLevels/test_level_1.json"};
 	private Level currentLevel;
 	private UpdateState state = new UpdateState(this);
 
@@ -29,14 +30,16 @@ public class GameComponent extends JComponent {
 	/**
 	 * Ensures the creation of the Game Component and initializes the first level
 	 * 
-	 * @param frame the frame that the game is taking place in, used for resizing to fit each level.
+	 * @param frame the frame that the game is taking place in, used for resizing to
+	 *              fit each level.
 	 */
 	public GameComponent(JFrame frame) {
 		this.frame = frame;
-		this.currentLevel = new Level(new File(levelFiles[0]), 0, hero);
+		this.currentLevel = new Level(levelFiles[0], 0, hero);
 		this.sceneManager = new SceneManager(null);
-		SceneUpdater s = new GameUpdater(sceneManager, currentLevel, keys, state);
-		this.sceneManager.switchScene(s);
+		GameUpdater g = new GameUpdater(sceneManager, currentLevel, keys, state);
+		MenuUpdater m = new MenuUpdater(sceneManager, g, keys);
+		this.sceneManager.switchScene(m);
 	}
 
 	public void loadLevelByIndex(int index) {
@@ -47,7 +50,7 @@ public class GameComponent extends JComponent {
 	 * ensures: the editing of the keys HashMap to update what keys are pressed
 	 * 
 	 * @param keyCode: the key being pressed or released
-	 * @param newVal: the new value to be associated with that keyCode
+	 * @param newVal:  the new value to be associated with that keyCode
 	 */
 	public void handleKey(int keyCode, boolean newVal) {
 		keys.put(keyCode, newVal);
@@ -73,14 +76,13 @@ public class GameComponent extends JComponent {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
 		Graphics2D g2 = (Graphics2D) g;
 
-		int xMiddle = 50;
-		int yMiddle = (currentLevel.getHeight() * 50 + 37) / 2;
-
-		String shownString = "";
-		sceneManager.drawScene(g2, shownString, xMiddle, yMiddle, score);
+		sceneManager.drawScene(g2, score);
+		g2.setFont(new Font("Monospaced", Font.BOLD, 28));
+		g2.setColor(new Color(200, 255, 200));
+		g2.drawString("Lives: " + lives, 25, 30);
+		g2.drawString("Score: " + score, 25, 60);
 	}
 
 	/**
@@ -89,7 +91,7 @@ public class GameComponent extends JComponent {
 	 * @param frame: the JFrame to get resized
 	 */
 	public void sizeFrame(JFrame frame) {
-		frame.setSize(currentLevel.getWidth() * 50 + 14, currentLevel.getHeight() * 50 + 37);
+		frame.setSize(currentLevel.getWidth() + 14, currentLevel.getHeight() + 37);
 	}
 
 	/**
@@ -102,7 +104,7 @@ public class GameComponent extends JComponent {
 			currentLevel.reset();
 			return;
 		} else {
-			this.currentLevel = new Level(new File(newLevel), index, hero);
+			this.currentLevel = new Level(newLevel, index, hero);
 			this.sceneManager.setLevel(currentLevel);
 			currentLevel.generateLevel();
 		}
@@ -117,9 +119,10 @@ public class GameComponent extends JComponent {
 
 	public void loseLife() {
 		hero.loseLife();
+		lives --;
 		levelReset();
-		System.out.println("You Died! Lives left: " + hero.getNumberOfLives());
-		if (hero.checkLives()) {
+		System.out.println("You Died! Lives left: " + lives);
+		if (lives > 0) {
 			sceneManager.switchScene(new ResetUpdater(sceneManager, sceneManager.getCurrentScene()));
 		} else {
 			sceneManager.switchScene(new LossUpdater(sceneManager, currentLevel));
