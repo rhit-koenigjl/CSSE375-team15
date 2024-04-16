@@ -14,6 +14,7 @@ import javax.swing.*;
 
 public class GameComponent extends JComponent {
 	private static final String LEVEL_DIRECTORY = "levels/gameLevels/";
+	private final MessageGenerator generator = new AiMessageGenerator();
 
 	private SceneManager sceneManager;
 	private int score = 0;
@@ -154,7 +155,7 @@ public class GameComponent extends JComponent {
 
 	public void nextLevel() {
 		loadLevelByIndex(currentLevel.getIndex() + 1);
-		sceneManager.switchScene(new TransitionUpdater(sceneManager, new AiMessageGenerator()));
+		sceneManager.switchScene(new TransitionUpdater(sceneManager, generator));
 	}
 
 }

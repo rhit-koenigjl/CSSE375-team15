@@ -23,6 +23,7 @@ public class TransitionUpdater extends SceneUpdater {
         this.timer++;
         if (timer > 300) {
             sceneManager.switchScene(gameUpdater);
+            generator.requestMessage();
         }
     }
 
