@@ -42,10 +42,6 @@ public class Level {
     numCoins = ll.getNumCoins();
     levelHeight = ll.getHeight();
     levelWidth = ll.getWidth();
-    System.out.println(levelHeight);
-    System.out.println(levelWidth);
-    System.out.println(tiles.size());
-    System.out.println(enemies.size());
     return new Object[] {tiles, hero, enemies};
   }
 

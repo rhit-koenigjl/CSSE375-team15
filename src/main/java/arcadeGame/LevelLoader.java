@@ -90,7 +90,6 @@ public class LevelLoader {
     }
 
     public void loadLevel() {
-        System.out.println("here");
         JSONObject jo = getJsonObject();
         setupInternalValues(jo);
 

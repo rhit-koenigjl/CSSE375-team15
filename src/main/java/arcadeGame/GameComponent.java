@@ -130,7 +130,6 @@ public class GameComponent extends JComponent {
 
 	public void levelReset() {
 		loadLevelByIndex(currentLevel.getIndex());
-		System.out.println("Level Reset");
 	}
 
 	public void loseLife() {
