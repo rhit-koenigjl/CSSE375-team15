@@ -28,7 +28,6 @@ public class PauseUpdater extends SceneUpdater {
 
     @Override
     public void drawScene(Graphics2D g2, String shownString, int xMiddle, int yMiddle, int score) {
-        Color previousColor = g2.getColor();
         level.draw(g2, score);
         Color pauseColor = new Color(0, 0, 0, 75);
         g2.setColor(pauseColor);
