@@ -25,13 +25,14 @@ public abstract class EnemySpawner extends Enemy {
 		this.p = player;
 		this.vx = velocityX;
 		this.vy = velocityY;
+		this.dir = Direction.NONE;
 	}
 
 	/**
 	 * ensures: the drawing of the EnemySpawner
 	 */
 	public void drawActor(Graphics2D g2) {
-		drawImage(g2, 1.25, 0.125, true);
+		drawImage(g2, 1.25, 0.125, false);
 	}
 
 	/**

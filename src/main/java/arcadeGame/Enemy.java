@@ -10,7 +10,6 @@ public class Enemy extends Actor {
 
 	protected boolean adding = false;
 
-
 	/**
 	 * ensures: the correct initialization of an Enemy
 	 */
@@ -54,24 +53,24 @@ public class Enemy extends Actor {
 	}
 
 	public Enemy(double startX, double startY, double width, double height, Direction dir) {
-		super(startX, startY, width, height);
+		super(startX, startY, width, height, GameImage.GHOST);
 		double ang = Direction.toAngle(dir) + Math.PI / 2;
 		this.vx = Math.cos(ang) * width * DEFAULT_SPEED;
 		this.vy = Math.sin(ang) * height * DEFAULT_SPEED;
-    }
-
-    @Override
-	void drawActor(Graphics2D g2) {
-		drawDirectedImage(g2, "ghost");
 	}
 
-	protected void drawDirectedImage(Graphics2D g2, String filename) {
-		String directedFile = String.format("%s_%s.png", filename, getDirection());
-		super.drawImage(g2, directedFile);
-  }
+	// @Override
+	// void drawActor(Graphics2D g2) {
+	// 	drawDirectedImage(g2, "ghost");
+	// }
+
+	// protected void drawDirectedImage(Graphics2D g2, String filename) {
+	// 	String directedFile = String.format("%s_%s.png", filename, getDirection());
+	// 	super.drawImage(g2, directedFile);
+	// }
+
 	public Enemy(double startX, double startY, double width, double height, GameImage gameImage) {
 		this(startX, startY, width, height, Math.random() * SPEED, Math.random() * SPEED, gameImage);
-
 	}
 
 	@Override

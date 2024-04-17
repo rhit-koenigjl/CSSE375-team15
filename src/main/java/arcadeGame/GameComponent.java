@@ -13,7 +13,7 @@ import java.util.Map;
 import javax.swing.*;
 
 public class GameComponent extends JComponent {
-	private static final String LEVEL_DIRECTORY = "levels/gameLevels/";
+	private static final String LEVEL_DIRECTORY = "levels/level_set_1/";
 	private final MessageGenerator generator = new AiMessageGenerator();
 
 	private SceneManager sceneManager;

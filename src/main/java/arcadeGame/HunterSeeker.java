@@ -67,8 +67,8 @@ public class HunterSeeker extends Enemy {
 			goalLift = width * DEFAULT_SPEED * 0.5;
 		}
 
-		vx += (goalSpeed - vx) / approachFactor;
-		vy += (goalLift - vy) / approachFactor;
+		vx += (goalSpeed - vx) / APPROACH_FACTOR;
+		vy += (goalLift - vy) / APPROACH_FACTOR;
 	}
 
 	@Override

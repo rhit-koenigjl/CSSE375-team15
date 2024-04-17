@@ -1,18 +1,8 @@
 package arcadeGame;
 
 import java.awt.Graphics2D;
-import java.util.HashMap;
 
 public class Spike extends Tile {
-	private Direction dir;
-	private static final HashMap <Direction, String> imageMap = new HashMap<Direction, String>() {
-		{
-			put(Direction.DOWN, "downward_spike.png");
-			put(Direction.UP, "upward_spike.png");
-			put(Direction.LEFT, "leftward_spike.png");
-			put(Direction.RIGHT, "rightward_spike.png");
-		}
-	};
 
 	/**
 	 * ensures: calls the Tile constructor
@@ -26,7 +16,7 @@ public class Spike extends Tile {
 		super(d == Direction.LEFT ? x + sideLength / 4 : x, 
 		      d == Direction.UP ? y + sideLength / 4 : y,
 			  d == Direction.RIGHT || d == Direction.LEFT ? sideLength * 3 / 4 : sideLength,
-			  d == Direction.DOWN || d == Direction.UP ? sideLength * 3 / 4 : sideLength);
+			  d == Direction.DOWN || d == Direction.UP ? sideLength * 3 / 4 : sideLength, GameImage.SPIKE);
 		this.dir = d;
 	}
 
