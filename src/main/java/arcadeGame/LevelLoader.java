@@ -64,8 +64,8 @@ public class LevelLoader {
 
     private void addBlock(int xPos, int yPos, char blockType, Direction dir) {
         int actorSize = (int) (size * 4.0 / 5.0);
-        int actorXPos = (int) ((xPos + 0.2) * size);
-        int actorYPos = (int) ((yPos + 0.2) * size);
+        int actorXPos = (int) ((xPos + 0.1) * size);
+        int actorYPos = (int) ((yPos + 0.1) * size);
 
         switch (blockType) {
             case 'b':
@@ -84,7 +84,7 @@ public class LevelLoader {
                 enemies.add(new HunterSeeker(actorXPos, actorYPos, actorSize, actorSize, this.player));
                 break;
             case 'c':
-                tiles.add(new Coin(xPos * size, yPos * size, size, size));
+                tiles.add(new Coin(actorXPos, actorYPos, actorSize, actorSize));
                 numCoins++;
                 break;
             case 'P':

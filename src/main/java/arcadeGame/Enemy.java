@@ -3,19 +3,7 @@ package arcadeGame;
 import java.awt.Graphics2D;
 
 public class Enemy extends Actor {
-	private static final int STARTING_X = 100;
-	private static final int STARTING_Y = 100;
-	private static final int WIDTH = 40;
-	private static final int HEIGHT = 40;
-
 	protected boolean adding = false;
-
-	/**
-	 * ensures: the correct initialization of an Enemy
-	 */
-	public Enemy() {
-		this(STARTING_X, STARTING_Y, WIDTH, HEIGHT); // viable arbitrary starting values
-	}
 
 	/**
 	 * ensures: the creation of a new enemy with specified coordinates and size
@@ -80,7 +68,7 @@ public class Enemy extends Actor {
 			String verticalDirection = (vy == 0) ? "" : (vy > 0) ? "D" : "U";
 			String direction = String.format("%s%s", (vx != 0) ? verticalDirection : "",
 					(vy != 0) ? horizontalDirection : "");
-			this.dir = Direction.fromString(direction);
+			this.dir = direction.equals("") ? this.dir : Direction.fromString(direction);
 		}
 		drawImage(g2);
 	}
@@ -101,5 +89,13 @@ public class Enemy extends Actor {
 	public boolean isNonTrackingEnemy() {
 		return true;
 	}
+
+	public GameImage getImage() {
+		return this.gameImage;
+	}
+
+    public Direction getDir() {
+        return this.dir;
+    }
 
 }
