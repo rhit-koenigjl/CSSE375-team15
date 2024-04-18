@@ -63,4 +63,13 @@ public class TestSpriteImageGeneration {
     checkImageGeneration(gameImage, expectedDirections, expectedFileNames);
   }
 
+  @Test
+  public void testCoinImageGenerator() {
+    Set<Direction> expectedDirections = Set.of(Direction.NONE);
+    Set<String> expectedFileNames = new HashSet<>(Set.of("coin.gif"));
+
+    GameImage gameImage = GameImage.COIN;
+    checkImageGeneration(gameImage, expectedDirections, expectedFileNames);
+  }
+
 }
