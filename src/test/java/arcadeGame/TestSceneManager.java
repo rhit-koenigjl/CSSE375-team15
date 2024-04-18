@@ -9,12 +9,10 @@ import org.junit.Test;
 public class TestSceneManager {
     private int drawnScene1 = 0;
     private int updatedScene1 = 0;
-    
+
     private int drawnScene2 = 0;
     private int updatedScene2 = 0;
 
-
-    
     private class DummyScene1 extends SceneUpdater {
         DummyScene1(SceneManager sceneManager) {
             super(sceneManager);
@@ -22,7 +20,7 @@ public class TestSceneManager {
 
         @Override
         void updateScene() {
-            updatedScene1 ++;
+            updatedScene1++;
             if (updatedScene1 >= 5) {
                 sceneManager.switchScene(new DummyScene2(this.sceneManager));
             }
@@ -30,7 +28,7 @@ public class TestSceneManager {
 
         @Override
         void drawScene(Graphics2D g, int score) {
-            drawnScene1 ++;
+            drawnScene1++;
         }
 
         @Override
@@ -47,12 +45,12 @@ public class TestSceneManager {
 
         @Override
         void updateScene() {
-            updatedScene2 ++;
+            updatedScene2++;
         }
 
         @Override
         void drawScene(Graphics2D g, int score) {
-            drawnScene2 ++;
+            drawnScene2++;
         }
 
         @Override
@@ -77,10 +75,20 @@ public class TestSceneManager {
         drawnScene1 = 0;
         SceneManager sm = new SceneManager(null);
         sm.switchScene(new DummyScene1(sm));
-        for (int i = 0;i < 5; i ++) {
+        for (int i = 0; i < 5; i++) {
             sm.drawScene(null, 0);
         }
 
         assertEquals(5, drawnScene1);
+    }
+
+    @Test
+    public void testSceneManager_runScene_expectUpdate() {
+        updatedScene1 = 0;
+        SceneManager sm = new SceneManager(null);
+        sm.switchScene(new DummyScene1(sm));
+        sm.runScene();
+
+        assertEquals(1, updatedScene1);
     }
 }
