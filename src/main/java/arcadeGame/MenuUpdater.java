@@ -47,4 +47,13 @@ public class MenuUpdater extends SceneUpdater {
         g2.drawString(str3, (int) midX3, (int) midY + metrics.getHeight());
     }
 
+    String getSceneName() {
+        return "menu";
+    }
+
+    // For testing purposes
+    void setKeys(Map<Integer, Boolean> keys) {
+        this.keys = keys;
+    }
+
 }

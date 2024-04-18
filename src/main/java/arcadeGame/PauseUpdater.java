@@ -54,4 +54,8 @@ public class PauseUpdater extends SceneUpdater {
         level.drawScore(g2, score);
     }
 
+    String getSceneName() {
+        return "pause";
+    }
+
 }

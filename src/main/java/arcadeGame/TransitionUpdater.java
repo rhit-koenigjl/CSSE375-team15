@@ -58,7 +58,10 @@ public class TransitionUpdater extends SceneUpdater {
             double midX = boundingBox.getWidth() / 2 - metrics.stringWidth(currentLine) / 2;
             g2.drawString(currentLine, (int) midX, y);
         }
-        
+    }
+
+    String getSceneName() {
+        return "transition";
     }
 
 }

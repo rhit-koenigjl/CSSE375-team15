@@ -40,4 +40,8 @@ public class ResetUpdater extends SceneUpdater {
         g2.drawString(str1, (int) midX1, (int) midY);
     }
 
+    String getSceneName() {
+        return "reset";
+    }
+
 }

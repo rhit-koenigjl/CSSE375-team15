@@ -13,4 +13,7 @@ public abstract class SceneUpdater {
     public abstract void updateScene();
 
     public abstract void drawScene(Graphics2D g, int score);
+
+    // For testing purposes
+    abstract String getSceneName();
 }

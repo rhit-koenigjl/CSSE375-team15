@@ -36,4 +36,8 @@ public class LossUpdater extends SceneUpdater {
         g2.drawString(str2, (int) midX2, (int) midY + metrics.getHeight() / 2);
     }
 
+    String getSceneName() {
+        return "loss";
+    }
+
 }

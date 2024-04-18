@@ -31,4 +31,8 @@ public class WinUpdater extends SceneUpdater {
         g2.drawString(str1, (int) midX1, (int) midY);
     }
 
+    String getSceneName() {
+        return "win";
+    }
+
 }

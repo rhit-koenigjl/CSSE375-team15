@@ -34,4 +34,8 @@ public class GameUpdater extends SceneUpdater {
         this.level = level;
     }
 
+    String getSceneName() {
+        return "game";
+    }
+
 }

@@ -24,7 +24,7 @@ public enum GameImage {
   private Set<Direction> directions;
   private Map<Direction, Image> images;
 
-  // For unit testing purposes
+  // For testing purposes
   private Map<Direction, File> imageFiles;
 
   private GameImage(String fileName, Extension extension, DirectionType directionType) {
@@ -87,12 +87,12 @@ public enum GameImage {
     return this.images.get(direction);
   }
 
-  // For unit testing purposes
+  // For testing purposes
   Map<Direction, Image> getImages() {
     return this.images;
   }
 
-  // For unit testing purposes
+  // For testing purposes
   File getImageFile(Direction direction) {
     return this.imageFiles.get(direction);
   }

@@ -159,4 +159,9 @@ public class GameComponent extends JComponent {
 		sceneManager.switchScene(new TransitionUpdater(sceneManager, generator));
 	}
 
+	// For testing purposes
+	SceneManager getSceneManager() {
+		return sceneManager;
+	}
+
 }
