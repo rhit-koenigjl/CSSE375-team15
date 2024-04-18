@@ -25,12 +25,12 @@ public class AiMessageGenerator implements MessageGenerator {
     try {
       Pattern pattern = Pattern.compile("\"text\": \".*\"");
       Matcher matcher = pattern.matcher(response.get().body());
-      String output =
-          matcher.find() ? matcher.group().substring(9, matcher.group().length() - 1) : "";
+      String output = matcher.find() ? matcher.group().substring(9, matcher.group().length() - 1)
+          : "Keep going!";
       return output;
     } catch (Exception e) {
       e.printStackTrace();
-      return "";
+      return "You got this!";
     }
   }
 
