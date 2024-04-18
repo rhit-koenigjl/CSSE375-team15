@@ -21,7 +21,7 @@ public class Coin extends Tile {
 	 */
 	@Override
 	void display(Graphics2D g) {
-		drawImage(g, 0.75, 0.125, false);
+		drawImage(g);
 	}
 
 	/**

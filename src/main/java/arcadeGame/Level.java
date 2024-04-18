@@ -21,11 +21,15 @@ public class Level {
   private boolean heroHurt = false;
   private GameImage gameImage;
 
+  // Extra Grapics Fields
+  private List<DisplaySprite> sprites;
+
   public Level(String levelPath, int index, Player hero) {
     this.levelPath = levelPath;
     this.levelIndex = index;
     this.hero = hero;
     this.gameImage = GameImage.BACKGROUND;
+    this.sprites = new ArrayList<DisplaySprite>();
   }
 
   /**
@@ -34,6 +38,7 @@ public class Level {
    * @param inputFilename: the text file the level is taking data from
    */
   public Object[] generateLevel() {
+    sprites.clear();
     LevelLoader ll = new LevelLoader(levelPath);
     ll.loadLevel();
     tiles = ll.getTiles();
@@ -62,6 +67,9 @@ public class Level {
         heroHurt = true;
       }
       if (collisionType == 2) {
+        if(hero.getVy() > 0) {
+          hero.setVy(- hero.getWidth() / 5);
+        }
         enemiesRemove.add(enemy);
       }
       enemy.update(tiles);
@@ -75,6 +83,7 @@ public class Level {
     }
     for (Enemy e : enemiesRemove) {
       enemies.remove(e);
+      sprites.add(new DeadEnemySprite(e.getX(), e.getY(), e.getWidth(), e.getHeight(), e.getVx(), e.getVy(), e.getDir(), e.getImage()));
       state.incrementScore(50);
     }
     for (Enemy e : enemiesToAdd) {
@@ -87,6 +96,7 @@ public class Level {
     for (Tile t : tiles) {
       if (t.shouldRemove()) {
         toRemove.add(t);
+        sprites.add(new CollectedCoinSprite(t.getX(), t.getY(), t.getWidth(), t.getHeight()));
       }
     }
     for (Tile t : toRemove) {
@@ -150,6 +160,11 @@ public class Level {
     }
     hero.drawActor(g2);
     drawScore(g2, score);
+
+    for (DisplaySprite ds: sprites) {
+      ds.display(g2);
+      ds.updatePosition();
+    }
   }
 
   public void drawScore(Graphics2D g2, int score) {
