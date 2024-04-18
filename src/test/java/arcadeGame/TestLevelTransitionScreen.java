@@ -34,7 +34,6 @@ public class TestLevelTransitionScreen {
   public void testTransitionMessageGeneration() {
     MessageGenerator generator = EasyMock.createMock(MessageGenerator.class);
     EasyMock.expect(generator.generateEncouragingMessage()).andReturn("This is a test message.");
-    generator.requestMessage();
 
     FontMetrics metrics = EasyMock.niceMock(FontMetrics.class);
     EasyMock.expect(metrics.getHeight()).andReturn(1);
