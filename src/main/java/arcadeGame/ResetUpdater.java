@@ -19,14 +19,15 @@ public class ResetUpdater extends SceneUpdater {
     @Override
     public void updateScene() {
         this.timer++;
-        if (timer > 350) {
+        if (timer > 300) {
             sceneManager.switchScene(gameUpdater);
         }
     }
 
     @Override
     public void drawScene(Graphics2D g2, int score) {
-        String str1 = "You got hit! Restarting the level in " + (350 - timer) / 100;
+        String str1 = "You got hit!";
+        String str2 = "Restarting the level in " + (400 - timer) / 100;
 
         Font font = new Font("Monospaced", Font.BOLD, 28);
         FontMetrics metrics = g2.getFontMetrics(font);
@@ -35,9 +36,11 @@ public class ResetUpdater extends SceneUpdater {
 
         Rectangle boundingBox = g2.getClipBounds();
         double midX1 = boundingBox.getWidth() / 2 - metrics.stringWidth(str1) / 2;
+        double midX2 = boundingBox.getWidth() / 2 - metrics.stringWidth(str2) / 2;
         double midY = boundingBox.getHeight() / 2 - metrics.getHeight() / 2;
 
-        g2.drawString(str1, (int) midX1, (int) midY);
+        g2.drawString(str1, (int) midX1, (int) midY - 14);
+        g2.drawString(str2, (int) midX2, (int) midY + 14);
     }
 
     String getSceneName() {
