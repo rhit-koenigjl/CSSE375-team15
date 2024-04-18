@@ -71,4 +71,16 @@ public class TestSceneManager {
 
         assertEquals(1, drawnScene1);
     }
+
+    @Test
+    public void testSceneManager_drawSceneMultipleTimes_expectMultipleDraws() {
+        drawnScene1 = 0;
+        SceneManager sm = new SceneManager(null);
+        sm.switchScene(new DummyScene1(sm));
+        for (int i = 0;i < 5; i ++) {
+            sm.drawScene(null, 0);
+        }
+
+        assertEquals(5, drawnScene1);
+    }
 }
