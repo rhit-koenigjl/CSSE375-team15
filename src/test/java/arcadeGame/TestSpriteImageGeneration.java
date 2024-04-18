@@ -94,8 +94,7 @@ public class TestSpriteImageGeneration {
   @Test
   public void testGhostImageGenerator() {
     Set<Direction> expectedDirections = getEightDirections();
-    Set<String> expectedFileNames =
-        new HashSet<>(getDirectedFiles("ghost", "png", expectedDirections));
+    Set<String> expectedFileNames = getDirectedFiles("ghost", "png", expectedDirections);
 
     GameImage gameImage = GameImage.GHOST;
     checkImageGeneration(gameImage, expectedDirections, expectedFileNames);
@@ -107,6 +106,19 @@ public class TestSpriteImageGeneration {
     Set<String> expectedFileNames = new HashSet<>(Set.of("mossy_brick.png"));
 
     GameImage gameImage = GameImage.MOSSY_BRICK;
+    checkImageGeneration(gameImage, expectedDirections, expectedFileNames);
+  }
+
+  private Set<Direction> getTwoDirections() {
+    return Set.of(Direction.LEFT, Direction.RIGHT);
+  }
+
+  @Test
+  public void testPlayerImageGenerator() {
+    Set<Direction> expectedDirections = getTwoDirections();
+    Set<String> expectedFileNames = getDirectedFiles("player", "gif", expectedDirections);
+
+    GameImage gameImage = GameImage.PLAYER;
     checkImageGeneration(gameImage, expectedDirections, expectedFileNames);
   }
 
