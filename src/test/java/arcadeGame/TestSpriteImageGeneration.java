@@ -101,4 +101,13 @@ public class TestSpriteImageGeneration {
     checkImageGeneration(gameImage, expectedDirections, expectedFileNames);
   }
 
+  @Test
+  public void testMossyBrickImageGenerator() {
+    Set<Direction> expectedDirections = getNoDirections();
+    Set<String> expectedFileNames = new HashSet<>(Set.of("mossy_brick.png"));
+
+    GameImage gameImage = GameImage.MOSSY_BRICK;
+    checkImageGeneration(gameImage, expectedDirections, expectedFileNames);
+  }
+
 }
