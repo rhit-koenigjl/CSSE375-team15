@@ -11,11 +11,15 @@ import org.junit.Test;
 
 public class TestSpriteImageGeneration {
 
+  private Set<Direction> getNoDirections() {
+    return Set.of(Direction.NONE);
+  }
+
   private void checkImageGeneration(GameImage gameImage, Set<Direction> expectedDirections,
       Set<String> expectedFileNames) {
     int expectedCount = expectedDirections.size();
     Map<Direction, Image> images = gameImage.getImages();
-    
+
     assertEquals(expectedCount, images.size());
     assertEquals(expectedDirections, images.keySet());
 
@@ -29,6 +33,7 @@ public class TestSpriteImageGeneration {
         if (fileName.getPath().contains(expectedFileName)) {
           assertTrue(true);
           expectedFileNames.remove(expectedFileName);
+          break;
         }
       }
     }
@@ -38,7 +43,7 @@ public class TestSpriteImageGeneration {
 
   @Test
   public void testBackgroundImageGenerator() {
-    Set<Direction> expectedDirections = Set.of(Direction.NONE);
+    Set<Direction> expectedDirections = getNoDirections();
     Set<String> expectedFileNames = new HashSet<>(Set.of("background.png"));
 
     GameImage gameImage = GameImage.BACKGROUND;
@@ -47,7 +52,7 @@ public class TestSpriteImageGeneration {
 
   @Test
   public void testBouncePadImageGenerator() {
-    Set<Direction> expectedDirections = Set.of(Direction.NONE);
+    Set<Direction> expectedDirections = getNoDirections();
     Set<String> expectedFileNames = new HashSet<>(Set.of("bounce_pad.gif"));
 
     GameImage gameImage = GameImage.BOUNCE_PAD;
@@ -56,7 +61,7 @@ public class TestSpriteImageGeneration {
 
   @Test
   public void testBrickImageGenerator() {
-    Set<Direction> expectedDirections = Set.of(Direction.NONE);
+    Set<Direction> expectedDirections = getNoDirections();
     Set<String> expectedFileNames = new HashSet<>(Set.of("brick.png"));
 
     GameImage gameImage = GameImage.BRICK;
@@ -65,10 +70,34 @@ public class TestSpriteImageGeneration {
 
   @Test
   public void testCoinImageGenerator() {
-    Set<Direction> expectedDirections = Set.of(Direction.NONE);
+    Set<Direction> expectedDirections = getNoDirections();
     Set<String> expectedFileNames = new HashSet<>(Set.of("coin.gif"));
 
     GameImage gameImage = GameImage.COIN;
+    checkImageGeneration(gameImage, expectedDirections, expectedFileNames);
+  }
+
+  private Set<Direction> getEightDirections() {
+    return Set.of(Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.UP_LEFT,
+        Direction.UP_RIGHT, Direction.DOWN_LEFT, Direction.DOWN_RIGHT);
+  }
+
+  private Set<String> getDirectedFiles(String fileName, String extension,
+      Set<Direction> directions) {
+    Set<String> fileNames = new HashSet<>();
+    for (Direction direction : directions) {
+      fileNames.add(fileName + "_" + direction.toString().toLowerCase() + "." + extension);
+    }
+    return fileNames;
+  }
+
+  @Test
+  public void testGhostImageGenerator() {
+    Set<Direction> expectedDirections = getEightDirections();
+    Set<String> expectedFileNames =
+        new HashSet<>(getDirectedFiles("ghost", "png", expectedDirections));
+
+    GameImage gameImage = GameImage.GHOST;
     checkImageGeneration(gameImage, expectedDirections, expectedFileNames);
   }
 
