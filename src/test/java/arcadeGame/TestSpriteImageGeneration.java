@@ -144,4 +144,13 @@ public class TestSpriteImageGeneration {
     checkImageGeneration(gameImage, expectedDirections, expectedFileNames);
   }
 
+  @Test
+  public void testTrackerImageGenerator() {
+    Set<Direction> expectedDirections = getEightDirections();
+    Set<String> expectedFileNames = getDirectedFiles("angry_ghost", "png", expectedDirections);
+
+    GameImage gameImage = GameImage.TRACKER;
+    checkImageGeneration(gameImage, expectedDirections, expectedFileNames);
+  }
+
 }
