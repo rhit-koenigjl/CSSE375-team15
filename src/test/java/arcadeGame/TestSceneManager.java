@@ -97,7 +97,7 @@ public class TestSceneManager {
         updatedScene1 = 0;
         SceneManager sm = new SceneManager(null);
         sm.switchScene(new DummyScene1(sm));
-        for (int i = 0;i < 3;i ++) {
+        for (int i = 0; i < 3; i++) {
             sm.runScene();
         }
 
@@ -113,5 +113,29 @@ public class TestSceneManager {
         assertEquals("DummyScene2", sm.getCurrentScene().getSceneName());
     }
 
-    
+    @Test
+    public void testSceneMAnager_testSwichSceneAtRuntime_expectRuntimeSwitch() {
+        drawnScene1 = 0;
+        updatedScene1 = 0;
+
+        drawnScene2 = 0;
+        updatedScene2 = 0;
+
+        SceneManager sm = new SceneManager(null);
+        sm.switchScene(new DummyScene1(sm));
+
+        assertEquals("DummyScene1", sm.getCurrentScene().getSceneName());
+
+        for (int i = 0; i < 12; i++) {
+            sm.runScene();
+            sm.drawScene(null, 0);
+        }
+
+        assertEquals("DummyScene2", sm.getCurrentScene().getSceneName());
+        assertEquals(4, drawnScene1);
+        assertEquals(5, updatedScene1);
+        assertEquals(8, drawnScene2);
+        assertEquals(7, updatedScene2);
+
+    }
 }
