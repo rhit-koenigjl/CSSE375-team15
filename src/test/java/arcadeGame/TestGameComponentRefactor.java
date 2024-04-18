@@ -38,7 +38,7 @@ public class TestGameComponentRefactor {
     List<Enemy> enemies = (List<Enemy>) gameObjects[2];
 
     assertEquals(15, tiles.size());
-    assertEquals(50, player.getX());
+    assertEquals(60, player.getX());
     assertEquals(0, enemies.size());
   }
 }

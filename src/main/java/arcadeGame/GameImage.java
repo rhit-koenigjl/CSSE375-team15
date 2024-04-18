@@ -1,6 +1,7 @@
 package arcadeGame;
 
 import java.awt.Image;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -22,6 +23,7 @@ public enum GameImage {
   private Extension extension;
   private Set<Direction> directions;
   private Map<Direction, Image> images;
+  private Map<Direction, File> imageFiles;
 
   private GameImage(String fileName, Extension extension, DirectionType directionType) {
     this.fileName = fileName;
@@ -62,6 +64,7 @@ public enum GameImage {
 
   private void createImages() {
     images = new HashMap<>();
+    imageFiles = new HashMap<>();
     for (Direction direction : directions) {
       StringBuilder path = new StringBuilder(this.fileName);
       if (direction != Direction.NONE) {
@@ -70,6 +73,7 @@ public enum GameImage {
       path.append(".").append(this.extension.toString().toLowerCase());
       images.put(direction,
           new ImageIcon(getClass().getResource("/images/" + path.toString())).getImage());
+      imageFiles.put(direction, new File(path.toString()));
     }
   }
 
@@ -79,6 +83,14 @@ public enum GameImage {
 
   public Image getImage(Direction direction) {
     return this.images.get(direction);
+  }
+
+  Map<Direction, Image> getImages() {
+    return this.images;
+  }
+
+  File getImageFile(Direction direction) {
+    return this.imageFiles.get(direction);
   }
 
 }
