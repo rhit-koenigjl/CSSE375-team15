@@ -8,13 +8,13 @@ import java.awt.Rectangle;
 
 public class TransitionUpdater extends SceneUpdater {
     private SceneUpdater gameUpdater;
-    private MessageGenerator generator;
+    private String message;
     private int timer;
 
     TransitionUpdater(SceneManager sceneManager, MessageGenerator generator) {
         super(sceneManager);
         this.gameUpdater = sceneManager.getCurrentScene();
-        this.generator = generator;
+        this.message = generator.generateEncouragingMessage();
         this.timer = 0;
     }
 
@@ -23,7 +23,6 @@ public class TransitionUpdater extends SceneUpdater {
         this.timer++;
         if (timer > 300) {
             sceneManager.switchScene(gameUpdater);
-            generator.requestMessage();
         }
     }
 
@@ -41,7 +40,7 @@ public class TransitionUpdater extends SceneUpdater {
         double midX2 = boundingBox.getWidth() / 2 - metrics.stringWidth(timerMessage) / 2;
         g2.drawString(timerMessage, (int) midX2, (int) midY - metrics.getHeight() - 10);
 
-        String[] words = generator.generateEncouragingMessage().split(" ");
+        String[] words = message.split(" ");
         String currentLine = words[0];
         int y = (int) midY;
         for (int i = 1; i < words.length; i++) {
