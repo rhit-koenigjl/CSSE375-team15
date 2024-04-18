@@ -91,4 +91,16 @@ public class TestSceneManager {
 
         assertEquals(1, updatedScene1);
     }
+
+    @Test
+    public void testSceneManager_runSceneMultipleTimes_expectMutipleUpdates() {
+        updatedScene1 = 0;
+        SceneManager sm = new SceneManager(null);
+        sm.switchScene(new DummyScene1(sm));
+        for (int i = 0;i < 3;i ++) {
+            sm.runScene();
+        }
+
+        assertEquals(3, updatedScene1);
+    }
 }
