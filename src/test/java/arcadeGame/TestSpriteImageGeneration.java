@@ -131,4 +131,17 @@ public class TestSpriteImageGeneration {
     checkImageGeneration(gameImage, expectedDirections, expectedFileNames);
   }
 
+  private Set<Direction> getFourDirections() {
+    return Set.of(Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT);
+  }
+
+  @Test
+  public void testSpikeImageGenerator() {
+    Set<Direction> expectedDirections = getFourDirections();
+    Set<String> expectedFileNames = getDirectedFiles("spike", "png", expectedDirections);
+
+    GameImage gameImage = GameImage.SPIKE;
+    checkImageGeneration(gameImage, expectedDirections, expectedFileNames);
+  }
+
 }
