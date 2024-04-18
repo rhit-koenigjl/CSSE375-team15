@@ -103,4 +103,15 @@ public class TestSceneManager {
 
         assertEquals(3, updatedScene1);
     }
+
+    @Test
+    public void testSceneManager_testSwitchScene_expectSceneSwitched() {
+        SceneManager sm = new SceneManager(null);
+        sm.switchScene(new DummyScene1(sm));
+        assertEquals("DummyScene1", sm.getCurrentScene().getSceneName());
+        sm.switchScene(new DummyScene2(sm));
+        assertEquals("DummyScene2", sm.getCurrentScene().getSceneName());
+    }
+
+    
 }
