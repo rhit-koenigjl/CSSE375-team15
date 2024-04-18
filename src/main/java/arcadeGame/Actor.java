@@ -6,43 +6,17 @@ import java.util.List;
 public abstract class Actor extends GameObject {
 	protected static final double APPROACH_FACTOR = 4;
 	protected static final double SPEED = 5;
-
-	private boolean didCollideWithSpikes = false;
 	protected static final double DEFAULT_SPEED = 1.0 / 10.0;
 
-	/**
-	 * ensures: the proper construction of an Actor instance
-	 * 
-	 * @param startX
-	 * @param startY
-	 * @param width
-	 * @param height
-	 */
-	public Actor(double startX, double startY, double width, double height, GameImage gameImage) {
+	private boolean didCollideWithSpikes = false;
+
+	Actor(double startX, double startY, double width, double height, GameImage gameImage) {
 		super(startX, startY, width, height, gameImage);
 	}
 
-	/**
-	 * ensures: the proper drawing of a basic actor
-	 * 
-	 * @param g2: the graphics package being used
-	 */
 	abstract void drawActor(Graphics2D g2);
 
-	/**
-	 * ensures: returns a true or false value whether or not this actor is colliding with a tile
-	 * 
-	 * @param t: the tiles
-	 * @return: true if the actor is overlapping a tile, false if not
-	 */
-
-	@Override
-	public String toString() {
-		return "Actor [x=" + getX() + ", y=" + getY() + ", width=" + width + ", height=" + height
-				+ ", vx=" + getVx() + ", vy=" + getVy() + "]";
-	}
-
-	protected void handleTileCollisions(List<Tile> tiles, double xVel, double yVel) {
+	private void handleTileCollisions(List<Tile> tiles, double xVel, double yVel) {
 		for (Tile tile : tiles) {
 			if (collidesWith(tile))
 				tile.handleCollision(this, xVel, yVel);

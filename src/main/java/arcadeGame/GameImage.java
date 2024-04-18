@@ -79,11 +79,11 @@ public enum GameImage {
     }
   }
 
-  public Image getImage() {
+  Image getImage() {
     return this.images.get(Direction.NONE);
   }
 
-  public Image getImage(Direction direction) {
+  Image getImage(Direction direction) {
     return this.images.get(direction);
   }
 

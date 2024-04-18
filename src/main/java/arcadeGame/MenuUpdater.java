@@ -11,7 +11,7 @@ public class MenuUpdater extends SceneUpdater {
     private GameUpdater gameUpdater;
     private Map<Integer, Boolean> keys;
 
-    public MenuUpdater(SceneManager sceneManager, GameUpdater gameUpdater,
+    MenuUpdater(SceneManager sceneManager, GameUpdater gameUpdater,
             Map<Integer, Boolean> keys) {
         super(sceneManager);
         this.gameUpdater = gameUpdater;
@@ -19,15 +19,15 @@ public class MenuUpdater extends SceneUpdater {
     }
 
     @Override
-    public void updateScene() {
+    void updateScene() {
         if (keys.getOrDefault(32, false)) {
             sceneManager.switchScene(gameUpdater);
         }
     }
 
     @Override
-    public void drawScene(Graphics2D g2, int score) {
-        String str1 = "Press Spacebar to Start";
+    void drawScene(Graphics2D g2, int score) {
+        String str1 = "Press the Space Bar to start";
         String str2 = "Use the Arrow Keys to move";
         String str3 = "Use Escape to pause the game";
 

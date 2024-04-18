@@ -4,29 +4,21 @@ import java.awt.Graphics2D;
 
 public class Spike extends Tile {
 
-	/**
-	 * ensures: calls the Tile constructor
-	 * 
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 */
-	public Spike(int x, int y, int sideLength, Direction d) {
-		super(d == Direction.LEFT ? x + sideLength / 4 : x, 
-		      d == Direction.UP ? y + sideLength / 4 : y,
-			  d == Direction.RIGHT || d == Direction.LEFT ? sideLength * 3 / 4 : sideLength,
-			  d == Direction.DOWN || d == Direction.UP ? sideLength * 3 / 4 : sideLength, GameImage.SPIKE);
+	Spike(int x, int y, int sideLength, Direction d) {
+		super(d == Direction.LEFT ? x + sideLength / 4 : x, d == Direction.UP ? y + sideLength / 4 : y,
+				d == Direction.RIGHT || d == Direction.LEFT ? sideLength * 3 / 4 : sideLength,
+				d == Direction.DOWN || d == Direction.UP ? sideLength * 3 / 4 : sideLength,
+				GameImage.SPIKE);
 		this.dir = d;
 	}
 
 	@Override
-	public void display(Graphics2D g2) {
+	void display(Graphics2D g2) {
 		drawImage(g2);
 	}
 
 	@Override
-	public void handleCollision(Actor a, double ix, double iy) {
+	void handleCollision(Actor a, double ix, double iy) {
 		if (ix > 0) {
 			if (this.dir == Direction.LEFT) {
 				a.setSpikeCollision(true);

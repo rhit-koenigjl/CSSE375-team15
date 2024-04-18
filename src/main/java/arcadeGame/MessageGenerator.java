@@ -1,7 +1,7 @@
 package arcadeGame;
 
 public interface MessageGenerator {
-  public String generateEncouragingMessage();
+  String generateEncouragingMessage();
 
-  public void requestMessage();
+  void requestMessage();
 }

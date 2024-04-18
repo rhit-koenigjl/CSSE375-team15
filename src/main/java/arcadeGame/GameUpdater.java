@@ -9,7 +9,7 @@ public class GameUpdater extends SceneUpdater {
     private Map<Integer, Boolean> keys;
     private UpdateState state;
 
-    public GameUpdater(SceneManager sm, Level level, Map<Integer, Boolean> k, UpdateState state) {
+    GameUpdater(SceneManager sm, Level level, Map<Integer, Boolean> k, UpdateState state) {
         super(sm);
         this.keys = k;
         this.level = level;
@@ -17,12 +17,12 @@ public class GameUpdater extends SceneUpdater {
     }
 
     @Override
-    public void updateScene() {
+    void updateScene() {
         this.level.update(keys, state, sceneManager);
     }
 
     @Override
-    public void drawScene(Graphics2D g2, int score) {
+    void drawScene(Graphics2D g2, int score) {
         Color previousColor = g2.getColor();
         g2.setFont(new Font("Monospaced", Font.BOLD, FONT_SIZE));
 
@@ -30,7 +30,7 @@ public class GameUpdater extends SceneUpdater {
         g2.setColor(previousColor);
     }
 
-    public void changeLevel(Level level) {
+    void changeLevel(Level level) {
         this.level = level;
     }
 

@@ -8,18 +8,18 @@ import java.awt.Rectangle;
 public class LossUpdater extends SceneUpdater {
     private Level level;
 
-    public LossUpdater(SceneManager sceneManager, Level level) {
+    LossUpdater(SceneManager sceneManager, Level level) {
         super(sceneManager);
         this.level = level;
     }
 
     @Override
-    public void updateScene() {
+    void updateScene() {
         return;
     }
 
     @Override
-    public void drawScene(Graphics2D g2, int score) {
+    void drawScene(Graphics2D g2, int score) {
         String str1 = "You ran out of lives on level " + level.getIndex();
         String str2 = "Your score was: " + score;
 

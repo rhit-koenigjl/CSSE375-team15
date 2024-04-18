@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 public class GameAdvanceListener implements ActionListener {
 	private GameComponent gameComponent;
 
-	public GameAdvanceListener(GameComponent gameComponent) {
+	GameAdvanceListener(GameComponent gameComponent) {
 		this.gameComponent = gameComponent;
 	}
 
@@ -15,9 +15,7 @@ public class GameAdvanceListener implements ActionListener {
 		advanceOneTick();
 	}
 
-	public void advanceOneTick() {
-		// The component uses user actions from listeners to change the state of the game.
-		// update screen
+	void advanceOneTick() {
 		this.gameComponent.updateState();
 		this.gameComponent.drawScreen();
 	}

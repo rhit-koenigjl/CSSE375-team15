@@ -7,17 +7,17 @@ import java.awt.Rectangle;
 
 public class WinUpdater extends SceneUpdater {
 
-    public WinUpdater(SceneManager sceneManager) {
+    WinUpdater(SceneManager sceneManager) {
         super(sceneManager);
     }
 
     @Override
-    public void updateScene() {
+    void updateScene() {
         return;
     }
 
     @Override
-    public void drawScene(Graphics2D g2, int score) {
+    void drawScene(Graphics2D g2, int score) {
         String str1 = "Congrats! You Won!";
         String str2 = "Your score was " + score;
 

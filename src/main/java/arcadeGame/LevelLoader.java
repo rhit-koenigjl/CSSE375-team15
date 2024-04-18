@@ -21,7 +21,7 @@ public class LevelLoader {
     private int levelHeight;
     private int numCoins;
 
-    public LevelLoader(String path) {
+    LevelLoader(String path) {
         this.tiles = new ArrayList<Tile>();
         this.enemies = new ArrayList<Enemy>();
         this.player = null;
@@ -38,7 +38,7 @@ public class LevelLoader {
         }
     }
 
-    public JSONObject getJsonObject() {
+    JSONObject getJsonObject() {
         Object obj = null;
 
         try {
@@ -51,7 +51,7 @@ public class LevelLoader {
         return (JSONObject) obj;
     }
 
-    public void setupInternalValues(JSONObject jo) {
+    void setupInternalValues(JSONObject jo) {
         String h = (String) jo.get("height");
         String w = (String) jo.get("width");
         String s = (String) jo.get("block_size");
@@ -81,7 +81,8 @@ public class LevelLoader {
                 enemies.add(new Enemy(actorXPos, actorYPos, actorSize, actorSize, dir));
                 break;
             case '@':
-                enemies.add(new HunterSeeker(actorXPos, actorYPos, actorSize, actorSize, this.player));
+                enemies.add(
+                        new HunterSeeker(actorXPos, actorYPos, actorSize, actorSize, this.player));
                 break;
             case 'c':
                 tiles.add(new Coin(actorXPos, actorYPos, actorSize, actorSize));
@@ -97,11 +98,12 @@ public class LevelLoader {
                 tiles.add(new BouncePad(xPos * size, yPos * size, size, size));
                 break;
             case 'G':
-                enemies.add(new EnemyGenerator(actorXPos, actorYPos, actorSize, actorSize, enemies, player));
+                enemies.add(new EnemyGenerator(actorXPos, actorYPos, actorSize, actorSize, enemies,
+                        player));
         }
     }
 
-    public void loadLevel() {
+    void loadLevel() {
         JSONObject jo = getJsonObject();
         setupInternalValues(jo);
 
@@ -110,7 +112,6 @@ public class LevelLoader {
         int xPos = 0;
         int yPos = 0;
         for (String blockSet : this.dataString.split("\\|")) {
-            // throw new NullPointerException(blockSet);
             String[] blockData = blockSet.split("-");
             String[] extraData = blockData[0].split("#");
             Direction d = Direction.NONE;
@@ -131,35 +132,36 @@ public class LevelLoader {
         }
     }
 
-    public List<Tile> getTiles() {
+    List<Tile> getTiles() {
         return this.tiles;
     }
 
-    public List<Enemy> getEnemies() {
+    List<Enemy> getEnemies() {
         return this.enemies;
     }
 
-    public Player getPlayer() {
+    Player getPlayer() {
         return this.player;
     }
 
-    public int getWidth() {
+    int getWidth() {
         return levelWidth * size;
     }
 
-    public int getHeight() {
+    int getHeight() {
         return levelHeight * size;
     }
 
-    public int getSize() {
+    int getSize() {
         return size;
     }
 
-    public String getDataString() {
+    String getDataString() {
         return this.dataString;
     }
 
-    public int getNumCoins() {
+    int getNumCoins() {
         return numCoins;
     }
+
 }

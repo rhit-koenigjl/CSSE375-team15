@@ -12,8 +12,8 @@ public class PauseUpdater extends SceneUpdater {
     private Map<Integer, Boolean> keys;
     private Level level;
 
-    public PauseUpdater(SceneManager sceneManager, SceneUpdater gameUpdater,
-            Map<Integer, Boolean> keys, Level level) {
+    PauseUpdater(SceneManager sceneManager, SceneUpdater gameUpdater, Map<Integer, Boolean> keys,
+            Level level) {
         super(sceneManager);
         this.gameUpdater = gameUpdater;
         this.keys = keys;
@@ -21,7 +21,7 @@ public class PauseUpdater extends SceneUpdater {
     }
 
     @Override
-    public void updateScene() {
+    void updateScene() {
         if (keys.getOrDefault(27, false)) {
             sceneManager.switchScene(gameUpdater);
             keys.remove(27);
@@ -29,7 +29,7 @@ public class PauseUpdater extends SceneUpdater {
     }
 
     @Override
-    public void drawScene(Graphics2D g2, int score) {
+    void drawScene(Graphics2D g2, int score) {
         level.draw(g2, score);
 
         g2.setColor(new Color(0, 0, 0, 75));
@@ -50,7 +50,7 @@ public class PauseUpdater extends SceneUpdater {
 
         g2.drawString(str1, (int) midX1, (int) midY - metrics.getHeight());
         g2.drawString(str2, (int) midX2, (int) midY + metrics.getHeight());
-        
+
         level.drawScore(g2, score);
     }
 

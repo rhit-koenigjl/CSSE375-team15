@@ -16,11 +16,10 @@ public class AiMessageGenerator implements MessageGenerator {
 
   private CompletableFuture<HttpResponse<String>> response;
 
-  public AiMessageGenerator() {
+  AiMessageGenerator() {
     requestMessage();
   }
 
-  @Override
   public String generateEncouragingMessage() {
     try {
       Pattern pattern = Pattern.compile("\"text\": \".*\"");

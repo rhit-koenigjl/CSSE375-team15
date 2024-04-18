@@ -11,7 +11,7 @@ public class TransitionUpdater extends SceneUpdater {
     private MessageGenerator generator;
     private int timer;
 
-    public TransitionUpdater(SceneManager sceneManager, MessageGenerator generator) {
+    TransitionUpdater(SceneManager sceneManager, MessageGenerator generator) {
         super(sceneManager);
         this.gameUpdater = sceneManager.getCurrentScene();
         this.generator = generator;
@@ -19,7 +19,7 @@ public class TransitionUpdater extends SceneUpdater {
     }
 
     @Override
-    public void updateScene() {
+    void updateScene() {
         this.timer++;
         if (timer > 300) {
             sceneManager.switchScene(gameUpdater);
@@ -28,7 +28,7 @@ public class TransitionUpdater extends SceneUpdater {
     }
 
     @Override
-    public void drawScene(Graphics2D g2, int score) {
+    void drawScene(Graphics2D g2, int score) {
         Font font = new Font("Monospaced", Font.BOLD, FONT_SIZE);
         FontMetrics metrics = g2.getFontMetrics(font);
         g2.setFont(font);

@@ -10,14 +10,14 @@ public class ResetUpdater extends SceneUpdater {
     private int timer;
     private SceneUpdater gameUpdater;
 
-    public ResetUpdater(SceneManager sceneManager, SceneUpdater gameUpdater) {
+    ResetUpdater(SceneManager sceneManager, SceneUpdater gameUpdater) {
         super(sceneManager);
         this.timer = 0;
         this.gameUpdater = gameUpdater;
     }
 
     @Override
-    public void updateScene() {
+    void updateScene() {
         this.timer++;
         if (timer > 300) {
             sceneManager.switchScene(gameUpdater);
@@ -25,7 +25,7 @@ public class ResetUpdater extends SceneUpdater {
     }
 
     @Override
-    public void drawScene(Graphics2D g2, int score) {
+    void drawScene(Graphics2D g2, int score) {
         String str1 = "You got hit!";
         String str2 = "Restarting the level in " + (400 - timer) / 100;
 
