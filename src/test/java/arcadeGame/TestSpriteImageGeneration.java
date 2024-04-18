@@ -54,4 +54,13 @@ public class TestSpriteImageGeneration {
     checkImageGeneration(gameImage, expectedDirections, expectedFileNames);
   }
 
+  @Test
+  public void testBrickImageGenerator() {
+    Set<Direction> expectedDirections = Set.of(Direction.NONE);
+    Set<String> expectedFileNames = new HashSet<>(Set.of("brick.png"));
+
+    GameImage gameImage = GameImage.BRICK;
+    checkImageGeneration(gameImage, expectedDirections, expectedFileNames);
+  }
+
 }
