@@ -12,7 +12,7 @@ public class GameObject {
 	protected GameImage gameImage;
 	protected Direction dir = Direction.NONE;
 
-	public GameObject(double x, double y, double width, double height, GameImage gameImage) {
+	GameObject(double x, double y, double width, double height, GameImage gameImage) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -20,7 +20,7 @@ public class GameObject {
 		this.gameImage = gameImage;
 	}
 
-	public GameObject(int x, int y, int width, int height, GameImage gameImage) {
+	GameObject(int x, int y, int width, int height, GameImage gameImage) {
 		this.x = (double) x;
 		this.y = (double) y;
 		this.width = (double) width;
@@ -28,55 +28,55 @@ public class GameObject {
 		this.gameImage = gameImage;
 	}
 
-	public double getX() {
+	double getX() {
 		return x;
 	}
 
-	public void setX(double x) {
+	void setX(double x) {
 		this.x = x;
 	}
 
-	public double getY() {
+	double getY() {
 		return y;
 	}
 
-	public void setY(double y) {
+	void setY(double y) {
 		this.y = y;
 	}
 
-	public double getVx() {
+	double getVx() {
 		return vx;
 	}
 
-	public void setVx(double vx) {
+	void setVx(double vx) {
 		this.vx = vx;
 	}
 
-	public double getVy() {
+	double getVy() {
 		return vy;
 	}
 
-	public void setVy(double vy) {
+	void setVy(double vy) {
 		this.vy = vy;
 	}
 
-	public double getHeight() {
+	double getHeight() {
 		return height;
 	}
 
-	public void setHeight(double height) {
+	void setHeight(double height) {
 		this.height = height;
 	}
 
-	public double getWidth() {
+	double getWidth() {
 		return width;
 	}
 
-	public void setWidth(double width) {
+	void setWidth(double width) {
 		this.width = width;
 	}
 
-	public boolean collidesWith(GameObject o) {
+	boolean collidesWith(GameObject o) {
 		return x + width > o.x && y + height > o.y && x < o.x + o.width && y < o.y + o.height;
 	}
 

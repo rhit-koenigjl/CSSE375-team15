@@ -1,8 +1,9 @@
 package arcadeGame;
 
-public class DeadEnemySprite extends DisplaySprite{
+public class DeadEnemySprite extends DisplaySprite {
 
-    public DeadEnemySprite(double x, double y, double width, double height, double vx, double vy, Direction dir, GameImage gameImage) {
+    DeadEnemySprite(double x, double y, double width, double height, double vx, double vy,
+            Direction dir, GameImage gameImage) {
         super(x, y, width, height, gameImage);
         this.vx = vx;
         this.vy = vy;
@@ -16,5 +17,5 @@ public class DeadEnemySprite extends DisplaySprite{
         this.x += this.vx;
         this.y += this.vy;
     }
-    
+
 }

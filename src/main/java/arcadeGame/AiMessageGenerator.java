@@ -6,35 +6,26 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Scanner;
-import java.util.concurrent.CompletableFuture;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AiMessageGenerator implements MessageGenerator {
   private static final String GEMINI_URL =
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=";
+      "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=";
 
-  private CompletableFuture<HttpResponse<String>> response;
+  private String message = "You are doing great!";
 
-  public AiMessageGenerator() {
+  AiMessageGenerator() {
     requestMessage();
   }
 
-  @Override
   public String generateEncouragingMessage() {
-    try {
-      Pattern pattern = Pattern.compile("\"text\": \".*\"");
-      Matcher matcher = pattern.matcher(response.get().body());
-      String output =
-          matcher.find() ? matcher.group().substring(9, matcher.group().length() - 1) : "";
-      return output;
-    } catch (Exception e) {
-      e.printStackTrace();
-      return "";
-    }
+    String currentMessage = message;
+    requestMessage();
+    return currentMessage;
   }
 
-  public void requestMessage() {
+  private void requestMessage() {
     try {
       URL apiPromptFile = getClass().getResource("/apiPrompt.txt");
       Scanner scanner = new Scanner(apiPromptFile.openStream());
@@ -50,9 +41,31 @@ public class AiMessageGenerator implements MessageGenerator {
       scanner.close();
 
       HttpClient client = HttpClient.newHttpClient();
-      response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+      client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+          .thenAccept(response -> parseResponse(response));
     } catch (Exception e) {
       e.printStackTrace();
+    }
+  }
+
+  private void parseResponse(HttpResponse<String> response) {
+    try {
+      Pattern successPattern = Pattern.compile("\"text\": \".*\"");
+      Matcher successMatcher = successPattern.matcher(response.body());
+      if (!successMatcher.find()) {
+        throw new Exception();
+      }
+      message = successMatcher.group().substring(9, successMatcher.group().length() - 1);
+    } catch (Exception e) {
+      Pattern failurePattern = Pattern.compile("\"finishReason\": \"SAFETY\"");
+      Matcher failureMatcher = failurePattern.matcher(response.body());
+      if (failureMatcher.find()) {
+        System.out.println("Regenerating message...");
+        requestMessage();
+      } else {
+        System.out.println("API request quota exceeded. Try again in a few minutes.");
+        message = "You got this!";
+      }
     }
   }
 

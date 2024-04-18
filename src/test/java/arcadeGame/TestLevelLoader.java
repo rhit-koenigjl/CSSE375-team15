@@ -14,8 +14,8 @@ public class TestLevelLoader {
         assertEquals(null, testLoader.getPlayer());
 
         assertEquals(-1, testLoader.getSize());
-        assertEquals(-1, testLoader.getWidth());
-        assertEquals(-1, testLoader.getHeight());
+        assertEquals(1, testLoader.getWidth());
+        assertEquals(1, testLoader.getHeight());
     }
 
     @Test
@@ -23,8 +23,8 @@ public class TestLevelLoader {
         LevelLoader testLoader = new LevelLoader("src\\main\\resources\\levels\\testLevels\\test_level_3.json");
         testLoader.loadLevel();
 
-        assertEquals(10, testLoader.getWidth());
-        assertEquals(5, testLoader.getHeight());
+        assertEquals(500, testLoader.getWidth());
+        assertEquals(250, testLoader.getHeight());
         assertEquals(50, testLoader.getSize());
         assertEquals("b-11|none-1|S#D-6|c-1|b-2|P-1|none-6|c-1|b-2|none-1|S#U-6|c-1|b-11", testLoader.getDataString());
     }
@@ -67,9 +67,9 @@ public class TestLevelLoader {
         LevelLoader testLoader = new LevelLoader("src\\main\\resources\\levels\\testLevels\\player_test.json");
         assertEquals(null, testLoader.getPlayer());
         testLoader.loadLevel();
-        assertEquals(70, (int) testLoader.getPlayer().getX());
-        assertEquals(280, (int) testLoader.getPlayer().getY());
-        assertEquals(35, (int) testLoader.getPlayer().getWidth());
-        assertEquals(35, (int) testLoader.getPlayer().getHeight());
+        assertEquals(77, (int) testLoader.getPlayer().getX());
+        assertEquals(287, (int) testLoader.getPlayer().getY());
+        assertEquals(28, (int) testLoader.getPlayer().getWidth());
+        assertEquals(28, (int) testLoader.getPlayer().getHeight());
     }
 }

@@ -24,7 +24,7 @@ public enum Direction {
         {
             put(UP, 0.0);
             put(UP_RIGHT, Math.PI / 4.0);
-            put(UP_LEFT, - Math.PI / 4.0);
+            put(UP_LEFT, -Math.PI / 4.0);
             put(LEFT, Math.PI / -2.0);
             put(RIGHT, Math.PI / 2.0);
             put(DOWN_LEFT, Math.PI * -3.0 / 4.0);
@@ -34,11 +34,11 @@ public enum Direction {
         }
     };
 
-    public static Direction fromString(String str) {
+    static Direction fromString(String str) {
         return stringMap.get(str);
     }
 
-    public static double toAngle(Direction d) {
+    static double toAngle(Direction d) {
         return angleMap.get(d);
     }
 }

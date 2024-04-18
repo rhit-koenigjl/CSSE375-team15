@@ -5,34 +5,16 @@ import java.awt.Graphics2D;
 public class Enemy extends Actor {
 	protected boolean adding = false;
 
-	/**
-	 * ensures: the creation of a new enemy with specified coordinates and size
-	 * 
-	 * @param startX
-	 * @param startY
-	 * @param width
-	 * @param height
-	 */
-	public Enemy(double startX, double startY, double width, double height) {
+	Enemy(double startX, double startY, double width, double height) {
 		this(startX, startY, width, height, GameImage.GHOST);
 	}
 
-	public Enemy(double startX, double startY, double width, double height, double velocityX,
+	Enemy(double startX, double startY, double width, double height, double velocityX,
 			double velocityY) {
 		this(startX, startY, width, height, velocityX, velocityY, GameImage.GHOST);
 	}
 
-	/**
-	 * ensures: the correct creation of an enemy with a specified velocity
-	 * 
-	 * @param startX
-	 * @param startY
-	 * @param width
-	 * @param height
-	 * @param velocityX
-	 * @param velocityY
-	 */
-	public Enemy(double startX, double startY, double width, double height, double velocityX,
+	Enemy(double startX, double startY, double width, double height, double velocityX,
 			double velocityY, GameImage gameImage) {
 		super(startX, startY, width, height, gameImage);
 		this.dir = Direction.RIGHT;
@@ -40,24 +22,14 @@ public class Enemy extends Actor {
 		vy = velocityY;
 	}
 
-	public Enemy(double startX, double startY, double width, double height, Direction dir) {
+	Enemy(double startX, double startY, double width, double height, Direction dir) {
 		super(startX, startY, width, height, GameImage.GHOST);
 		double ang = Direction.toAngle(dir) + Math.PI / 2;
 		this.vx = Math.cos(ang) * width * DEFAULT_SPEED;
 		this.vy = Math.sin(ang) * height * DEFAULT_SPEED;
 	}
 
-	// @Override
-	// void drawActor(Graphics2D g2) {
-	// 	drawDirectedImage(g2, "ghost");
-	// }
-
-	// protected void drawDirectedImage(Graphics2D g2, String filename) {
-	// 	String directedFile = String.format("%s_%s.png", filename, getDirection());
-	// 	super.drawImage(g2, directedFile);
-	// }
-
-	public Enemy(double startX, double startY, double width, double height, GameImage gameImage) {
+	Enemy(double startX, double startY, double width, double height, GameImage gameImage) {
 		this(startX, startY, width, height, Math.random() * SPEED, Math.random() * SPEED, gameImage);
 	}
 
@@ -73,11 +45,11 @@ public class Enemy extends Actor {
 		drawImage(g2);
 	}
 
-	public boolean getAdding() {
+	boolean getAdding() {
 		return adding;
 	}
 
-	public void setAdding(boolean newAdding) {
+	void setAdding(boolean newAdding) {
 		adding = newAdding;
 	}
 
@@ -86,16 +58,16 @@ public class Enemy extends Actor {
 	}
 
 	@Override
-	public boolean isNonTrackingEnemy() {
+	protected boolean isNonTrackingEnemy() {
 		return true;
 	}
 
-	public GameImage getImage() {
+	GameImage getImage() {
 		return this.gameImage;
 	}
 
-    public Direction getDir() {
-        return this.dir;
-    }
+	Direction getDir() {
+		return this.dir;
+	}
 
 }

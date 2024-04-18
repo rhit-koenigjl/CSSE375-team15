@@ -4,16 +4,8 @@ import java.awt.Graphics2D;
 
 public class BouncePad extends Tile {
 
-	/**
-	 * ensures: calls the Tile constructor for the bounce pad
-	 * 
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 */
-	public BouncePad(int x, int y, int width, int height) {
-		super(x, (int) (y + 3.0/5.0 * height), width, height, GameImage.BOUNCE_PAD);
+	BouncePad(int x, int y, int width, int height) {
+		super(x, (int) (y + 3.0 / 5.0 * height), width, height, GameImage.BOUNCE_PAD);
 	}
 
 	@Override
@@ -24,7 +16,7 @@ public class BouncePad extends Tile {
 	}
 
 	@Override
-	public void handleCollision(Actor actor, double xPos, double yPos) {
+	void handleCollision(Actor actor, double xPos, double yPos) {
 		if (xPos > 0) {
 			actor.setX(x - actor.getWidth());
 			actor.setVx(0);

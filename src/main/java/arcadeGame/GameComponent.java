@@ -15,30 +15,17 @@ import javax.swing.*;
 public class GameComponent extends JComponent {
 	private static final String LEVEL_DIRECTORY = "levels/level_set_1/";
 	private final MessageGenerator generator = new AiMessageGenerator();
-
 	private SceneManager sceneManager;
 	private int score = 0;
 	private int lives = 3;
-
-	// Fields for level management and creation
-
 	private String levelFiles[];
 	private Level currentLevel;
 	private UpdateState state = new UpdateState(this);
-
-	// User fields
 	private Player hero = new Player(0, 0, 0, 0);
 	private Map<Integer, Boolean> keys = new HashMap<Integer, Boolean>();
-
-	// the containing frame
 	private JFrame frame;
 
-	/**
-	 * Ensures the creation of the Game Component and initializes the first level
-	 * 
-	 * @param frame the frame that the game is taking place in, used for resizing to fit each level.
-	 */
-	public GameComponent(JFrame frame) {
+	GameComponent(JFrame frame) {
 		buildLevelsList();
 		this.frame = frame;
 		this.currentLevel = new Level(levelFiles[0], 0, hero);
@@ -60,39 +47,24 @@ public class GameComponent extends JComponent {
 		}
 	}
 
-	public void loadLevelByIndex(int index) {
+	void loadLevelByIndex(int index) {
 		switchLevel(levelFiles[index], index);
 	}
 
-	/**
-	 * ensures: the editing of the keys HashMap to update what keys are pressed
-	 * 
-	 * @param keyCode: the key being pressed or released
-	 * @param newVal: the new value to be associated with that keyCode
-	 */
-	public void handleKey(int keyCode, boolean newVal) {
+	void handleKey(int keyCode, boolean newVal) {
 		keys.put(keyCode, newVal);
 	}
 
-	/**
-	 * ensures: the actions of the game that must take place every frame
-	 */
-	public void updateState() {
+	void updateState() {
 		sceneManager.runScene();
 	}
 
-	/**
-	 * ensures: the drawing of the screen that must take place every frame.
-	 */
-	public void drawScreen() {
+	void drawScreen() {
 		this.repaint();
 	}
 
-	/**
-	 * ensures: the drawing of all the objects onto the JFrame
-	 */
 	@Override
-	public void paintComponent(Graphics g) {
+	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 
@@ -103,21 +75,11 @@ public class GameComponent extends JComponent {
 		g2.drawString("Score: " + score, 25, 60);
 	}
 
-	/**
-	 * ensures: the resizing of a frame to fit the size of the level
-	 * 
-	 * @param frame: the JFrame to get resized
-	 */
-	public void sizeFrame(JFrame frame) {
+	void sizeFrame(JFrame frame) {
 		frame.setSize(currentLevel.getWidth() + 14, currentLevel.getHeight() + 37);
 	}
 
-	/**
-	 * ensures: the switching of levels
-	 * 
-	 * @param newLevel The level to go to.
-	 */
-	public void switchLevel(String newLevel, int index) {
+	void switchLevel(String newLevel, int index) {
 		if (index == currentLevel.getIndex()) {
 			currentLevel.reset();
 			return;
@@ -130,11 +92,11 @@ public class GameComponent extends JComponent {
 		frame.repaint();
 	}
 
-	public void levelReset() {
+	void levelReset() {
 		loadLevelByIndex(currentLevel.getIndex());
 	}
 
-	public void loseLife() {
+	void loseLife() {
 		hero.loseLife();
 		lives--;
 		levelReset();
@@ -146,17 +108,22 @@ public class GameComponent extends JComponent {
 		}
 	}
 
-	public int getLevelCount() {
+	int getLevelCount() {
 		return levelFiles.length;
 	}
 
-	public void incrementScore(int score) {
+	void incrementScore(int score) {
 		this.score += score;
 	}
 
-	public void nextLevel() {
+	void nextLevel() {
 		loadLevelByIndex(currentLevel.getIndex() + 1);
 		sceneManager.switchScene(new TransitionUpdater(sceneManager, generator));
+	}
+
+	// For testing purposes
+	SceneManager getSceneManager() {
+		return sceneManager;
 	}
 
 }

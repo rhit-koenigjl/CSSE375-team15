@@ -12,19 +12,15 @@ public class Level {
   private String levelPath;
   private int levelHeight;
   private int levelWidth;
-
-  // fields pertaining the current level
   private Player hero;
   private List<Tile> tiles;
   private List<Enemy> enemies;
   private int numCoins = 0;
   private boolean heroHurt = false;
   private GameImage gameImage;
-
-  // Extra Grapics Fields
   private List<DisplaySprite> sprites;
 
-  public Level(String levelPath, int index, Player hero) {
+  Level(String levelPath, int index, Player hero) {
     this.levelPath = levelPath;
     this.levelIndex = index;
     this.hero = hero;
@@ -32,12 +28,7 @@ public class Level {
     this.sprites = new ArrayList<DisplaySprite>();
   }
 
-  /**
-   * ensures: the creation of new levels from a string filename
-   * 
-   * @param inputFilename: the text file the level is taking data from
-   */
-  public Object[] generateLevel() {
+  Object[] generateLevel() {
     sprites.clear();
     LevelLoader ll = new LevelLoader(levelPath);
     ll.loadLevel();
@@ -67,8 +58,8 @@ public class Level {
         heroHurt = true;
       }
       if (collisionType == 2) {
-        if(hero.getVy() > 0) {
-          hero.setVy(- hero.getWidth() / 5);
+        if (hero.getVy() > 0) {
+          hero.setVy(-hero.getWidth() / 5);
         }
         enemiesRemove.add(enemy);
       }
@@ -83,7 +74,8 @@ public class Level {
     }
     for (Enemy e : enemiesRemove) {
       enemies.remove(e);
-      sprites.add(new DeadEnemySprite(e.getX(), e.getY(), e.getWidth(), e.getHeight(), e.getVx(), e.getVy(), e.getDir(), e.getImage()));
+      sprites.add(new DeadEnemySprite(e.getX(), e.getY(), e.getWidth(), e.getHeight(), e.getVx(),
+          e.getVy(), e.getDir(), e.getImage()));
       state.incrementScore(50);
     }
     for (Enemy e : enemiesToAdd) {
@@ -134,7 +126,7 @@ public class Level {
     }
   }
 
-  public void update(Map<Integer, Boolean> keys, UpdateState state, SceneManager sceneManager) {
+  void update(Map<Integer, Boolean> keys, UpdateState state, SceneManager sceneManager) {
     handlePlayer(keys);
     handleEnemies(state);
     handleTiles(state);
@@ -146,7 +138,7 @@ public class Level {
     }
   }
 
-  public void draw(Graphics2D g2, int score) {
+  void draw(Graphics2D g2, int score) {
     for (int i = 0; i < levelWidth; i += 100) {
       for (int j = 0; j < levelHeight; j += 100) {
         g2.drawImage(gameImage.getImage(), i, j, 100, 100, null);
@@ -161,33 +153,33 @@ public class Level {
     hero.drawActor(g2);
     drawScore(g2, score);
 
-    for (DisplaySprite ds: sprites) {
+    for (DisplaySprite ds : sprites) {
       ds.display(g2);
       ds.updatePosition();
     }
   }
 
-  public void drawScore(Graphics2D g2, int score) {
+  void drawScore(Graphics2D g2, int score) {
     g2.setColor(new Color(200, 255, 200));
     g2.setFont(new Font("Monospaced", Font.BOLD, 28));
     g2.drawString("Level: " + levelIndex, 200, 30);
   }
 
-  public void reset() {
+  void reset() {
     numCoins = 0;
     heroHurt = false;
     generateLevel();
   }
 
-  public int getHeight() {
+  int getHeight() {
     return levelHeight;
   }
 
-  public int getWidth() {
+  int getWidth() {
     return levelWidth;
   }
 
-  public int getIndex() {
+  int getIndex() {
     return levelIndex;
   }
 
