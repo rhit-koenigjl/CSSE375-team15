@@ -29,18 +29,18 @@ public class TransitionUpdater extends SceneUpdater {
 
     @Override
     public void drawScene(Graphics2D g2, int score) {
-        Font font = new Font("Monospaced", Font.BOLD, 28);
+        Font font = new Font("Monospaced", Font.BOLD, FONT_SIZE);
         FontMetrics metrics = g2.getFontMetrics(font);
         g2.setFont(font);
         g2.setColor(new Color(255, 255, 255));
-        
+
         Rectangle boundingBox = g2.getClipBounds();
         double midY = boundingBox.getHeight() / 2 - metrics.getHeight() / 2;
 
         String timerMessage = "Next level in " + (400 - timer) / 100;
         double midX2 = boundingBox.getWidth() / 2 - metrics.stringWidth(timerMessage) / 2;
         g2.drawString(timerMessage, (int) midX2, (int) midY - metrics.getHeight() - 10);
-        
+
         String[] words = generator.generateEncouragingMessage().split(" ");
         String currentLine = words[0];
         int y = (int) midY;

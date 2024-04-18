@@ -23,7 +23,7 @@ public class LossUpdater extends SceneUpdater {
         String str1 = "You ran out of lives on level " + level.getIndex();
         String str2 = "Your score was: " + score;
 
-        Font font = new Font("Monospaced", Font.BOLD, 28);
+        Font font = new Font("Monospaced", Font.BOLD, FONT_SIZE);
         FontMetrics metrics = g2.getFontMetrics(font);
         g2.setFont(font);
 

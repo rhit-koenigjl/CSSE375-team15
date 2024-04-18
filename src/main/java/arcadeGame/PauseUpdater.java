@@ -39,7 +39,7 @@ public class PauseUpdater extends SceneUpdater {
         String str1 = "Game Paused.";
         String str2 = "Press Escape to Continue";
 
-        Font font = new Font("Monospaced", Font.BOLD, 28);
+        Font font = new Font("Monospaced", Font.BOLD, FONT_SIZE);
         FontMetrics metrics = g2.getFontMetrics(font);
         g2.setFont(font);
 

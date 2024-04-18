@@ -3,6 +3,8 @@ package arcadeGame;
 import java.awt.Graphics2D;
 
 public abstract class SceneUpdater {
+    protected static final int FONT_SIZE = 28;
+
     protected SceneManager sceneManager;
     protected Level level = null;
 

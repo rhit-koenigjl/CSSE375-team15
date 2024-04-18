@@ -31,7 +31,7 @@ public class MenuUpdater extends SceneUpdater {
         String str2 = "Use the Arrow Keys to move";
         String str3 = "Use Escape to pause the game";
 
-        Font font = new Font("Monospaced", Font.BOLD, 28);
+        Font font = new Font("Monospaced", Font.BOLD, FONT_SIZE);
         FontMetrics metrics = g2.getFontMetrics(font);
         g2.setFont(font);
         g2.setColor(new Color(0, 0, 0));

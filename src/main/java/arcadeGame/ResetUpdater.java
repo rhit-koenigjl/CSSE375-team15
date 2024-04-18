@@ -29,7 +29,7 @@ public class ResetUpdater extends SceneUpdater {
         String str1 = "You got hit!";
         String str2 = "Restarting the level in " + (400 - timer) / 100;
 
-        Font font = new Font("Monospaced", Font.BOLD, 28);
+        Font font = new Font("Monospaced", Font.BOLD, FONT_SIZE);
         FontMetrics metrics = g2.getFontMetrics(font);
         g2.setFont(font);
         g2.setColor(new Color(255, 255, 255));
@@ -39,8 +39,8 @@ public class ResetUpdater extends SceneUpdater {
         double midX2 = boundingBox.getWidth() / 2 - metrics.stringWidth(str2) / 2;
         double midY = boundingBox.getHeight() / 2 - metrics.getHeight() / 2;
 
-        g2.drawString(str1, (int) midX1, (int) midY - 14);
-        g2.drawString(str2, (int) midX2, (int) midY + 14);
+        g2.drawString(str1, (int) midX1, (int) midY - FONT_SIZE / 2);
+        g2.drawString(str2, (int) midX2, (int) midY + FONT_SIZE / 2);
     }
 
     String getSceneName() {

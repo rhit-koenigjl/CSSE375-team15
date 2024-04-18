@@ -24,7 +24,7 @@ public class GameUpdater extends SceneUpdater {
     @Override
     public void drawScene(Graphics2D g2, int score) {
         Color previousColor = g2.getColor();
-        g2.setFont(new Font("Monospaced", Font.BOLD, 28));
+        g2.setFont(new Font("Monospaced", Font.BOLD, FONT_SIZE));
 
         level.draw(g2, score);
         g2.setColor(previousColor);
