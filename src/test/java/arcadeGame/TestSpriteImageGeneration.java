@@ -122,4 +122,13 @@ public class TestSpriteImageGeneration {
     checkImageGeneration(gameImage, expectedDirections, expectedFileNames);
   }
 
+  @Test
+  public void testSpawnerImageGenerator() {
+    Set<Direction> expectedDirections = getNoDirections();
+    Set<String> expectedFileNames = new HashSet<>(Set.of("spawner.gif"));
+
+    GameImage gameImage = GameImage.SPAWNER;
+    checkImageGeneration(gameImage, expectedDirections, expectedFileNames);
+  }
+
 }
