@@ -64,4 +64,9 @@ public class TransitionUpdater extends SceneUpdater {
         return "transition";
     }
 
+    // For testing purposes
+    void setTimer(int timer) {
+        this.timer = timer;
+    }
+
 }
