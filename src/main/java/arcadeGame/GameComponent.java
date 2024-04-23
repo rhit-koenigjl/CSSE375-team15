@@ -14,10 +14,13 @@ import javax.swing.*;
 
 public class GameComponent extends JComponent {
 	private static final String LEVEL_DIRECTORY = "levels/level_set_1/";
+	private static final int STARTING_LIVES = 3;
+	private static final int STARTING_SCORE = 0;
+
 	private final MessageGenerator generator = new AiMessageGenerator();
 	private SceneManager sceneManager;
-	private int score = 0;
-	private int lives = 3;
+	private int score = STARTING_SCORE;
+	private int lives = STARTING_LIVES;
 	private String levelFiles[];
 	private Level currentLevel;
 	private UpdateState state = new UpdateState(this);
@@ -119,8 +122,8 @@ public class GameComponent extends JComponent {
 		SceneUpdater newScene = win ? new WinUpdater(sceneManager, keys, score)
 				: new LossUpdater(sceneManager, keys, score);
 		sceneManager.switchScene(newScene);
-		lives = 3;
-		score = 0;
+		lives = STARTING_LIVES;
+		score = STARTING_SCORE;
 	}
 
 	int getLevelCount() {
@@ -139,7 +142,6 @@ public class GameComponent extends JComponent {
 	int getScore() {
 		return score;
 	}
-
 
 	// For testing purposes
 	SceneManager getSceneManager() {
