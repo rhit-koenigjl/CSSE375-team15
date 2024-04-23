@@ -100,7 +100,7 @@ public class Level {
     if (numCoins == 0) {
       state.incrementScore(100);
       if (levelIndex == state.getLevelCount() - 1) {
-        sceneManager.switchScene(new WinUpdater(sceneManager, state.getScore()));
+        state.handleWinGame();
       } else {
         state.transitionNextLevel();
       }

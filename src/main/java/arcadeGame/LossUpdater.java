@@ -7,17 +7,14 @@ import java.awt.Rectangle;
 import java.util.Map;
 
 public class LossUpdater extends SceneUpdater {
-    private Level level;
     private Map<Integer, Boolean> keys;
     private SceneUpdater gameUpdater;
     private int score;
 
-    LossUpdater(SceneManager sceneManager, Level level, Map<Integer, Boolean> keys,
-            SceneUpdater gameUpdater, int score) {
+    LossUpdater(SceneManager sceneManager, Map<Integer, Boolean> keys, int score) {
         super(sceneManager);
-        this.level = level;
         this.keys = keys;
-        this.gameUpdater = gameUpdater;
+        this.gameUpdater = sceneManager.getCurrentScene();
         this.score = score;
     }
 
@@ -30,7 +27,7 @@ public class LossUpdater extends SceneUpdater {
 
     @Override
     void drawScene(Graphics2D g2) {
-        String str1 = "You ran out of lives on level " + level.getIndex();
+        String str1 = "You ran out of lives!";
         String str2 = "Your score was: " + score;
         String str3 = "Press space to play again";
 

@@ -106,14 +106,19 @@ public class GameComponent extends JComponent {
 		if (lives > 0) {
 			sceneManager.switchScene(new ResetUpdater(sceneManager, sceneManager.getCurrentScene()));
 		} else {
-			endGame();
+			restart(false);
 		}
 	}
 
-	private void endGame() {
+	void winGame() {
+		restart(true);
+	}
+
+	private void restart(boolean win) {
 		loadLevelByIndex(0);
-		sceneManager.switchScene(
-				new LossUpdater(sceneManager, currentLevel, keys, sceneManager.getCurrentScene(), score));
+		SceneUpdater newScene = win ? new WinUpdater(sceneManager, keys, score)
+				: new LossUpdater(sceneManager, keys, score);
+		sceneManager.switchScene(newScene);
 		lives = 3;
 		score = 0;
 	}
@@ -134,6 +139,7 @@ public class GameComponent extends JComponent {
 	int getScore() {
 		return score;
 	}
+
 
 	// For testing purposes
 	SceneManager getSceneManager() {
