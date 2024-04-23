@@ -12,9 +12,13 @@ public abstract class SceneUpdater {
         this.sceneManager = sceneManager;
     }
 
+    boolean displayStats() {
+        return false;
+    }
+
     abstract void updateScene();
 
-    abstract void drawScene(Graphics2D g, int score);
+    abstract void drawScene(Graphics2D g);
 
     // For testing purposes
     abstract String getSceneName();
