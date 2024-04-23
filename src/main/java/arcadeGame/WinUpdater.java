@@ -6,9 +6,11 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 public class WinUpdater extends SceneUpdater {
+    private int score;
 
-    WinUpdater(SceneManager sceneManager) {
+    WinUpdater(SceneManager sceneManager, int score) {
         super(sceneManager);
+        this.score = score;
     }
 
     @Override
@@ -17,7 +19,7 @@ public class WinUpdater extends SceneUpdater {
     }
 
     @Override
-    void drawScene(Graphics2D g2, int score) {
+    void drawScene(Graphics2D g2) {
         String str1 = "Congrats! You Won!";
         String str2 = "Your score was " + score;
 

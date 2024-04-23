@@ -27,7 +27,7 @@ public class TransitionUpdater extends SceneUpdater {
     }
 
     @Override
-    void drawScene(Graphics2D g2, int score) {
+    void drawScene(Graphics2D g2) {
         Font font = new Font("Monospaced", Font.BOLD, FONT_SIZE);
         FontMetrics metrics = g2.getFontMetrics(font);
         g2.setFont(font);
@@ -66,6 +66,11 @@ public class TransitionUpdater extends SceneUpdater {
     // For testing purposes
     void setTimer(int timer) {
         this.timer = timer;
+    }
+
+    @Override
+    boolean displayStats() {
+        return true;
     }
 
 }

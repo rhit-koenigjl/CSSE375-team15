@@ -17,8 +17,8 @@ public class SceneManager {
         this.scene = newScene;
     }
 
-    void drawScene(Graphics2D g, int score) {
-        this.scene.drawScene(g, score);
+    void drawScene(Graphics2D g) {
+        this.scene.drawScene(g);
     }
 
     SceneUpdater getCurrentScene() {
@@ -27,6 +27,10 @@ public class SceneManager {
 
     void setLevel(Level level) {
         this.scene.level = level;
+    }
+
+    boolean displayStats() {
+        return this.scene.displayStats();
     }
 
 }

@@ -68,11 +68,13 @@ public class GameComponent extends JComponent {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 
-		sceneManager.drawScene(g2, score);
-		g2.setFont(new Font("Monospaced", Font.BOLD, 28));
-		g2.setColor(new Color(200, 255, 200));
-		g2.drawString("Lives: " + lives, 25, 30);
-		g2.drawString("Score: " + score, 25, 60);
+		sceneManager.drawScene(g2);
+		if (sceneManager.displayStats()) {
+			g2.setFont(new Font("Monospaced", Font.BOLD, 28));
+			g2.setColor(new Color(200, 255, 200));
+			g2.drawString("Lives: " + lives, 25, 30);
+			g2.drawString("Score: " + score, 25, 60);
+		}
 	}
 
 	void sizeFrame(JFrame frame) {
@@ -104,8 +106,16 @@ public class GameComponent extends JComponent {
 		if (lives > 0) {
 			sceneManager.switchScene(new ResetUpdater(sceneManager, sceneManager.getCurrentScene()));
 		} else {
-			sceneManager.switchScene(new LossUpdater(sceneManager, currentLevel));
+			endGame();
 		}
+	}
+
+	private void endGame() {
+		loadLevelByIndex(0);
+		sceneManager.switchScene(
+				new LossUpdater(sceneManager, currentLevel, keys, sceneManager.getCurrentScene(), score));
+		lives = 3;
+		score = 0;
 	}
 
 	int getLevelCount() {
@@ -119,6 +129,10 @@ public class GameComponent extends JComponent {
 	void nextLevel() {
 		loadLevelByIndex(currentLevel.getIndex() + 1);
 		sceneManager.switchScene(new TransitionUpdater(sceneManager, generator));
+	}
+
+	int getScore() {
+		return score;
 	}
 
 	// For testing purposes

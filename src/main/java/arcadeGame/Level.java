@@ -1,7 +1,5 @@
 package arcadeGame;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -102,7 +100,7 @@ public class Level {
     if (numCoins == 0) {
       state.incrementScore(100);
       if (levelIndex == state.getLevelCount() - 1) {
-        sceneManager.switchScene(new WinUpdater(sceneManager));
+        sceneManager.switchScene(new WinUpdater(sceneManager, state.getScore()));
       } else {
         state.transitionNextLevel();
       }
@@ -138,7 +136,7 @@ public class Level {
     }
   }
 
-  void draw(Graphics2D g2, int score) {
+  void draw(Graphics2D g2) {
     for (int i = 0; i < levelWidth; i += 100) {
       for (int j = 0; j < levelHeight; j += 100) {
         g2.drawImage(gameImage.getImage(), i, j, 100, 100, null);
@@ -151,18 +149,11 @@ public class Level {
       e.drawActor(g2);
     }
     hero.drawActor(g2);
-    drawScore(g2, score);
 
     for (DisplaySprite ds : sprites) {
       ds.display(g2);
       ds.updatePosition();
     }
-  }
-
-  void drawScore(Graphics2D g2, int score) {
-    g2.setColor(new Color(200, 255, 200));
-    g2.setFont(new Font("Monospaced", Font.BOLD, 28));
-    g2.drawString("Level: " + levelIndex, 200, 30);
   }
 
   void reset() {

@@ -29,8 +29,8 @@ public class PauseUpdater extends SceneUpdater {
     }
 
     @Override
-    void drawScene(Graphics2D g2, int score) {
-        level.draw(g2, score);
+    void drawScene(Graphics2D g2) {
+        level.draw(g2);
 
         g2.setColor(new Color(0, 0, 0, 75));
         g2.fillRect(0, 0, level.getWidth() + 14, level.getHeight() + 37);
@@ -51,11 +51,16 @@ public class PauseUpdater extends SceneUpdater {
         g2.drawString(str1, (int) midX1, (int) midY - metrics.getHeight());
         g2.drawString(str2, (int) midX2, (int) midY + metrics.getHeight());
 
-        level.drawScore(g2, score);
+        // level.drawScore(g2, score);
     }
 
     String getSceneName() {
         return "pause";
+    }
+
+    @Override
+    boolean displayStats() {
+        return true;
     }
 
 }

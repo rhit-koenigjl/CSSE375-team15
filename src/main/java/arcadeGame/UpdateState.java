@@ -11,6 +11,10 @@ public class UpdateState {
     gameComponent.incrementScore(score);
   }
 
+  int getScore() {
+    return gameComponent.getScore();
+  }
+
   void heroLostLife() {
     gameComponent.loseLife();
   }

@@ -48,7 +48,7 @@ public class TestLevelTransitionScreen {
     EasyMock.replay(generator, metrics, g, sceneManager);
 
     SceneUpdater transition = new TransitionUpdater(sceneManager, generator);
-    transition.drawScene(g, 0);
+    transition.drawScene(g);
     ((TransitionUpdater) transition).setTimer(400);
     transition.updateScene();
     EasyMock.verify(generator, metrics, g, sceneManager);

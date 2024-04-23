@@ -26,7 +26,7 @@ public class MenuUpdater extends SceneUpdater {
     }
 
     @Override
-    void drawScene(Graphics2D g2, int score) {
+    void drawScene(Graphics2D g2) {
         String str1 = "Press the Space Bar to start";
         String str2 = "Use the Arrow Keys to move";
         String str3 = "Use Escape to pause the game";
