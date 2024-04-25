@@ -16,9 +16,7 @@ public abstract class SceneUpdater {
     boolean displayStats() {
         return false;
     }
-
-    abstract void updateScene();
-
+    
     void drawScene(Graphics2D g) {
         Dimension screenSize = g.getClipBounds().getSize();
         for (int i = 0; i < screenSize.getWidth(); i += 100) {
@@ -27,6 +25,10 @@ public abstract class SceneUpdater {
             }
         }
     }
+
+    void onFirstLoad() {}
+    
+    abstract void updateScene();
 
     // For testing purposes
     abstract String getSceneName();

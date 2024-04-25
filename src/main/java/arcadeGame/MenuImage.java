@@ -7,9 +7,9 @@ import javax.imageio.ImageIO;
 
 public enum MenuImage {
   LOGO("menu_logo.png", (int) (940 * 0.65), (int) (384 * 0.65)),
-  PLAY("play_button.png", 72, 108),
-  HELP("help_button.png", 48, 72),
-  CREDITS("credits_button.png", 48, 72);
+  PLAY("play_button.png", (int) (72 * 1.7), (int) (108 * 1.7)),
+  HELP("help_button.png", (int) (48 * 1.7), (int) (72 * 1.7)),
+  CREDITS("credits_button.png", (int) (48 * 1.7), (int) (72 * 1.7));
 
   private BufferedImage image;
 

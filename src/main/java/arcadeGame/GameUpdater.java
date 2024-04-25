@@ -31,6 +31,11 @@ public class GameUpdater extends SceneUpdater {
         g2.setColor(previousColor);
     }
 
+    @Override
+    void onFirstLoad() {
+        this.state.resizeLevel();
+    }
+
     void changeLevel(Level level) {
         this.level = level;
     }

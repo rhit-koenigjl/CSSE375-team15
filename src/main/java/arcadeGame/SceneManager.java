@@ -14,6 +14,7 @@ public class SceneManager {
     }
 
     void switchScene(SceneUpdater newScene) {
+        newScene.onFirstLoad();
         this.scene = newScene;
     }
 

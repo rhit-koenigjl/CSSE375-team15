@@ -10,12 +10,15 @@ import javax.swing.Timer;
 
 public class MainApp {
 	private static final int DELAY = 10;
+	private static final int MENU_WIDTH = 900;
+	private static final int MENU_HEIGHT = 550;
+
 	private GameComponent component;
 	private JFrame gameFrame;
 
 	private void runApp() {
 		gameFrame = new JFrame("Bomber Jack");
-		gameFrame.setSize(800, 600);
+		gameFrame.setSize(MENU_WIDTH, MENU_HEIGHT);
 
 		component = new GameComponent(gameFrame);
 		component.loadLevelByIndex(0);
@@ -46,7 +49,7 @@ public class MainApp {
 		});
 
 		gameFrame.setVisible(true);
-		component.sizeFrame(gameFrame);
+		// component.sizeFrame(gameFrame);
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameFrame.setResizable(false);
 	}

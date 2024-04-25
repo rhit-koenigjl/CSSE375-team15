@@ -6,7 +6,8 @@ import java.awt.Image;
 import java.util.Map;
 
 public class MenuUpdater extends SceneUpdater {
-    private static final int BUTTON_Y_POS = 330;
+    private static final int MENU_Y_OFFSET = 20;
+    private static final int BUTTON_Y_OFFSET = 320;
     private static final int BUTTON_X_OFFSET = 100;
 
     private GameUpdater gameUpdater;
@@ -39,11 +40,11 @@ public class MenuUpdater extends SceneUpdater {
         int xPosHelpButton = xPosPlayButton - help.getWidth(null) - BUTTON_X_OFFSET;
         int xPosCreditsButton = xPosPlayButton + play.getWidth(null) + BUTTON_X_OFFSET;
         int yPosOffset = (play.getHeight(null) - help.getHeight(null)) / 2;
-        
-        g2.drawImage(logo, xPosLogo, 0, null);
-        g2.drawImage(play, xPosPlayButton, BUTTON_Y_POS, null);
-        g2.drawImage(help, xPosHelpButton, BUTTON_Y_POS + yPosOffset, null);
-        g2.drawImage(credits, xPosCreditsButton, BUTTON_Y_POS + yPosOffset, null);
+
+        g2.drawImage(logo, xPosLogo, MENU_Y_OFFSET, null);
+        g2.drawImage(play, xPosPlayButton, BUTTON_Y_OFFSET, null);
+        g2.drawImage(help, xPosHelpButton, BUTTON_Y_OFFSET + yPosOffset, null);
+        g2.drawImage(credits, xPosCreditsButton, BUTTON_Y_OFFSET + yPosOffset, null);
     }
 
     String getSceneName() {
