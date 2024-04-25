@@ -40,7 +40,7 @@ public class Level {
   }
 
   private void handlePlayer(Map<Integer, Boolean> keys) {
-    hero.update(keys, tiles);
+    hero.update(keys, tiles, sprites);
 
     if (hero.getSpikeCollision()) {
       heroHurt = true;

@@ -14,5 +14,4 @@ public class DeadEnemySprite extends DisplaySprite {
         this.x += this.vx;
         this.y += this.vy;
     }
-
 }
