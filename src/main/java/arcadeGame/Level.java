@@ -40,7 +40,7 @@ public class Level {
   }
 
   private void handlePlayer(Map<Integer, Boolean> keys) {
-    hero.update(keys, tiles);
+    hero.update(keys, tiles, sprites);
 
     if (hero.getSpikeCollision()) {
       heroHurt = true;
@@ -73,7 +73,7 @@ public class Level {
     for (Enemy e : enemiesRemove) {
       enemies.remove(e);
       sprites.add(new DeadEnemySprite(e.getX(), e.getY(), e.getWidth(), e.getHeight(), e.getVx(),
-          e.getVy(), e.getDir(), e.getImage()));
+          e.getVy()));
       state.incrementScore(50);
     }
     for (Enemy e : enemiesToAdd) {

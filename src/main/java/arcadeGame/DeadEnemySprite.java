@@ -2,13 +2,10 @@ package arcadeGame;
 
 public class DeadEnemySprite extends DisplaySprite {
 
-    DeadEnemySprite(double x, double y, double width, double height, double vx, double vy,
-            Direction dir, GameImage gameImage) {
-        super(x, y, width, height, gameImage);
+    DeadEnemySprite(double x, double y, double width, double height, double vx, double vy) {
+        super(x, y, width, height, GameImage.DEAD_GHOST);
         this.vx = vx;
         this.vy = vy;
-        this.dir = dir;
-        this.gameImage = gameImage;
     }
 
     @Override
@@ -17,5 +14,4 @@ public class DeadEnemySprite extends DisplaySprite {
         this.x += this.vx;
         this.y += this.vy;
     }
-
 }
