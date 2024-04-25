@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Player extends Actor {
-	private static final double GRAVITY = 0.5;
-	private static final double JUMP_HEIGHT = 0.75;
+	private double gravity;
+	private double flyVelocity;
 
 	private double speed = 8;
 
@@ -14,10 +14,13 @@ public class Player extends Actor {
 		super(startX, startY, width, height, GameImage.PLAYER);
 		this.dir = Direction.RIGHT;
 		this.speed = this.width * DEFAULT_SPEED * 8.0 / 5.0;
+
+		this.flyVelocity = this.width * (0.75/50f);
+		this.gravity = this.width / 100f;
 	}
 
 	void update(Map<Integer, Boolean> keys, List<Tile> tiles) {
-		vy += GRAVITY;
+		vy += gravity;
 		super.update(tiles);
 		handleKeyAction(keys);
 	}
@@ -29,6 +32,7 @@ public class Player extends Actor {
 	int handleCollisions(Enemy enemy) {
 		int collisionType = 0; // 0 = No Collision, 1 = Enemy Won Collision, 2 = Player Won Collision
 		if (collidesWith(enemy)) {
+			System.out.println("Here");
 			if (y + height * 3 / 4 - vy < enemy.getY() - enemy.getVy()) {
 				collisionType = 2;
 			} else {
@@ -55,9 +59,9 @@ public class Player extends Actor {
 		if (findKey(keys, 37))
 			desiredVelocity -= speed;
 		if (findKey(keys, 38))
-			vy -= JUMP_HEIGHT;
+			vy -= flyVelocity;
 		if (findKey(keys, 40)) {
-			vy += JUMP_HEIGHT;
+			vy += flyVelocity;
 		}
 
 		this.setVx(this.getVx() + (desiredVelocity - this.getVx()) / APPROACH_FACTOR);
