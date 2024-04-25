@@ -28,10 +28,11 @@ public class TransitionUpdater extends SceneUpdater {
 
     @Override
     void drawScene(Graphics2D g2) {
+        super.drawScene(g2);
         Font font = new Font("Monospaced", Font.BOLD, FONT_SIZE);
         FontMetrics metrics = g2.getFontMetrics(font);
         g2.setFont(font);
-        g2.setColor(new Color(255, 255, 255));
+        g2.setColor(Color.WHITE);
 
         Rectangle boundingBox = g2.getClipBounds();
         double midY = boundingBox.getHeight() / 2 - metrics.getHeight() / 2;

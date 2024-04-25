@@ -1,10 +1,6 @@
 package arcadeGame;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.util.Map;
 
 public class MenuUpdater extends SceneUpdater {
@@ -27,24 +23,11 @@ public class MenuUpdater extends SceneUpdater {
 
     @Override
     void drawScene(Graphics2D g2) {
-        String str1 = "Press the Space Bar to start";
-        String str2 = "Use the Arrow Keys to move";
-        String str3 = "Use Escape to pause the game";
-
-        Font font = new Font("Monospaced", Font.BOLD, FONT_SIZE);
-        FontMetrics metrics = g2.getFontMetrics(font);
-        g2.setFont(font);
-        g2.setColor(new Color(0, 0, 0));
-
-        Rectangle boundingBox = g2.getClipBounds();
-        double midX1 = boundingBox.getWidth() / 2 - metrics.stringWidth(str1) / 2;
-        double midX2 = boundingBox.getWidth() / 2 - metrics.stringWidth(str2) / 2;
-        double midX3 = boundingBox.getWidth() / 2 - metrics.stringWidth(str3) / 2;
-        double midY = boundingBox.getHeight() / 2 - metrics.getHeight() / 2;
-
-        g2.drawString(str1, (int) midX1, (int) midY - metrics.getHeight());
-        g2.drawString(str2, (int) midX2, (int) midY);
-        g2.drawString(str3, (int) midX3, (int) midY + metrics.getHeight());
+        super.drawScene(g2);
+        g2.drawImage(MenuImage.LOGO.getImage(), 0, 0, null);
+        g2.drawImage(MenuImage.PLAY.getImage(), 100, 200, null);
+        g2.drawImage(MenuImage.HELP.getImage(), 0, 225, null);
+        g2.drawImage(MenuImage.CREDITS.getImage(), 200, 225, null);
     }
 
     String getSceneName() {

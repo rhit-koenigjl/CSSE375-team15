@@ -15,14 +15,12 @@ public class Level {
   private List<Enemy> enemies;
   private int numCoins = 0;
   private boolean heroHurt = false;
-  private GameImage gameImage;
   private List<DisplaySprite> sprites;
 
   Level(String levelPath, int index, Player hero) {
     this.levelPath = levelPath;
     this.levelIndex = index;
     this.hero = hero;
-    this.gameImage = GameImage.BACKGROUND;
     this.sprites = new ArrayList<DisplaySprite>();
   }
 
@@ -137,11 +135,6 @@ public class Level {
   }
 
   void draw(Graphics2D g2) {
-    for (int i = 0; i < levelWidth; i += 100) {
-      for (int j = 0; j < levelHeight; j += 100) {
-        g2.drawImage(gameImage.getImage(), i, j, 100, 100, null);
-      }
-    }
     for (Tile t : tiles) {
       t.display(g2);
     }
