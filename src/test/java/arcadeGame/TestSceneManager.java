@@ -27,7 +27,7 @@ public class TestSceneManager {
         }
 
         @Override
-        void drawScene(Graphics2D g, int score) {
+        void drawScene(Graphics2D g) {
             drawnScene1++;
         }
 
@@ -49,7 +49,7 @@ public class TestSceneManager {
         }
 
         @Override
-        void drawScene(Graphics2D g, int score) {
+        void drawScene(Graphics2D g) {
             drawnScene2++;
         }
 
@@ -65,7 +65,7 @@ public class TestSceneManager {
         SceneManager sm = new SceneManager(null);
         sm.switchScene(new DummyScene1(sm));
 
-        sm.drawScene(null, 0);
+        sm.drawScene(null);
 
         assertEquals(1, drawnScene1);
     }
@@ -76,7 +76,7 @@ public class TestSceneManager {
         SceneManager sm = new SceneManager(null);
         sm.switchScene(new DummyScene1(sm));
         for (int i = 0; i < 5; i++) {
-            sm.drawScene(null, 0);
+            sm.drawScene(null);
         }
 
         assertEquals(5, drawnScene1);
@@ -93,7 +93,7 @@ public class TestSceneManager {
     }
 
     @Test
-    public void testSceneManager_runSceneMultipleTimes_expectMutipleUpdates() {
+    public void testSceneManager_runSceneMultipleTimes_expectMultipleUpdates() {
         updatedScene1 = 0;
         SceneManager sm = new SceneManager(null);
         sm.switchScene(new DummyScene1(sm));
@@ -114,7 +114,7 @@ public class TestSceneManager {
     }
 
     @Test
-    public void testSceneMAnager_testSwichSceneAtRuntime_expectRuntimeSwitch() {
+    public void testSceneMAnager_testSwitchSceneAtRuntime_expectRuntimeSwitch() {
         drawnScene1 = 0;
         updatedScene1 = 0;
 
@@ -128,7 +128,7 @@ public class TestSceneManager {
 
         for (int i = 0; i < 12; i++) {
             sm.runScene();
-            sm.drawScene(null, 0);
+            sm.drawScene(null);
         }
 
         assertEquals("DummyScene2", sm.getCurrentScene().getSceneName());

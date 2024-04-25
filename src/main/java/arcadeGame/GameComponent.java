@@ -13,11 +13,14 @@ import java.util.Map;
 import javax.swing.*;
 
 public class GameComponent extends JComponent {
-	private static final String LEVEL_DIRECTORY = "levels/user_test_level_set/";
+  private static final String LEVEL_DIRECTORY = "levels/user_test_level_set/";
+	private static final int STARTING_LIVES = 3;
+	private static final int STARTING_SCORE = 0;
+  
 	private final MessageGenerator generator = new AiMessageGenerator();
 	private SceneManager sceneManager;
-	private int score = 0;
-	private int lives = 3;
+	private int score = STARTING_SCORE;
+	private int lives = STARTING_LIVES;
 	private String levelFiles[];
 	private Level currentLevel;
 	private UpdateState state = new UpdateState(this);
@@ -68,11 +71,13 @@ public class GameComponent extends JComponent {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 
-		sceneManager.drawScene(g2, score);
-		g2.setFont(new Font("Monospaced", Font.BOLD, 28));
-		g2.setColor(new Color(200, 255, 200));
-		g2.drawString("Lives: " + lives, 25, 30);
-		g2.drawString("Score: " + score, 25, 60);
+		sceneManager.drawScene(g2);
+		if (sceneManager.displayStats()) {
+			g2.setFont(new Font("Monospaced", Font.BOLD, 28));
+			g2.setColor(new Color(200, 255, 200));
+			g2.drawString("Lives: " + lives, 25, 30);
+			g2.drawString("Score: " + score, 25, 60);
+		}
 	}
 
 	void sizeFrame(JFrame frame) {
@@ -104,8 +109,21 @@ public class GameComponent extends JComponent {
 		if (lives > 0) {
 			sceneManager.switchScene(new ResetUpdater(sceneManager, sceneManager.getCurrentScene()));
 		} else {
-			sceneManager.switchScene(new LossUpdater(sceneManager, currentLevel));
+			restart(false);
 		}
+	}
+
+	void winGame() {
+		restart(true);
+	}
+
+	private void restart(boolean win) {
+		loadLevelByIndex(0);
+		SceneUpdater newScene = win ? new WinUpdater(sceneManager, keys, score)
+				: new LossUpdater(sceneManager, keys, score);
+		sceneManager.switchScene(newScene);
+		lives = STARTING_LIVES;
+		score = STARTING_SCORE;
 	}
 
 	int getLevelCount() {
@@ -119,6 +137,10 @@ public class GameComponent extends JComponent {
 	void nextLevel() {
 		loadLevelByIndex(currentLevel.getIndex() + 1);
 		sceneManager.switchScene(new TransitionUpdater(sceneManager, generator));
+	}
+
+	int getScore() {
+		return score;
 	}
 
 	// For testing purposes

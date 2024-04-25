@@ -27,4 +27,8 @@ public class UpdateState {
     gameComponent.nextLevel();
   }
 
+  void handleWinGame() {
+    gameComponent.winGame();
+  }
+
 }
