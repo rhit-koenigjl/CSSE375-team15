@@ -5,22 +5,40 @@ import java.util.List;
 import java.util.Map;
 
 public class Player extends Actor {
-	private double gravity;
-	private double flyVelocity;
 
-	private double speed = 8;
+	private double horizontalSpeed;
+
+	private final int FLY_COOLDOWN = 30;
+	private int flyCooldownTimer = 0;
+
+	private double downWardPushAcceleration;
+
+	private double naturalFallMaxSpeed;
+	private double naturalFallAcceleration;
+
+	private double flyJumpSpeed;
+	private double flyPassiveSpeed;
+	private double flyMaxSpeed;
 
 	public Player(double startX, double startY, double width, double height) {
 		super(startX, startY, width, height, GameImage.PLAYER);
-		this.dir = Direction.RIGHT;
-		this.speed = this.width * DEFAULT_SPEED * 8.0 / 5.0;
 
-		this.flyVelocity = this.width * (0.75/50f);
-		this.gravity = this.width / 100f;
+		dir = Direction.RIGHT;
+
+		horizontalSpeed = width * DEFAULT_SPEED * 8f / 5f;
+
+		downWardPushAcceleration = width / 75;
+
+		naturalFallMaxSpeed = width / 7;
+		naturalFallAcceleration = width / 300;
+
+		flyJumpSpeed = width / 17;
+		flyPassiveSpeed = width / 250;
+		flyMaxSpeed = width/7;
 	}
 
 	void update(Map<Integer, Boolean> keys, List<Tile> tiles) {
-		vy += gravity;
+		flyCooldownTimer--;
 		super.update(tiles);
 		handleKeyAction(keys);
 	}
@@ -52,23 +70,54 @@ public class Player extends Actor {
 	}
 
 	void handleKeyAction(Map<Integer, Boolean> keys) {
-		int desiredVelocity = 0;
-		desiredVelocity = 0;
-		if (findKey(keys, 39))
-			desiredVelocity += speed;
-		if (findKey(keys, 37))
-			desiredVelocity -= speed;
-		if (findKey(keys, 38))
-			vy -= flyVelocity;
-		if (findKey(keys, 40)) {
-			vy += flyVelocity;
+		handleXControls(keys);
+		handleYControls(keys);
+	}
+
+	private void handleYControls(Map<Integer, Boolean> keys) {
+		if (findKey(keys, 38) && !findKey(keys, 40)) {
+			upEffect();
+		} else if (findKey(keys, 40) && !findKey(keys, 38)) {
+			downEffect();
+		} else {
+			passiveEffect();
 		}
+	}
+
+	private void passiveEffect() {
+		if (vy < naturalFallMaxSpeed) {
+			vy += Math.min(naturalFallMaxSpeed - vy, naturalFallAcceleration);
+		}
+	}
+
+	private void upEffect() {
+		if (flyCooldownTimer <= 0 && vy >= 0) {
+			vy = -flyJumpSpeed;
+			flyCooldownTimer = FLY_COOLDOWN;
+		} else if (vy > -flyMaxSpeed) {
+			vy += Math.max(-flyPassiveSpeed, -flyMaxSpeed - vy);
+		}
+	}
+
+	private void downEffect() {
+		vy += downWardPushAcceleration;
+	}
+
+	private void handleXControls(Map<Integer, Boolean> keys) {
+		int desiredVelocity = 0;
+
+		if (findKey(keys, 39))
+			desiredVelocity += this.horizontalSpeed;
+
+		if (findKey(keys, 37))
+			desiredVelocity -= this.horizontalSpeed;
 
 		this.setVx(this.getVx() + (desiredVelocity - this.getVx()) / APPROACH_FACTOR);
 
 		if (this.vx > 0) {
 			this.dir = Direction.RIGHT;
 		}
+
 		if (this.vx < 0) {
 			this.dir = Direction.LEFT;
 		}
