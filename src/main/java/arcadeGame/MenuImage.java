@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 public enum MenuImage {
-  LOGO("menu_logo.png", 470, 192),
+  LOGO("menu_logo.png", (int) (940 * 0.65), (int) (384 * 0.65)),
   PLAY("play_button.png", 72, 108),
   HELP("help_button.png", 48, 72),
   CREDITS("credits_button.png", 48, 72);

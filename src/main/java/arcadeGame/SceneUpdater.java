@@ -2,7 +2,6 @@ package arcadeGame;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Toolkit;
 
 public abstract class SceneUpdater {
     protected static final int FONT_SIZE = 28;
@@ -21,7 +20,7 @@ public abstract class SceneUpdater {
     abstract void updateScene();
 
     void drawScene(Graphics2D g) {
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension screenSize = g.getClipBounds().getSize();
         for (int i = 0; i < screenSize.getWidth(); i += 100) {
             for (int j = 0; j < screenSize.getHeight(); j += 100) {
                 g.drawImage(GameImage.BACKGROUND.getImage(), i, j, 100, 100, null);
