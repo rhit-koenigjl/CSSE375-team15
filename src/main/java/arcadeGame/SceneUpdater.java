@@ -1,5 +1,6 @@
 package arcadeGame;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 
 public abstract class SceneUpdater {
@@ -15,10 +16,19 @@ public abstract class SceneUpdater {
     boolean displayStats() {
         return false;
     }
+    
+    void drawScene(Graphics2D g) {
+        Dimension screenSize = g.getClipBounds().getSize();
+        for (int i = 0; i < screenSize.getWidth(); i += 100) {
+            for (int j = 0; j < screenSize.getHeight(); j += 100) {
+                g.drawImage(GameImage.BACKGROUND.getImage(), i, j, 100, 100, null);
+            }
+        }
+    }
 
+    void onFirstLoad() {}
+    
     abstract void updateScene();
-
-    abstract void drawScene(Graphics2D g);
 
     // For testing purposes
     abstract String getSceneName();

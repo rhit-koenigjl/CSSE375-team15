@@ -1,5 +1,6 @@
 package arcadeGame;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
@@ -27,6 +28,7 @@ public class LossUpdater extends SceneUpdater {
 
     @Override
     void drawScene(Graphics2D g2) {
+        super.drawScene(g2);
         String str1 = "You ran out of lives!";
         String str2 = "Your score was: " + score;
         String str3 = "Press space to play again";
@@ -41,6 +43,7 @@ public class LossUpdater extends SceneUpdater {
         double midX3 = boundingBox.getWidth() / 2 - metrics.stringWidth(str3) / 2;
         double midY = boundingBox.getHeight() / 2 - metrics.getHeight() / 2;
 
+        g2.setColor(Color.WHITE);
         g2.drawString(str1, (int) midX1, (int) midY - metrics.getHeight() / 2);
         g2.drawString(str2, (int) midX2, (int) midY + metrics.getHeight() / 2);
         g2.drawString(str3, (int) midX3, (int) midY + metrics.getHeight() * 2);

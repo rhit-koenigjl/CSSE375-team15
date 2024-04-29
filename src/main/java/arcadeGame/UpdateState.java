@@ -31,4 +31,8 @@ public class UpdateState {
     gameComponent.winGame();
   }
 
+  void resizeLevel() {
+    gameComponent.resize();
+  }
+
 }

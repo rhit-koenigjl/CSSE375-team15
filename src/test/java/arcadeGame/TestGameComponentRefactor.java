@@ -12,7 +12,8 @@ public class TestGameComponentRefactor {
   private static final String LEVEL_DIRECTORY = "levels/testLevels/";
 
   @Test
-  public void testLoadLevel_withValidFilePath_returnsLayoutObject() throws IOException, URISyntaxException {
+  public void testLoadLevel_withValidFilePath_returnsLayoutObject()
+      throws IOException, URISyntaxException {
     String filePath = Path.of(ClassLoader.getSystemClassLoader()
         .getResource(LEVEL_DIRECTORY + "test_level_0.json").toURI()).toFile().getPath();
 
@@ -41,4 +42,5 @@ public class TestGameComponentRefactor {
     assertEquals(55, player.getX());
     assertEquals(0, enemies.size());
   }
+
 }

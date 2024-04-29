@@ -1,59 +1,54 @@
 package arcadeGame;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
-import java.util.Map;
 
 public class MenuUpdater extends SceneUpdater {
-    private GameUpdater gameUpdater;
-    private Map<Integer, Boolean> keys;
+    private static final int MENU_Y_OFFSET = 20;
+    private static final int BUTTON_Y_OFFSET = 320;
+    private static final int BUTTON_X_OFFSET = 100;
 
-    MenuUpdater(SceneManager sceneManager, GameUpdater gameUpdater,
-            Map<Integer, Boolean> keys) {
+    private GameUpdater gameUpdater;
+    private MouseListener mouseListener;
+
+    MenuUpdater(SceneManager sceneManager, GameUpdater gameUpdater, MouseListener mouseListener) {
         super(sceneManager);
         this.gameUpdater = gameUpdater;
-        this.keys = keys;
+        this.mouseListener = mouseListener;
+        mouseListener.setSceneManager(sceneManager);
     }
 
     @Override
-    void updateScene() {
-        if (keys.getOrDefault(32, false)) {
-            sceneManager.switchScene(gameUpdater);
-        }
-    }
+    void updateScene() {}
 
     @Override
     void drawScene(Graphics2D g2) {
-        String str1 = "Press the Space Bar to start";
-        String str2 = "Use the Arrow Keys to move";
-        String str3 = "Use Escape to pause the game";
+        super.drawScene(g2);
+        Dimension screenSize = g2.getClipBounds().getSize();
+        Image logo = MenuImage.LOGO.getImage();
+        Image play = MenuImage.PLAY.getImage();
+        Image help = MenuImage.HELP.getImage();
+        Image credits = MenuImage.CREDITS.getImage();
 
-        Font font = new Font("Monospaced", Font.BOLD, FONT_SIZE);
-        FontMetrics metrics = g2.getFontMetrics(font);
-        g2.setFont(font);
-        g2.setColor(new Color(0, 0, 0));
+        int xPosLogo = ((int) screenSize.getWidth() - logo.getWidth(null)) / 2;
+        int xPosPlayButton = ((int) screenSize.getWidth() - play.getWidth(null)) / 2;
+        int xPosHelpButton = xPosPlayButton - help.getWidth(null) - BUTTON_X_OFFSET;
+        int xPosCreditsButton = xPosPlayButton + play.getWidth(null) + BUTTON_X_OFFSET;
+        int yPosOffset = (play.getHeight(null) - help.getHeight(null)) / 2;
 
-        Rectangle boundingBox = g2.getClipBounds();
-        double midX1 = boundingBox.getWidth() / 2 - metrics.stringWidth(str1) / 2;
-        double midX2 = boundingBox.getWidth() / 2 - metrics.stringWidth(str2) / 2;
-        double midX3 = boundingBox.getWidth() / 2 - metrics.stringWidth(str3) / 2;
-        double midY = boundingBox.getHeight() / 2 - metrics.getHeight() / 2;
+        g2.drawImage(logo, xPosLogo, MENU_Y_OFFSET, null);
+        g2.drawImage(play, xPosPlayButton, BUTTON_Y_OFFSET, null);
+        g2.drawImage(help, xPosHelpButton, BUTTON_Y_OFFSET + yPosOffset, null);
+        g2.drawImage(credits, xPosCreditsButton, BUTTON_Y_OFFSET + yPosOffset, null);
 
-        g2.drawString(str1, (int) midX1, (int) midY - metrics.getHeight());
-        g2.drawString(str2, (int) midX2, (int) midY);
-        g2.drawString(str3, (int) midX3, (int) midY + metrics.getHeight());
+        mouseListener.addClickAction(new Rectangle(xPosPlayButton, BUTTON_Y_OFFSET,
+                play.getWidth(null), play.getHeight(null)), gameUpdater);
     }
 
     String getSceneName() {
         return "menu";
-    }
-
-    // For testing purposes
-    void setKeys(Map<Integer, Boolean> keys) {
-        this.keys = keys;
     }
 
 }

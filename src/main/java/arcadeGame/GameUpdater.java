@@ -23,11 +23,17 @@ public class GameUpdater extends SceneUpdater {
 
     @Override
     void drawScene(Graphics2D g2) {
+        super.drawScene(g2);
         Color previousColor = g2.getColor();
         g2.setFont(new Font("Monospaced", Font.BOLD, FONT_SIZE));
 
         level.draw(g2);
         g2.setColor(previousColor);
+    }
+
+    @Override
+    void onFirstLoad() {
+        this.state.resizeLevel();
     }
 
     void changeLevel(Level level) {

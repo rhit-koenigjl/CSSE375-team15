@@ -13,10 +13,10 @@ import java.util.Map;
 import javax.swing.*;
 
 public class GameComponent extends JComponent {
-  private static final String LEVEL_DIRECTORY = "levels/user_test_level_set/";
+	private static final String LEVEL_DIRECTORY = "levels/user_test_level_set/";
 	private static final int STARTING_LIVES = 3;
 	private static final int STARTING_SCORE = 0;
-  
+
 	private final MessageGenerator generator = new AiMessageGenerator();
 	private SceneManager sceneManager;
 	private int score = STARTING_SCORE;
@@ -28,13 +28,13 @@ public class GameComponent extends JComponent {
 	private Map<Integer, Boolean> keys = new HashMap<Integer, Boolean>();
 	private JFrame frame;
 
-	GameComponent(JFrame frame) {
+	GameComponent(JFrame frame, MouseListener mouseListener) {
 		buildLevelsList();
 		this.frame = frame;
 		this.currentLevel = new Level(levelFiles[0], 0, hero);
 		this.sceneManager = new SceneManager(null);
 		GameUpdater g = new GameUpdater(sceneManager, currentLevel, keys, state);
-		MenuUpdater m = new MenuUpdater(sceneManager, g, keys);
+		MenuUpdater m = new MenuUpdater(sceneManager, g, mouseListener);
 		this.sceneManager.switchScene(m);
 	}
 
@@ -80,10 +80,6 @@ public class GameComponent extends JComponent {
 		}
 	}
 
-	void sizeFrame(JFrame frame) {
-		frame.setSize(currentLevel.getWidth() + 14, currentLevel.getHeight() + 37);
-	}
-
 	void switchLevel(String newLevel, int index) {
 		if (index == currentLevel.getIndex()) {
 			currentLevel.reset();
@@ -93,7 +89,7 @@ public class GameComponent extends JComponent {
 			this.sceneManager.setLevel(currentLevel);
 			currentLevel.generateLevel();
 		}
-		sizeFrame(this.frame);
+		resize();
 		frame.repaint();
 	}
 
@@ -143,9 +139,17 @@ public class GameComponent extends JComponent {
 		return score;
 	}
 
+	void resize() {
+		this.frame.setSize(currentLevel.getWidth() + 14, currentLevel.getHeight() + 37);
+	}
+
 	// For testing purposes
 	SceneManager getSceneManager() {
 		return sceneManager;
+	}
+
+	void setSceneManager(SceneManager sceneManager) {
+		this.sceneManager = sceneManager;
 	}
 
 }

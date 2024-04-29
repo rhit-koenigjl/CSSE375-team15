@@ -26,6 +26,7 @@ public class ResetUpdater extends SceneUpdater {
 
     @Override
     void drawScene(Graphics2D g2) {
+        super.drawScene(g2);
         String str1 = "You got hit!";
         String str2 = "Restarting the level in " + (400 - timer) / 100;
 
