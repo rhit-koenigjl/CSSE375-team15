@@ -28,13 +28,13 @@ public class GameComponent extends JComponent {
 	private Map<Integer, Boolean> keys = new HashMap<Integer, Boolean>();
 	private JFrame frame;
 
-	GameComponent(JFrame frame) {
+	GameComponent(JFrame frame, MouseListener mouseListener) {
 		buildLevelsList();
 		this.frame = frame;
 		this.currentLevel = new Level(levelFiles[0], 0, hero);
 		this.sceneManager = new SceneManager(null);
 		GameUpdater g = new GameUpdater(sceneManager, currentLevel, keys, state);
-		MenuUpdater m = new MenuUpdater(sceneManager, g, keys);
+		MenuUpdater m = new MenuUpdater(sceneManager, g, mouseListener);
 		this.sceneManager.switchScene(m);
 	}
 

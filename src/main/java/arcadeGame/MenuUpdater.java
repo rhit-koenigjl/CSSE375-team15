@@ -3,7 +3,7 @@ package arcadeGame;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.util.Map;
+import java.awt.Rectangle;
 
 public class MenuUpdater extends SceneUpdater {
     private static final int MENU_Y_OFFSET = 20;
@@ -11,20 +11,17 @@ public class MenuUpdater extends SceneUpdater {
     private static final int BUTTON_X_OFFSET = 100;
 
     private GameUpdater gameUpdater;
-    private Map<Integer, Boolean> keys;
+    private MouseListener mouseListener;
 
-    MenuUpdater(SceneManager sceneManager, GameUpdater gameUpdater, Map<Integer, Boolean> keys) {
+    MenuUpdater(SceneManager sceneManager, GameUpdater gameUpdater, MouseListener mouseListener) {
         super(sceneManager);
         this.gameUpdater = gameUpdater;
-        this.keys = keys;
+        this.mouseListener = mouseListener;
+        mouseListener.setSceneManager(sceneManager);
     }
 
     @Override
-    void updateScene() {
-        if (keys.getOrDefault(32, false)) {
-            sceneManager.switchScene(gameUpdater);
-        }
-    }
+    void updateScene() {}
 
     @Override
     void drawScene(Graphics2D g2) {
@@ -45,15 +42,13 @@ public class MenuUpdater extends SceneUpdater {
         g2.drawImage(play, xPosPlayButton, BUTTON_Y_OFFSET, null);
         g2.drawImage(help, xPosHelpButton, BUTTON_Y_OFFSET + yPosOffset, null);
         g2.drawImage(credits, xPosCreditsButton, BUTTON_Y_OFFSET + yPosOffset, null);
+
+        mouseListener.addClickAction(new Rectangle(xPosPlayButton, BUTTON_Y_OFFSET,
+                play.getWidth(null), play.getHeight(null)), gameUpdater);
     }
 
     String getSceneName() {
         return "menu";
-    }
-
-    // For testing purposes
-    void setKeys(Map<Integer, Boolean> keys) {
-        this.keys = keys;
     }
 
 }
