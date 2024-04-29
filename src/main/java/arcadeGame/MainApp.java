@@ -15,12 +15,12 @@ public class MainApp {
 
 	private GameComponent component;
 	private JFrame gameFrame;
-	private MouseListener mouseListener = new MouseListener();
+	private MouseListener mouseListener;
 
 	private void runApp() {
 		gameFrame = new JFrame("Indiana Ghost");
 		gameFrame.setSize(MENU_WIDTH, MENU_HEIGHT);
-		gameFrame.addMouseListener(mouseListener);
+		this.mouseListener = new MouseListener(gameFrame);
 
 		component = new GameComponent(gameFrame, mouseListener);
 		component.loadLevelByIndex(0);

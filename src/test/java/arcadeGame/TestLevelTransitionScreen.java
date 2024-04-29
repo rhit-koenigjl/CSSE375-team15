@@ -16,6 +16,8 @@ public class TestLevelTransitionScreen {
     JFrame frame = EasyMock.createMock(JFrame.class);
     frame.setSize(EasyMock.anyInt(), EasyMock.anyInt());
     frame.repaint();
+    frame.addMouseMotionListener(EasyMock.anyObject(MouseListener.class));
+    frame.addMouseListener(EasyMock.anyObject(MouseListener.class));
 
     SceneManager sceneManager = EasyMock.createMock(SceneManager.class);
     EasyMock.expect(sceneManager.getCurrentScene())
@@ -29,7 +31,7 @@ public class TestLevelTransitionScreen {
         .andReturn(EasyMock.partialMockBuilder(TransitionUpdater.class).createMock()).anyTimes();
     EasyMock.replay(frame, sceneManager);
 
-    GameComponent gameComponent = new GameComponent(frame, new MouseListener());
+    GameComponent gameComponent = new GameComponent(frame, new MouseListener(frame));
     gameComponent.setSceneManager(sceneManager);
 
     SceneUpdater menu = sceneManager.getCurrentScene();
