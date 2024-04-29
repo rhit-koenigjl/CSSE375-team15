@@ -13,4 +13,5 @@ public class TestAlwaysPasses {
   public void testAlwaysPasses() {
     assertTrue(true, "This test will always pass");
   }
+
 }

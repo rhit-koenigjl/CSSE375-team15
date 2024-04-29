@@ -40,7 +40,7 @@ public class TestLevelTransitionScreen {
 
     Graphics2D g = EasyMock.niceMock(Graphics2D.class);
     EasyMock.expect(g.getFontMetrics(new Font("Monospaced", Font.BOLD, 28))).andReturn(metrics);
-    EasyMock.expect(g.getClipBounds()).andReturn(new Rectangle());
+    EasyMock.expect(g.getClipBounds()).andReturn(new Rectangle()).anyTimes();
 
     SceneManager sceneManager = EasyMock.niceMock(SceneManager.class);
     EasyMock.expect(sceneManager.getCurrentScene())
