@@ -35,7 +35,8 @@ public class GameComponent extends JComponent {
 		this.sceneManager = new SceneManager(null);
 		GameUpdater g = new GameUpdater(sceneManager, currentLevel, keys, state);
 		MenuUpdater m = new MenuUpdater(sceneManager, g, keys);
-		this.sceneManager.switchScene(m);
+		InstructionsUpdater i = new InstructionsUpdater(sceneManager); //TODO remove this once testing is over
+		this.sceneManager.switchScene(i);
 	}
 
 	private void buildLevelsList() {
