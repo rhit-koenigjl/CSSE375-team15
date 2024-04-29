@@ -40,7 +40,7 @@ public class TestActorsAndTilesForBasicData {
 
         p.setVx(10);
         p.setVy(7);
-        p.update(new HashMap<Integer, Boolean>(), new ArrayList<Tile>());
+        p.update(new HashMap<Integer, Boolean>(), new ArrayList<Tile>(), new ArrayList<DisplaySprite>());
 
         assertEquals(7.5, p.getX());
         assertEquals(7, p.getY());

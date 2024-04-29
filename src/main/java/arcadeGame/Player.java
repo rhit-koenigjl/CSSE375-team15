@@ -37,10 +37,10 @@ public class Player extends Actor {
 		flyMaxSpeed = width/7;
 	}
 
-	void update(Map<Integer, Boolean> keys, List<Tile> tiles) {
+	void update(Map<Integer, Boolean> keys, List<Tile> tiles, List<DisplaySprite> sprites) {
 		flyCooldownTimer--;
 		super.update(tiles);
-		handleKeyAction(keys);
+		handleKeyAction(keys, sprites);
 	}
 
 	boolean findKey(Map<Integer, Boolean> keys, int val) {
@@ -50,7 +50,6 @@ public class Player extends Actor {
 	int handleCollisions(Enemy enemy) {
 		int collisionType = 0; // 0 = No Collision, 1 = Enemy Won Collision, 2 = Player Won Collision
 		if (collidesWith(enemy)) {
-			System.out.println("Here");
 			if (y + height * 3 / 4 - vy < enemy.getY() - enemy.getVy()) {
 				collisionType = 2;
 			} else {
@@ -69,14 +68,14 @@ public class Player extends Actor {
 		vy = 0;
 	}
 
-	void handleKeyAction(Map<Integer, Boolean> keys) {
+	void handleKeyAction(Map<Integer, Boolean> keys, List<DisplaySprite> sprites) {
 		handleXControls(keys);
-		handleYControls(keys);
+		handleYControls(keys, sprites);
 	}
 
-	private void handleYControls(Map<Integer, Boolean> keys) {
+	private void handleYControls(Map<Integer, Boolean> keys, List<DisplaySprite> sprites) {
 		if (findKey(keys, 38) && !findKey(keys, 40)) {
-			upEffect();
+			upEffect(sprites);
 		} else if (findKey(keys, 40) && !findKey(keys, 38)) {
 			downEffect();
 		} else {
@@ -90,10 +89,11 @@ public class Player extends Actor {
 		}
 	}
 
-	private void upEffect() {
+	private void upEffect(List<DisplaySprite> sprites) {
 		if (flyCooldownTimer <= 0 && vy >= 0) {
 			vy = -flyJumpSpeed;
 			flyCooldownTimer = FLY_COOLDOWN;
+			sprites.add(new PlayerJumpSprite(x, y + height, width));
 		} else if (vy > -flyMaxSpeed) {
 			vy += Math.max(-flyPassiveSpeed, -flyMaxSpeed - vy);
 		}
