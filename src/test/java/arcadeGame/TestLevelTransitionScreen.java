@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.Map;
 import javax.swing.JFrame;
 import org.easymock.EasyMock;
 import org.junit.Test;
@@ -15,12 +14,26 @@ public class TestLevelTransitionScreen {
   @Test
   public void testTransitionScreenDisplayedOnNextLevel() {
     JFrame frame = EasyMock.createMock(JFrame.class);
-    GameComponent gameComponent = new GameComponent(frame);
-    SceneManager sceneManager = gameComponent.getSceneManager();
+    frame.setSize(EasyMock.anyInt(), EasyMock.anyInt());
+    frame.repaint();
+
+    SceneManager sceneManager = EasyMock.createMock(SceneManager.class);
+    EasyMock.expect(sceneManager.getCurrentScene())
+        .andReturn(EasyMock.partialMockBuilder(MenuUpdater.class).createMock());
+    sceneManager.runScene();
+    sceneManager.setLevel(EasyMock.anyObject(Level.class));
+    EasyMock.expect(sceneManager.getCurrentScene())
+        .andReturn(EasyMock.partialMockBuilder(GameUpdater.class).createMock());
+    sceneManager.switchScene(EasyMock.anyObject(TransitionUpdater.class));
+    EasyMock.expect(sceneManager.getCurrentScene())
+        .andReturn(EasyMock.partialMockBuilder(TransitionUpdater.class).createMock()).anyTimes();
+    EasyMock.replay(frame, sceneManager);
+
+    GameComponent gameComponent = new GameComponent(frame, new MouseListener());
+    gameComponent.setSceneManager(sceneManager);
 
     SceneUpdater menu = sceneManager.getCurrentScene();
     assertEquals("menu", menu.getSceneName());
-    ((MenuUpdater) menu).setKeys(Map.of(32, true));
     sceneManager.runScene();
     SceneUpdater game = sceneManager.getCurrentScene();
     assertEquals("game", game.getSceneName());
@@ -28,6 +41,7 @@ public class TestLevelTransitionScreen {
     gameComponent.nextLevel();
     SceneUpdater transition = sceneManager.getCurrentScene();
     assertEquals("transition", transition.getSceneName());
+    EasyMock.verify(frame, sceneManager);
   }
 
   @Test

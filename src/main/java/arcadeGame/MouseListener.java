@@ -15,10 +15,15 @@ public class MouseListener extends MouseAdapter {
     if (sceneManager == null) {
       return;
     }
+    boolean shouldClear = false;
     for (Rectangle r : clicks.keySet()) {
       if (r.contains(e.getX(), e.getY())) {
         sceneManager.switchScene(clicks.get(r));
+        shouldClear = true;
       }
+    }
+    if (shouldClear) {
+      clicks.clear();
     }
   }
 

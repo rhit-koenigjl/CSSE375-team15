@@ -148,4 +148,8 @@ public class GameComponent extends JComponent {
 		return sceneManager;
 	}
 
+	void setSceneManager(SceneManager sceneManager) {
+		this.sceneManager = sceneManager;
+	}
+
 }
