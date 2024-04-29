@@ -15,12 +15,14 @@ public class MainApp {
 
 	private GameComponent component;
 	private JFrame gameFrame;
+	private MouseListener mouseListener = new MouseListener();
 
 	private void runApp() {
-		gameFrame = new JFrame("Bomber Jack");
+		gameFrame = new JFrame("Indiana Ghost");
 		gameFrame.setSize(MENU_WIDTH, MENU_HEIGHT);
+		gameFrame.addMouseListener(mouseListener);
 
-		component = new GameComponent(gameFrame);
+		component = new GameComponent(gameFrame, mouseListener);
 		component.loadLevelByIndex(0);
 		gameFrame.add(component, BorderLayout.CENTER);
 		gameFrame.getContentPane().setBackground(new Color(206, 214, 237));
@@ -49,7 +51,6 @@ public class MainApp {
 		});
 
 		gameFrame.setVisible(true);
-		// component.sizeFrame(gameFrame);
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameFrame.setResizable(false);
 	}

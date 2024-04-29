@@ -13,11 +13,13 @@ public enum GameImage {
   BRICK("brick", Extension.PNG),
   COIN("coin", Extension.GIF),
   GHOST("ghost", Extension.PNG, DirectionType.EIGHT),
+  DEAD_GHOST("dead_ghost", Extension.PNG),
   MOSSY_BRICK("mossy_brick", Extension.PNG),
   PLAYER("player", Extension.GIF, DirectionType.TWO),
   SPAWNER("spawner", Extension.GIF),
   SPIKE("spike", Extension.PNG, DirectionType.FOUR),
-  TRACKER("angry_ghost", Extension.PNG, DirectionType.EIGHT);
+  TRACKER("angry_ghost", Extension.PNG, DirectionType.EIGHT),
+  JUMP_WIND("jump_wind", Extension.PNG);
 
   private String fileName;
   private Extension extension;

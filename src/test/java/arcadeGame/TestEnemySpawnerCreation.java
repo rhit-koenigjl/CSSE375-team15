@@ -44,22 +44,24 @@ public class TestEnemySpawnerCreation {
 
   @Test
   public void testEnemySpawnerGenerator_createsNewEnemyGenerator() {
-    EnemySpawner enemySpawner = new EnemySpawnerGenerator(STARTING_POSITION, STARTING_POSITION, ACTOR_SIZE,
-        ACTOR_SIZE, STARTING_VELOCITY, STARTING_VELOCITY, ENEMIES, PLAYER);
+    EnemySpawner enemySpawner = new EnemySpawnerGenerator(STARTING_POSITION, STARTING_POSITION,
+        ACTOR_SIZE, ACTOR_SIZE, STARTING_VELOCITY, STARTING_VELOCITY, ENEMIES, PLAYER);
     matchesEnemyType(EnemyGenerator.class, enemySpawner);
   }
 
   @Test
   public void testHunterSeekerGenerator_createsNewHunterSeeker() {
-    EnemySpawner enemySpawner = new HunterSeekerGenerator(STARTING_POSITION, STARTING_POSITION, ACTOR_SIZE,
-        ACTOR_SIZE, STARTING_VELOCITY, STARTING_VELOCITY, ENEMIES, PLAYER);
+    EnemySpawner enemySpawner = new HunterSeekerGenerator(STARTING_POSITION, STARTING_POSITION,
+        ACTOR_SIZE, ACTOR_SIZE, STARTING_VELOCITY, STARTING_VELOCITY, ENEMIES, PLAYER);
     matchesEnemyType(HunterSeeker.class, enemySpawner);
   }
 
   @Test
   public void testRecursiveEnemySpawnerGenerator_createsNewRecursiveEnemySpawnerGenerator() {
-    EnemySpawner enemySpawner = new RecursiveEnemySpawnerGenerator(STARTING_POSITION, STARTING_POSITION, ACTOR_SIZE,
-        ACTOR_SIZE, STARTING_VELOCITY, STARTING_VELOCITY, ENEMIES, PLAYER);
+    EnemySpawner enemySpawner =
+        new RecursiveEnemySpawnerGenerator(STARTING_POSITION, STARTING_POSITION, ACTOR_SIZE,
+            ACTOR_SIZE, STARTING_VELOCITY, STARTING_VELOCITY, ENEMIES, PLAYER);
     matchesEnemyType(RecursiveEnemySpawnerGenerator.class, enemySpawner);
   }
+
 }

@@ -1,18 +1,21 @@
 package arcadeGame;
 
 public class CollectedCoinSprite extends DisplaySprite {
-    private double animationMetric;
+    private static int COIN_FINAL_X = 10;
+    private static int COIN_FINAL_Y = 10;
+    private double animationTime;
 
     CollectedCoinSprite(double x, double y, double width, double height) {
         super(x, y, width, height, GameImage.COIN);
-        animationMetric = 0;
+        animationTime = 0;
     }
 
     @Override
     protected void updatePosition() {
-        animationMetric += width / 100;
-        this.x += Math.cos(animationMetric / 3) * animationMetric * 2;
-        this.y += Math.sin(animationMetric / 3) * animationMetric * 2;
+        x += (COIN_FINAL_X - x) / Math.max(1, 100 - animationTime / 3);
+        y += (COIN_FINAL_Y - y) / Math.max(1, 100 - animationTime / 3);
+        animationTime += 8;
+        this.y += Math.max(8 - animationTime/20 , 0);
     }
 
 }

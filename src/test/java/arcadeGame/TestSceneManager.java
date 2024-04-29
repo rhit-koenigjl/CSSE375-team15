@@ -35,6 +35,7 @@ public class TestSceneManager {
         String getSceneName() {
             return "DummyScene1";
         }
+
     }
 
     private class DummyScene2 extends SceneUpdater {
@@ -57,6 +58,7 @@ public class TestSceneManager {
         String getSceneName() {
             return "DummyScene2";
         }
+
     }
 
     @Test
@@ -136,6 +138,6 @@ public class TestSceneManager {
         assertEquals(5, updatedScene1);
         assertEquals(8, drawnScene2);
         assertEquals(7, updatedScene2);
-
     }
+
 }
