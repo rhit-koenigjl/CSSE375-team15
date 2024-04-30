@@ -5,31 +5,44 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Menu;
 import java.awt.Rectangle;
 
 public class InstructionsUpdater extends SceneUpdater{
+    private static int BACK_BUTTON_X = 10;
+    private static int BACK_BUTTON_Y = 10;
+    private static int BACK_BUTTON_WIDTH = 50;
+    private static int BACK_BUTTON_HEIGHT = 75;
 
-    InstructionsUpdater(SceneManager sceneManager) {
+    private SceneUpdater menuScene;
+    private MouseListener mouseListener;
+
+    InstructionsUpdater(SceneManager sceneManager, SceneUpdater menuScene, MouseListener mouseListener) {
         super(sceneManager);
+        this.menuScene = menuScene;
+        this.mouseListener = mouseListener;
     }
 
     @Override
     void updateScene() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateScene'");
+        mouseListener.addClickAction(new Rectangle(BACK_BUTTON_X, BACK_BUTTON_Y,
+                BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT), menuScene);
     }
 
     @Override
     String getSceneName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSceneName'");
+        return "Instruction Screen";
     }
 
     @Override
     void drawScene(Graphics2D g2) {
         super.drawScene(g2);
         Rectangle d = g2.getClipBounds();
+
         Image instructionScreen = MenuImage.INSTRUCTION_SCREEN.getImage();
+        Image backButtonImage = MenuImage.BACK.getImage();
+
+        g2.drawImage(backButtonImage, BACK_BUTTON_X, BACK_BUTTON_Y, null);
         
         int imageXPos = (int) (d.getWidth() - instructionScreen.getWidth(null)) / 2;
         int imageYPos = (int) (d.getHeight() - instructionScreen.getHeight(null)) / 2;
@@ -84,15 +97,5 @@ public class InstructionsUpdater extends SceneUpdater{
         g2.drawString(str4a, midX4 - metrics.stringWidth(str4a) / 2, startY4);
         g2.drawString(str4b, midX4 - metrics.stringWidth(str4b) / 2, startY4 + lineHeight);
         g2.drawString(str4c, midX4 - metrics.stringWidth(str4c) / 2, startY4 + lineHeight * 2);
-
-
-        // Rectangle boundingBox = g2.getClipBounds();
-        // double midX1 = boundingBox.getWidth() / 2 - metrics.stringWidth(str1) / 2;
-        // double midX2 = boundingBox.getWidth() / 2 - metrics.stringWidth(str2) / 2;
-        // double midY = boundingBox.getHeight() / 2 - metrics.getHeight() / 2;
-
-        // g2.drawString(str1, (int) midX1, (int) midY - metrics.getHeight());
-        // g2.drawString(str2, (int) midX2, (int) midY + metrics.getHeight());
     }
-    
 }
