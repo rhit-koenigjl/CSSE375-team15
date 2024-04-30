@@ -10,11 +10,7 @@ public enum MenuImage {
   PLAY("play_button.png", (int) (72 * 1.7), (int) (108 * 1.7)),
   HELP("help_button.png", (int) (48 * 1.7), (int) (72 * 1.7)),
   CREDITS("credits_button.png", (int) (48 * 1.7), (int) (72 * 1.7)),
-  MENU_BLOCK("menu_block.png", 512, 128),
-  LEFT_KEY("arrow_key_left.png", 64, 64),
-  RIGHT_KEY("arrow_key_right.png", 64, 64),
-  UP_KEY("arrow_key_up.png", 64, 64),
-  DOWN_KEY("arrow_key_down.png", 64, 64);
+  INSTRUCTION_SCREEN("instruction_screen.png", 500, 500);
 
   private BufferedImage image;
 
