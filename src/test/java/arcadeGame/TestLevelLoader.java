@@ -1,13 +1,13 @@
 package arcadeGame;
 
 import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
+import arcadeGame.levelManagers.LevelLoader;
 
-public class TestLevelLoader {
+class TestLevelLoader {
 
     @Test
-    public void testLevelLoader_testConstructor_expectInitialValues() {
+    void testLevelLoader_testConstructor_expectInitialValues() {
         LevelLoader testLoader = new LevelLoader("");
 
         assertEquals(0, testLoader.getEnemies().size());
@@ -20,7 +20,7 @@ public class TestLevelLoader {
     }
 
     @Test
-    public void testLevelLoader_createLevel_expectTenByFive() {
+    void testLevelLoader_createLevel_expectTenByFive() {
         LevelLoader testLoader =
                 new LevelLoader("src\\main\\resources\\levels\\testLevels\\test_level_3.json");
         testLoader.loadLevel();
@@ -33,7 +33,7 @@ public class TestLevelLoader {
     }
 
     @Test
-    public void testLevelLoader_createLevel_expectFiveBlocksFiveEnemies() {
+    void testLevelLoader_createLevel_expectFiveBlocksFiveEnemies() {
         LevelLoader testLoader =
                 new LevelLoader("src\\main\\resources\\levels\\testLevels\\test55.json");
         testLoader.loadLevel();
@@ -43,7 +43,7 @@ public class TestLevelLoader {
     }
 
     @Test
-    public void testLevelLoader_createLevel_expectSpikes() {
+    void testLevelLoader_createLevel_expectSpikes() {
         LevelLoader testLoader =
                 new LevelLoader("src\\main\\resources\\levels\\testLevels\\spike_test.json");
         assertEquals(0, testLoader.getTiles().size());
@@ -52,7 +52,7 @@ public class TestLevelLoader {
     }
 
     @Test
-    public void testLevelLoader_createLevel_expectHunterSeekers() {
+    void testLevelLoader_createLevel_expectHunterSeekers() {
         LevelLoader testLoader = new LevelLoader(
                 "src\\main\\resources\\levels\\testLevels\\hunter_seeker_test.json");
         assertEquals(0, testLoader.getEnemies().size());
@@ -61,7 +61,7 @@ public class TestLevelLoader {
     }
 
     @Test
-    public void testLevelLoader_createLevel_expectCoins() {
+    void testLevelLoader_createLevel_expectCoins() {
         LevelLoader testLoader =
                 new LevelLoader("src\\main\\resources\\levels\\testLevels\\coin_test.json");
         assertEquals(0, testLoader.getTiles().size());
@@ -70,7 +70,7 @@ public class TestLevelLoader {
     }
 
     @Test
-    public void testLevelLoader_createLevel_expectDesiredPlayer() {
+    void testLevelLoader_createLevel_expectDesiredPlayer() {
         LevelLoader testLoader =
                 new LevelLoader("src\\main\\resources\\levels\\testLevels\\player_test.json");
         assertEquals(null, testLoader.getPlayer());

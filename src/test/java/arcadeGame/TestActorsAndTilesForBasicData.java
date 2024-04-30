@@ -1,16 +1,21 @@
 package arcadeGame;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import org.junit.jupiter.api.Test;
+import arcadeGame.gameComponents.Enemy;
+import arcadeGame.gameComponents.Player;
+import arcadeGame.gameComponents.Tile;
+import arcadeGame.gameComponents.Wall;
+import arcadeGame.gameComponents.spriteAnimations.DisplaySprite;
 
-public class TestActorsAndTilesForBasicData {
+class TestActorsAndTilesForBasicData {
 
     @Test
-    public void testBasicTile_testConstructor_expectGettersToGetExpectedValues() {
+    void testBasicTile_testConstructor_expectGettersToGetExpectedValues() {
         Wall wall = new Wall(1, 2, 3, 4);
 
         assertEquals(1, wall.getX());
@@ -20,7 +25,7 @@ public class TestActorsAndTilesForBasicData {
     }
 
     @Test
-    public void testBasicActor_testConstructor_expectGettersToGetExpectedValues() {
+    void testBasicActor_testConstructor_expectGettersToGetExpectedValues() {
         Enemy enemy = new Enemy(1, 2, 3, 4);
 
         assertEquals(1, enemy.getX());
@@ -30,7 +35,7 @@ public class TestActorsAndTilesForBasicData {
     }
 
     @Test
-    public void testPlayerActor_testAfterMovement_expectValuesMovedFromInitialPosition() {
+    void testPlayerActor_testAfterMovement_expectValuesMovedFromInitialPosition() {
         Player p = new Player(0, 0, 10, 10);
 
         assertEquals(0, p.getX());
@@ -40,7 +45,8 @@ public class TestActorsAndTilesForBasicData {
 
         p.setVx(10);
         p.setVy(7);
-        p.update(new HashMap<Integer, Boolean>(), new ArrayList<Tile>(), new ArrayList<DisplaySprite>());
+        p.update(new HashMap<Integer, Boolean>(), new ArrayList<Tile>(),
+                new ArrayList<DisplaySprite>());
 
         assertEquals(7.5, p.getX());
         assertEquals(7, p.getY());
@@ -49,7 +55,7 @@ public class TestActorsAndTilesForBasicData {
     }
 
     @Test
-    public void testTwoObjectCollisions_haveNoCollision_expectNoCollision() {
+    void testTwoObjectCollisions_haveNoCollision_expectNoCollision() {
         Player p = new Player(100, 100, 50, 50);
         Wall t = new Wall(200, 200, 40, 40);
 
@@ -57,7 +63,7 @@ public class TestActorsAndTilesForBasicData {
     }
 
     @Test
-    public void testTwoObjectCollisions_hasCollision_expectCollision() {
+    void testTwoObjectCollisions_hasCollision_expectCollision() {
         Player p = new Player(0, 0, 50, 50);
         Wall t = new Wall(10, 30, 40, 40);
 

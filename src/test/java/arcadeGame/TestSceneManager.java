@@ -1,12 +1,12 @@
 package arcadeGame;
 
 import static org.junit.Assert.assertEquals;
-
 import java.awt.Graphics2D;
-
 import org.junit.Test;
+import arcadeGame.gameHelpers.SceneManager;
+import arcadeGame.gameHelpers.screens.SceneUpdater;
 
-public class TestSceneManager {
+class TestSceneManager {
     private int drawnScene1 = 0;
     private int updatedScene1 = 0;
 
@@ -19,7 +19,7 @@ public class TestSceneManager {
         }
 
         @Override
-        void updateScene() {
+        public void updateScene() {
             updatedScene1++;
             if (updatedScene1 >= 5) {
                 sceneManager.switchScene(new DummyScene2(this.sceneManager));
@@ -27,12 +27,12 @@ public class TestSceneManager {
         }
 
         @Override
-        void drawScene(Graphics2D g) {
+        public void drawScene(Graphics2D g) {
             drawnScene1++;
         }
 
         @Override
-        String getSceneName() {
+        public String getSceneName() {
             return "DummyScene1";
         }
 
@@ -45,24 +45,24 @@ public class TestSceneManager {
         }
 
         @Override
-        void updateScene() {
+        public void updateScene() {
             updatedScene2++;
         }
 
         @Override
-        void drawScene(Graphics2D g) {
+        public void drawScene(Graphics2D g) {
             drawnScene2++;
         }
 
         @Override
-        String getSceneName() {
+        public String getSceneName() {
             return "DummyScene2";
         }
 
     }
 
     @Test
-    public void testSceneManager_drawScene_expectSingleDraw() {
+    void testSceneManager_drawScene_expectSingleDraw() {
         drawnScene1 = 0;
         SceneManager sm = new SceneManager(null);
         sm.switchScene(new DummyScene1(sm));
@@ -73,7 +73,7 @@ public class TestSceneManager {
     }
 
     @Test
-    public void testSceneManager_drawSceneMultipleTimes_expectMultipleDraws() {
+    void testSceneManager_drawSceneMultipleTimes_expectMultipleDraws() {
         drawnScene1 = 0;
         SceneManager sm = new SceneManager(null);
         sm.switchScene(new DummyScene1(sm));
@@ -85,7 +85,7 @@ public class TestSceneManager {
     }
 
     @Test
-    public void testSceneManager_runScene_expectUpdate() {
+    void testSceneManager_runScene_expectUpdate() {
         updatedScene1 = 0;
         SceneManager sm = new SceneManager(null);
         sm.switchScene(new DummyScene1(sm));
@@ -95,7 +95,7 @@ public class TestSceneManager {
     }
 
     @Test
-    public void testSceneManager_runSceneMultipleTimes_expectMultipleUpdates() {
+    void testSceneManager_runSceneMultipleTimes_expectMultipleUpdates() {
         updatedScene1 = 0;
         SceneManager sm = new SceneManager(null);
         sm.switchScene(new DummyScene1(sm));
@@ -107,7 +107,7 @@ public class TestSceneManager {
     }
 
     @Test
-    public void testSceneManager_testSwitchScene_expectSceneSwitched() {
+    void testSceneManager_testSwitchScene_expectSceneSwitched() {
         SceneManager sm = new SceneManager(null);
         sm.switchScene(new DummyScene1(sm));
         assertEquals("DummyScene1", sm.getCurrentScene().getSceneName());
@@ -116,7 +116,7 @@ public class TestSceneManager {
     }
 
     @Test
-    public void testSceneMAnager_testSwitchSceneAtRuntime_expectRuntimeSwitch() {
+    void testSceneMAnager_testSwitchSceneAtRuntime_expectRuntimeSwitch() {
         drawnScene1 = 0;
         updatedScene1 = 0;
 
