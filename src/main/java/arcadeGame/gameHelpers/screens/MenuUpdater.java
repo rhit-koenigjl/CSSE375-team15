@@ -14,14 +14,15 @@ public class MenuUpdater extends SceneUpdater {
     private static final int BUTTON_X_OFFSET = 100;
 
     private GameUpdater gameUpdater;
+    private InstructionsUpdater instructionsUpdater;
     private MouseListener mouseListener;
 
-    public MenuUpdater(SceneManager sceneManager, GameUpdater gameUpdater,
-            MouseListener mouseListener) {
+    MenuUpdater(SceneManager sceneManager, GameUpdater gameUpdater, MouseListener mouseListener) {
         super(sceneManager);
         this.gameUpdater = gameUpdater;
         this.mouseListener = mouseListener;
         mouseListener.setSceneManager(sceneManager);
+        this.instructionsUpdater = new InstructionsUpdater(sceneManager, this, mouseListener);
     }
 
     @Override
@@ -49,6 +50,9 @@ public class MenuUpdater extends SceneUpdater {
 
         mouseListener.addClickAction(new Rectangle(xPosPlayButton, BUTTON_Y_OFFSET,
                 play.getWidth(null), play.getHeight(null)), gameUpdater);
+
+        mouseListener.addClickAction(new Rectangle(xPosHelpButton, BUTTON_Y_OFFSET + yPosOffset,
+                help.getWidth(null), help.getHeight(null)), instructionsUpdater);
     }
 
     @Override
