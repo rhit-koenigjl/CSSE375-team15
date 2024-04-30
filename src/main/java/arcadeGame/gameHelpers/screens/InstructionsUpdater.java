@@ -1,14 +1,16 @@
-package arcadeGame;
+package arcadeGame.gameHelpers.screens;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Menu;
 import java.awt.Rectangle;
+import arcadeGame.gameComponents.imageManagers.MenuImage;
+import arcadeGame.gameHelpers.SceneManager;
+import arcadeGame.stateComponents.MouseListener;
 
-public class InstructionsUpdater extends SceneUpdater{
+public class InstructionsUpdater extends SceneUpdater {
     private static int BACK_BUTTON_X = 10;
     private static int BACK_BUTTON_Y = 10;
     private static int BACK_BUTTON_WIDTH = 50;
@@ -17,25 +19,27 @@ public class InstructionsUpdater extends SceneUpdater{
     private SceneUpdater menuScene;
     private MouseListener mouseListener;
 
-    InstructionsUpdater(SceneManager sceneManager, SceneUpdater menuScene, MouseListener mouseListener) {
+    InstructionsUpdater(SceneManager sceneManager, SceneUpdater menuScene,
+            MouseListener mouseListener) {
         super(sceneManager);
         this.menuScene = menuScene;
         this.mouseListener = mouseListener;
     }
 
     @Override
-    void updateScene() {
-        mouseListener.addClickAction(new Rectangle(BACK_BUTTON_X, BACK_BUTTON_Y,
-                BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT), menuScene);
+    public void updateScene() {
+        mouseListener.addClickAction(
+                new Rectangle(BACK_BUTTON_X, BACK_BUTTON_Y, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT),
+                menuScene);
     }
 
     @Override
-    String getSceneName() {
+    public String getSceneName() {
         return "Instruction Screen";
     }
 
     @Override
-    void drawScene(Graphics2D g2) {
+    public void drawScene(Graphics2D g2) {
         super.drawScene(g2);
         Rectangle d = g2.getClipBounds();
 
@@ -43,13 +47,13 @@ public class InstructionsUpdater extends SceneUpdater{
         Image backButtonImage = MenuImage.BACK.getImage();
 
         g2.drawImage(backButtonImage, BACK_BUTTON_X, BACK_BUTTON_Y, null);
-        
+
         int imageXPos = (int) (d.getWidth() - instructionScreen.getWidth(null)) / 2;
         int imageYPos = (int) (d.getHeight() - instructionScreen.getHeight(null)) / 2;
         g2.drawImage(instructionScreen, imageXPos, imageYPos, null);
-        
+
         g2.setColor(new Color(0, 0, 0));
-        
+
         Font font = new Font("Monospaced", Font.BOLD, 23);
         g2.setFont(font);
         FontMetrics metrics = g2.getFontMetrics(font);
@@ -90,7 +94,7 @@ public class InstructionsUpdater extends SceneUpdater{
         String str4a = "Use bounce pads";
         String str4b = "to fling yourself";
         String str4c = "across the dungeon!";
-        
+
         int midX4 = imageXPos + 160;
         int startY4 = imageYPos + 400;
 
@@ -98,4 +102,5 @@ public class InstructionsUpdater extends SceneUpdater{
         g2.drawString(str4b, midX4 - metrics.stringWidth(str4b) / 2, startY4 + lineHeight);
         g2.drawString(str4c, midX4 - metrics.stringWidth(str4c) / 2, startY4 + lineHeight * 2);
     }
+
 }

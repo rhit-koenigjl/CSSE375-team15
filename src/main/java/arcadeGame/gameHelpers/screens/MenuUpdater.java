@@ -17,7 +17,8 @@ public class MenuUpdater extends SceneUpdater {
     private InstructionsUpdater instructionsUpdater;
     private MouseListener mouseListener;
 
-    MenuUpdater(SceneManager sceneManager, GameUpdater gameUpdater, MouseListener mouseListener) {
+    public MenuUpdater(SceneManager sceneManager, GameUpdater gameUpdater,
+            MouseListener mouseListener) {
         super(sceneManager);
         this.gameUpdater = gameUpdater;
         this.mouseListener = mouseListener;

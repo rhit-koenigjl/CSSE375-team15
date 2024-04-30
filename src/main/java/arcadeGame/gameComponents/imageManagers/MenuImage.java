@@ -32,7 +32,7 @@ public enum MenuImage {
         image = resizedImage;
     }
 
-    Image getImage() {
+    public Image getImage() {
         return this.image;
     }
 
