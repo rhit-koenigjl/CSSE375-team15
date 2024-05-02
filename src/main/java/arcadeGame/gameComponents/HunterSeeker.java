@@ -58,7 +58,7 @@ public class HunterSeeker extends Enemy {
     }
 
     @Override
-    protected boolean isNonTrackingEnemy() {
+    public boolean isNonTrackingEnemy() {
         return false;
     }
 

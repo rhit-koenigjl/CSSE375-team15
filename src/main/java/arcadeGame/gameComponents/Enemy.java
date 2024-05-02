@@ -61,7 +61,7 @@ public class Enemy extends Actor {
     }
 
     @Override
-    protected boolean isNonTrackingEnemy() {
+    public boolean isNonTrackingEnemy() {
         return true;
     }
 

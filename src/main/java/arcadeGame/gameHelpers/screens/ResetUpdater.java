@@ -5,16 +5,20 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+
+import arcadeGame.gameHelpers.DeathType;
 import arcadeGame.gameHelpers.SceneManager;
 
 public class ResetUpdater extends SceneUpdater {
     private int timer;
     private SceneUpdater gameUpdater;
+    private DeathType deathType;
 
-    public ResetUpdater(SceneManager sceneManager, SceneUpdater gameUpdater) {
+    public ResetUpdater(SceneManager sceneManager, SceneUpdater gameUpdater, DeathType deathType) {
         super(sceneManager);
         this.timer = 0;
         this.gameUpdater = gameUpdater;
+        this.deathType = deathType;
     }
 
     @Override
@@ -43,6 +47,26 @@ public class ResetUpdater extends SceneUpdater {
 
         g2.drawString(str1, (int) midX1, (int) midY - FONT_SIZE / 2);
         g2.drawString(str2, (int) midX2, (int) midY + FONT_SIZE / 2);
+
+        midY = boundingBox.getHeight() / 2 - metrics.getHeight() / 2;
+
+        String[] words = deathType.getEncouragementString().split(" ");
+        String currentLine = words[0];
+        int y = (int) midY + 60;
+        for (int i = 1; i < words.length; i++) {
+            if (metrics.stringWidth(currentLine + words[i]) < boundingBox.getWidth()) {
+                currentLine += " " + words[i];
+            } else {
+                double midX = boundingBox.getWidth() / 2 - metrics.stringWidth(currentLine) / 2;
+                g2.drawString(currentLine, (int) midX, y);
+                y += metrics.getHeight();
+                currentLine = words[i];
+            }
+        }
+        if (currentLine.trim().length() > 0) {
+            double midX = boundingBox.getWidth() / 2 - metrics.stringWidth(currentLine) / 2;
+            g2.drawString(currentLine, (int) midX, y);
+        }
     }
 
     @Override

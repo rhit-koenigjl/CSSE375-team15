@@ -48,7 +48,7 @@ public abstract class EnemySpawner extends Enemy {
         return Math.atan2(p.getY() - y, p.getX() - x);
     }
 
-    protected boolean isNonTrackingEnemy() {
+    public boolean isNonTrackingEnemy() {
         return false;
     }
 
