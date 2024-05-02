@@ -7,7 +7,7 @@ import arcadeGame.gameHelpers.SceneManager;
 import arcadeGame.levelManagers.Level;
 
 public abstract class SceneUpdater {
-    protected static final int FONT_SIZE = 28;
+    public static final int FONT_SIZE = 28;
 
     protected SceneManager sceneManager;
     protected Level level;

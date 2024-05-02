@@ -15,6 +15,7 @@ public class MenuUpdater extends SceneUpdater {
 
     private GameUpdater gameUpdater;
     private InstructionsUpdater instructionsUpdater;
+    private CreditsUpdater creditsUpdater;
     private MouseListener mouseListener;
 
     public MenuUpdater(SceneManager sceneManager, GameUpdater gameUpdater,
@@ -24,6 +25,7 @@ public class MenuUpdater extends SceneUpdater {
         this.mouseListener = mouseListener;
         mouseListener.setSceneManager(sceneManager);
         this.instructionsUpdater = new InstructionsUpdater(sceneManager, this, mouseListener);
+        this.creditsUpdater = new CreditsUpdater(sceneManager, this, mouseListener);
     }
 
     @Override
@@ -54,6 +56,9 @@ public class MenuUpdater extends SceneUpdater {
 
         mouseListener.addClickAction(new Rectangle(xPosHelpButton, BUTTON_Y_OFFSET + yPosOffset,
                 help.getWidth(null), help.getHeight(null)), instructionsUpdater);
+
+        mouseListener.addClickAction(new Rectangle(xPosCreditsButton, BUTTON_Y_OFFSET + yPosOffset,
+                credits.getWidth(null), credits.getHeight(null)), creditsUpdater);
     }
 
     @Override

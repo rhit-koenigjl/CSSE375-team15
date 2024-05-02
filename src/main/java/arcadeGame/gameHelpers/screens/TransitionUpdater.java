@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import arcadeGame.gameHelpers.SceneManager;
 import arcadeGame.gameHelpers.transitions.MessageGenerator;
+import arcadeGame.gameHelpers.transitions.TextGraphics;
 
 public class TransitionUpdater extends SceneUpdater {
     private SceneUpdater gameUpdater;
@@ -43,23 +44,7 @@ public class TransitionUpdater extends SceneUpdater {
         double midX2 = boundingBox.getWidth() / 2 - metrics.stringWidth(timerMessage) / 2;
         g2.drawString(timerMessage, (int) midX2, (int) midY - metrics.getHeight() - 10);
 
-        String[] words = message.split(" ");
-        String currentLine = words[0];
-        int y = (int) midY;
-        for (int i = 1; i < words.length; i++) {
-            if (metrics.stringWidth(currentLine + words[i]) < boundingBox.getWidth()) {
-                currentLine += " " + words[i];
-            } else {
-                double midX = boundingBox.getWidth() / 2 - metrics.stringWidth(currentLine) / 2;
-                g2.drawString(currentLine, (int) midX, y);
-                y += metrics.getHeight();
-                currentLine = words[i];
-            }
-        }
-        if (currentLine.trim().length() > 0) {
-            double midX = boundingBox.getWidth() / 2 - metrics.stringWidth(currentLine) / 2;
-            g2.drawString(currentLine, (int) midX, y);
-        }
+        TextGraphics.drawMultilineText(message, g2);
     }
 
     @Override
