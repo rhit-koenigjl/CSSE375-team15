@@ -1,6 +1,7 @@
 package arcadeGame.gameComponents;
 
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Map;
 import arcadeGame.gameComponents.imageManagers.Direction;
@@ -79,9 +80,11 @@ public class Player extends Actor {
     }
 
     private void handleYControls(Map<Integer, Boolean> keys, List<DisplaySprite> sprites) {
-        if (findKey(keys, 38) && !findKey(keys, 40)) {
+        boolean pressingUp = findKey(keys, KeyEvent.VK_UP) || findKey(keys, KeyEvent.VK_W);
+        boolean pressingDown = findKey(keys, KeyEvent.VK_DOWN) || findKey(keys, KeyEvent.VK_S);
+        if (pressingUp && !pressingDown) {
             upEffect(sprites);
-        } else if (findKey(keys, 40) && !findKey(keys, 38)) {
+        } else if (pressingDown && !pressingUp) {
             downEffect();
         } else {
             passiveEffect();
@@ -110,11 +113,10 @@ public class Player extends Actor {
 
     private void handleXControls(Map<Integer, Boolean> keys) {
         int desiredVelocity = 0;
-
-        if (findKey(keys, 39))
+        if (findKey(keys, KeyEvent.VK_RIGHT) || findKey(keys, KeyEvent.VK_D))
             desiredVelocity += this.horizontalSpeed;
 
-        if (findKey(keys, 37))
+        if (findKey(keys, KeyEvent.VK_LEFT) || findKey(keys, KeyEvent.VK_A))
             desiredVelocity -= this.horizontalSpeed;
 
         this.setVx(this.getVx() + (desiredVelocity - this.getVx()) / APPROACH_FACTOR);
