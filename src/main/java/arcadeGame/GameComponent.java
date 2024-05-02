@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import arcadeGame.gameComponents.Player;
+import arcadeGame.gameHelpers.DeathType;
 import arcadeGame.gameHelpers.SceneManager;
 import arcadeGame.gameHelpers.UpdateState;
 import arcadeGame.gameHelpers.screens.GameUpdater;
@@ -118,7 +119,7 @@ public class GameComponent extends JComponent {
         System.out.println("You Died! Lives left: " + lives);
         if (lives > 0) {
             sceneManager
-                    .switchScene(new ResetUpdater(sceneManager, sceneManager.getCurrentScene()));
+                    .switchScene(new ResetUpdater(sceneManager, sceneManager.getCurrentScene(), currentLevel.getDeathType()));
         } else {
             restart(false);
         }

@@ -10,6 +10,7 @@ import arcadeGame.gameComponents.Tile;
 import arcadeGame.gameComponents.spriteAnimations.CollectedCoinSprite;
 import arcadeGame.gameComponents.spriteAnimations.DeadEnemySprite;
 import arcadeGame.gameComponents.spriteAnimations.DisplaySprite;
+import arcadeGame.gameHelpers.DeathType;
 import arcadeGame.gameHelpers.SceneManager;
 import arcadeGame.gameHelpers.UpdateState;
 import arcadeGame.gameHelpers.screens.PauseUpdater;
@@ -28,6 +29,7 @@ public class Level {
 
     private double initialPlayerX;
     private double initialPlayerY;
+    private DeathType deathType;
 
     public Level(String levelPath, int index, Player hero) {
         this.levelPath = levelPath;
@@ -56,6 +58,7 @@ public class Level {
 
         if (hero.getSpikeCollision()) {
             heroHurt = true;
+            deathType = DeathType.SPIKE;
         }
 
         if (hero.getX() + hero.getWidth() < 0 ||
@@ -77,6 +80,11 @@ public class Level {
             int collisionType = hero.handleCollisions(enemy);
             if (collisionType == 1) {
                 heroHurt = true;
+                if (enemy.isNonTrackingEnemy()) {
+                    deathType = DeathType.ENEMY;
+                } else {
+                    deathType = DeathType.HUNTER_SEEKER;
+                }
             }
             if (collisionType == 2) {
                 if (hero.getVy() > 0) {
@@ -191,6 +199,10 @@ public class Level {
 
     public int getIndex() {
         return levelIndex;
+    }
+
+    public DeathType getDeathType() {
+        return deathType;
     }
 
 }
