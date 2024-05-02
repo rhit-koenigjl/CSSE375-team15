@@ -1,13 +1,11 @@
 package arcadeGame.gameHelpers.screens;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import arcadeGame.gameComponents.imageManagers.MenuImage;
 import arcadeGame.gameHelpers.SceneManager;
+import arcadeGame.gameHelpers.transitions.TextGraphics;
 import arcadeGame.stateComponents.MouseListener;
 
 public class CreditsUpdater extends SceneUpdater {
@@ -41,31 +39,7 @@ public class CreditsUpdater extends SceneUpdater {
         Image backButtonImage = MenuImage.BACK.getImage();
         g2.drawImage(backButtonImage, BACK_BUTTON_X, BACK_BUTTON_Y, null);
 
-        Font font = new Font("Monospaced", Font.BOLD, FONT_SIZE);
-        FontMetrics metrics = g2.getFontMetrics(font);
-        g2.setFont(font);
-        g2.setColor(Color.WHITE);
-
-        Rectangle boundingBox = g2.getClipBounds();
-        double midY = boundingBox.getHeight() / 2 - metrics.getHeight() / 2;
-
-        String[] words = CREDITS_MESSAGE.split(" ");
-        String currentLine = words[0];
-        int y = (int) midY;
-        for (int i = 1; i < words.length; i++) {
-            if (metrics.stringWidth(currentLine + words[i]) < boundingBox.getWidth()) {
-                currentLine += " " + words[i];
-            } else {
-                double midX = boundingBox.getWidth() / 2 - metrics.stringWidth(currentLine) / 2;
-                g2.drawString(currentLine, (int) midX, y);
-                y += metrics.getHeight();
-                currentLine = words[i];
-            }
-        }
-        if (currentLine.trim().length() > 0) {
-            double midX = boundingBox.getWidth() / 2 - metrics.stringWidth(currentLine) / 2;
-            g2.drawString(currentLine, (int) midX, y);
-        }
+        TextGraphics.drawMultilineText(CREDITS_MESSAGE, g2);
     }
 
     @Override
