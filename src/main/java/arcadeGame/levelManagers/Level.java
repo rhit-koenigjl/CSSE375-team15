@@ -1,6 +1,7 @@
 package arcadeGame.levelManagers;
 
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -141,18 +142,18 @@ public class Level {
 
     private void handleDebugControls(Map<Integer, Boolean> keys, UpdateState state,
             SceneManager sceneManager) {
-        if (keys.getOrDefault(85, false) && levelIndex < state.getLevelCount() - 1) {
+        if (keys.getOrDefault(KeyEvent.VK_EQUALS, false) && levelIndex < state.getLevelCount() - 1) {
             state.setNextLevel(levelIndex + 1);
-            keys.put(85, false);
+            keys.put(KeyEvent.VK_EQUALS, false);
         }
-        if (keys.getOrDefault(68, false) && levelIndex > 0) {
+        if (keys.getOrDefault(KeyEvent.VK_MINUS, false) && levelIndex > 0) {
             state.setNextLevel(levelIndex - 1);
-            keys.put(68, false);
+            keys.put(KeyEvent.VK_MINUS, false);
         }
-        if (keys.getOrDefault(27, false)) {
+        if (keys.getOrDefault(KeyEvent.VK_ESCAPE, false)) {
             sceneManager.switchScene(
                     new PauseUpdater(sceneManager, sceneManager.getCurrentScene(), keys, this));
-            keys.remove(27);
+            keys.remove(KeyEvent.VK_ESCAPE);
         }
     }
 

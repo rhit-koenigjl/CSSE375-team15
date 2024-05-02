@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.util.Map;
 import arcadeGame.gameHelpers.SceneManager;
 import arcadeGame.levelManagers.Level;
@@ -24,7 +25,7 @@ public class PauseUpdater extends SceneUpdater {
 
     @Override
     public void updateScene() {
-        if (keys.getOrDefault(27, false)) {
+        if (keys.getOrDefault(KeyEvent.VK_ESCAPE, false)) {
             sceneManager.switchScene(gameUpdater);
             keys.remove(27);
         }

@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.util.Map;
 import arcadeGame.gameHelpers.SceneManager;
 
@@ -22,7 +23,7 @@ public class WinUpdater extends SceneUpdater {
 
     @Override
     public void updateScene() {
-        if (keys.getOrDefault(32, false)) {
+        if (keys.getOrDefault(KeyEvent.VK_SPACE, false)) {
             sceneManager.switchScene(gameUpdater);
         }
     }
