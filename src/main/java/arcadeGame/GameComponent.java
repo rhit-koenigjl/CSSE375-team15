@@ -12,7 +12,6 @@ import java.util.Map;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import arcadeGame.gameComponents.Player;
-import arcadeGame.gameHelpers.DeathType;
 import arcadeGame.gameHelpers.SceneManager;
 import arcadeGame.gameHelpers.UpdateState;
 import arcadeGame.gameHelpers.screens.GameUpdater;
