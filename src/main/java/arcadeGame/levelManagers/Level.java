@@ -26,6 +26,9 @@ public class Level {
     private boolean heroHurt = false;
     private List<DisplaySprite> sprites;
 
+    private double initialPlayerX;
+    private double initialPlayerY;
+
     public Level(String levelPath, int index, Player hero) {
         this.levelPath = levelPath;
         this.levelIndex = index;
@@ -40,6 +43,8 @@ public class Level {
         tiles = ll.getTiles();
         enemies = ll.getEnemies();
         hero = ll.getPlayer();
+        initialPlayerX = hero.getX();
+        initialPlayerY = hero.getY();
         numCoins = ll.getNumCoins();
         levelHeight = ll.getHeight();
         levelWidth = ll.getWidth();
@@ -52,6 +57,17 @@ public class Level {
         if (hero.getSpikeCollision()) {
             heroHurt = true;
         }
+
+        if (hero.getX() + hero.getWidth() < 0 ||
+        hero.getY() + hero.getHeight() < 0 ||
+        hero.getX() > levelWidth ||
+        hero.getY() > levelHeight) {
+            hero.setX(initialPlayerX);
+            hero.setY(initialPlayerY);
+            hero.setVx(0);
+            hero.setVy(0);
+        }
+
     }
 
     private void handleEnemies(UpdateState state) {
