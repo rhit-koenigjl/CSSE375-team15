@@ -11,6 +11,9 @@ public class BouncePad extends Tile {
     public BouncePad(int x, int y, int width, int height, Direction dir) {
         super(x, (int) (y + 3.0 / 5.0 * height), width, height, GameImage.BOUNCE_PAD);
         this.dir = dir;
+        if (dir == Direction.NONE) {
+            this.dir = Direction.UP;
+        }
     }
 
     @Override

@@ -106,7 +106,7 @@ public class LevelLoader {
                 player.setHeight(actorSize);
                 break;
             case 'B':
-                tiles.add(new BouncePad(xPos * size, yPos * size, size, size, Direction.UP));
+                tiles.add(new BouncePad(xPos * size, yPos * size, size, size, dir));
                 break;
             case 'G':
                 enemies.add(new EnemyGenerator(actorXPos, actorYPos, actorSize, actorSize, enemies,
