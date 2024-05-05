@@ -12,8 +12,20 @@
         ],
         [
             [
-                "B",
-                "assets\\bounce_pad.gif"
+                "B#U",
+                "assets\\bounce_pad_up.gif"
+            ],
+            [
+                "B#D",
+                "assets\\bounce_pad_down.gif"
+            ],
+            [
+                "B#L",
+                "assets\\bounce_pad_left.gif"
+            ],
+            [
+                "B#R",
+                "assets\\bounce_pad_right.gif"
             ]
         ],
         [
