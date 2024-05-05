@@ -9,7 +9,12 @@ public class BouncePad extends Tile {
     private static double BOUNCE_VALUE = 2f/5f;
 
     public BouncePad(int x, int y, int width, int height, Direction dir) {
-        super(x, (int) (y + 3.0 / 5.0 * height), width, height, GameImage.BOUNCE_PAD);
+        super(
+            dir == Direction.LEFT ? x + width / 2 : x, 
+            dir == Direction.UP || dir == Direction.NONE ? y + height / 2 : y, 
+            dir == Direction.LEFT || dir == Direction.RIGHT ? width / 2 : width, 
+            dir == Direction.UP || dir == Direction.DOWN || dir == Direction.NONE ? height / 2 : height,
+            GameImage.BOUNCE_PAD);
         this.dir = dir;
         if (dir == Direction.NONE) {
             this.dir = Direction.UP;
@@ -18,9 +23,35 @@ public class BouncePad extends Tile {
 
     @Override
     public void display(Graphics2D g2) {
-        this.y -= height * 0.5;
+        if (dir == Direction.UP || dir == Direction.NONE) {
+            y -= height;
+            height *= 2;
+        }
+        if (dir == Direction.LEFT) {
+            x -= this.width;
+            width *= 2;
+        }
+        if (dir == Direction.RIGHT) {
+            width *= 2;
+        }
+        if (dir == Direction.DOWN) {
+            height *= 2;
+        }
         drawImage(g2);
-        this.y += height * 0.5;
+        if (dir == Direction.UP || dir == Direction.NONE) {
+            height /= 2;
+            y += height;
+        }
+        if (dir == Direction.LEFT) {
+            width /= 2;
+            x += this.width;
+        }
+        if (dir == Direction.RIGHT) {
+            width /= 2;
+        }
+        if (dir == Direction.DOWN) {
+            height /= 2;
+        }
     }
 
     @Override
