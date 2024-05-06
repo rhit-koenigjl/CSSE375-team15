@@ -25,6 +25,8 @@ public class Player extends Actor {
     private double flyPassiveSpeed;
     private double flyMaxSpeed;
 
+    private double maxHorizontalAccelerationChange;
+
     public Player(double startX, double startY, double width, double height) {
         super(startX, startY, width, height, GameImage.PLAYER);
 
@@ -40,6 +42,8 @@ public class Player extends Actor {
         flyJumpSpeed = width / 17;
         flyPassiveSpeed = width / 250;
         flyMaxSpeed = width / 7;
+
+        maxHorizontalAccelerationChange = width / 100;
     }
 
     public void update(Map<Integer, Boolean> keys, List<Tile> tiles, List<DisplaySprite> sprites) {
@@ -98,7 +102,7 @@ public class Player extends Actor {
     }
 
     private void upEffect(List<DisplaySprite> sprites) {
-        if (flyCoolDownTimer <= 0 && vy >= 0) {
+        if (flyCoolDownTimer <= 0 && vy > naturalFallAcceleration) {
             vy = -flyJumpSpeed;
             flyCoolDownTimer = FLY_COOL_DOWN;
             sprites.add(new PlayerJumpSprite(x, y + height, width));
@@ -119,7 +123,13 @@ public class Player extends Actor {
         if (findKey(keys, KeyEvent.VK_LEFT) || findKey(keys, KeyEvent.VK_A))
             desiredVelocity -= this.horizontalSpeed;
 
-        this.setVx(this.getVx() + (desiredVelocity - this.getVx()) / APPROACH_FACTOR);
+        double vxMod = (desiredVelocity - vx) / APPROACH_FACTOR;
+        if (vxMod > 0) {
+            vxMod = Math.min(vxMod, maxHorizontalAccelerationChange);
+        } else {
+            vxMod = Math.max(vxMod, -maxHorizontalAccelerationChange);
+        }
+        vx += vxMod;
 
         if (this.vx > 0) {
             this.dir = Direction.RIGHT;

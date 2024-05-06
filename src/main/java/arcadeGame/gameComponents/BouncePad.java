@@ -1,38 +1,76 @@
 package arcadeGame.gameComponents;
 
 import java.awt.Graphics2D;
+
+import arcadeGame.gameComponents.imageManagers.Direction;
 import arcadeGame.gameComponents.imageManagers.GameImage;
 
 public class BouncePad extends Tile {
+    private static double BOUNCE_VALUE = 2f/5f;
 
-    public BouncePad(int x, int y, int width, int height) {
-        super(x, (int) (y + 3.0 / 5.0 * height), width, height, GameImage.BOUNCE_PAD);
+    public BouncePad(int x, int y, int width, int height, Direction dir) {
+        super(
+            dir == Direction.LEFT ? x + width / 2 : x, 
+            dir == Direction.UP || dir == Direction.NONE ? y + height / 2 : y, 
+            dir == Direction.LEFT || dir == Direction.RIGHT ? width / 2 : width, 
+            dir == Direction.UP || dir == Direction.DOWN || dir == Direction.NONE ? height / 2 : height,
+            GameImage.BOUNCE_PAD);
+        this.dir = dir;
+        if (dir == Direction.NONE) {
+            this.dir = Direction.UP;
+        }
     }
 
     @Override
     public void display(Graphics2D g2) {
-        this.y -= height * 0.5;
+        if (dir == Direction.UP || dir == Direction.NONE) {
+            y -= height;
+            height *= 2;
+        }
+        if (dir == Direction.LEFT) {
+            x -= this.width;
+            width *= 2;
+        }
+        if (dir == Direction.RIGHT) {
+            width *= 2;
+        }
+        if (dir == Direction.DOWN) {
+            height *= 2;
+        }
         drawImage(g2);
-        this.y += height * 0.5;
+        if (dir == Direction.UP || dir == Direction.NONE) {
+            height /= 2;
+            y += height;
+        }
+        if (dir == Direction.LEFT) {
+            width /= 2;
+            x += this.width;
+        }
+        if (dir == Direction.RIGHT) {
+            width /= 2;
+        }
+        if (dir == Direction.DOWN) {
+            height /= 2;
+        }
     }
 
     @Override
     void handleCollision(Actor actor, double xPos, double yPos) {
         if (xPos > 0) {
             actor.setX(x - actor.getWidth());
-            actor.setVx(0);
+            actor.setVx(dir == Direction.LEFT ? -width * BOUNCE_VALUE : 0);
         }
         if (xPos < 0) {
             actor.setX(x + width);
-            actor.setVx(0);
+            actor.setVx(dir == Direction.RIGHT ? width * BOUNCE_VALUE : 0);
         }
         if (yPos > 0) {
             actor.setY(y - actor.getHeight());
-            actor.setVy(-30);
+            actor.setVy(dir == Direction.UP ? -width * BOUNCE_VALUE : 0);
         }
         if (yPos < 0) {
             actor.setY(y + height);
-            actor.setVy(0);
+            actor.setVy(dir == Direction.DOWN ? width * BOUNCE_VALUE : 0);
         }
     }
 

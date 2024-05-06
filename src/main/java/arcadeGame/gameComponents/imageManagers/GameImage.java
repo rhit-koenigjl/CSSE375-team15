@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 
 public enum GameImage {
     BACKGROUND("background", Extension.PNG),
-    BOUNCE_PAD("bounce_pad", Extension.GIF),
+    BOUNCE_PAD("bounce_pad", Extension.GIF, DirectionType.FOUR),
     BRICK("brick", Extension.PNG),
     COIN("coin", Extension.GIF),
     GHOST("ghost", Extension.PNG, DirectionType.EIGHT),
