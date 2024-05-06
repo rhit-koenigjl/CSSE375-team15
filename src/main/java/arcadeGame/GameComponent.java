@@ -115,7 +115,6 @@ public class GameComponent extends JComponent {
         hero.loseLife();
         lives--;
         levelReset();
-        System.out.println("You Died! Lives left: " + lives);
         if (lives > 0) {
             sceneManager
                     .switchScene(new ResetUpdater(sceneManager, sceneManager.getCurrentScene(), currentLevel.getDeathType()));
