@@ -13,39 +13,55 @@ public class AiMessageGenerator implements MessageGenerator {
     private static final String GEMINI_URL =
             "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=";
 
+    private Scanner scanner;
     private String message = "You are doing great!";
+    private String apiKey = "";
 
     public AiMessageGenerator() {
+        loadApiKey();
         requestMessage();
     }
 
-    public String generateEncouragingMessage() {
-        String currentMessage = message;
-        requestMessage();
-        return currentMessage;
+    private void loadApiKey() {
+        try {
+            URL apiKeyFile = getClass().getResource("/apiKey.local");
+            scanner = new Scanner(apiKeyFile.openStream());
+            apiKey = scanner.nextLine();
+            scanner.close();
+        } catch (Exception e) {
+            System.err.println(
+                    "API key not found. Please follow the repo instructions to change the default message.");
+        }
     }
 
     private void requestMessage() {
+        if (apiKey.isEmpty()) {
+            return;
+        }
         try {
             URL apiPromptFile = getClass().getResource("/apiPrompt.txt");
             Scanner scanner = new Scanner(apiPromptFile.openStream());
             String prompt = scanner.nextLine();
-
-            URL apiKeyFile = getClass().getResource("/apiKey.local");
-            scanner = new Scanner(apiKeyFile.openStream());
-            HttpRequest request =
-                    HttpRequest.newBuilder().uri(URI.create(GEMINI_URL + scanner.nextLine()))
-                            .POST(HttpRequest.BodyPublishers.ofString(
-                                    "{\"contents\":[{\"parts\":[{\"text\":\"" + prompt + "\"}]}]}"))
-                            .build();
+            HttpRequest request = HttpRequest.newBuilder().uri(URI.create(GEMINI_URL + apiKey))
+                    .POST(HttpRequest.BodyPublishers.ofString(
+                            "{\"contents\":[{\"parts\":[{\"text\":\"" + prompt + "\"}]}]}"))
+                    .build();
             scanner.close();
 
             HttpClient client = HttpClient.newHttpClient();
             client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                     .thenAccept(response -> parseResponse(response));
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(
+                    "API prompt instructions not found. Please follow the repo instructions to change the default message.");
         }
+    }
+
+    @Override
+    public String generateEncouragingMessage() {
+        String currentMessage = message;
+        requestMessage();
+        return currentMessage;
     }
 
     private void parseResponse(HttpResponse<String> response) {
@@ -60,10 +76,9 @@ public class AiMessageGenerator implements MessageGenerator {
             Pattern failurePattern = Pattern.compile("\"finishReason\": \"SAFETY\"");
             Matcher failureMatcher = failurePattern.matcher(response.body());
             if (failureMatcher.find()) {
-                System.out.println("Regenerating message...");
                 requestMessage();
             } else {
-                System.out.println("API request quota exceeded. Try again in a few minutes.");
+                System.err.println("API request quota exceeded. Try again in a few minutes.");
                 message = "You got this!";
             }
         }
