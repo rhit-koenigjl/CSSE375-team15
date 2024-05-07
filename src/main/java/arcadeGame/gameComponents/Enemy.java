@@ -42,8 +42,8 @@ public class Enemy extends Actor {
         if (vx != 0 || vy != 0) {
             String horizontalDirection = closeToZero(vx) ? "" : (vx > 0) ? "R" : "L";
             String verticalDirection = closeToZero(vy) ? "" : (vy > 0) ? "D" : "U";
-            String direction = String.format("%s%s", closeToZero(vx) ? verticalDirection : "",
-                    closeToZero(vy) ? horizontalDirection : "");
+            String direction = String.format("%s%s", closeToZero(vx) ? "" : verticalDirection,
+                    closeToZero(vy) ? "" : horizontalDirection);
             this.dir = direction.isEmpty() ? this.dir : Direction.fromString(direction);
         }
         drawImage(g2);
