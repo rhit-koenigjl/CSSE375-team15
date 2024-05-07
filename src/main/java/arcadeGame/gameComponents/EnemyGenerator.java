@@ -3,6 +3,7 @@ package arcadeGame.gameComponents;
 import java.util.List;
 
 public class EnemyGenerator extends EnemySpawner {
+    private static final double VELOCITY_MULTIPLIER = 4;
 
     public EnemyGenerator(double startX, double startY, double width, double height,
             List<Enemy> enemies, Player player) {
@@ -17,7 +18,8 @@ public class EnemyGenerator extends EnemySpawner {
     @Override
     public Enemy returnNew() {
         double angle = super.getAngle();
-        return new Enemy(x, y, width, height, Math.cos(angle) * 4, Math.sin(angle) * 4);
+        return new Enemy(x, y, width, height, Math.cos(angle) * VELOCITY_MULTIPLIER,
+                Math.sin(angle) * VELOCITY_MULTIPLIER);
     }
 
 }
