@@ -38,8 +38,8 @@ public enum Direction {
         return stringMap.get(str);
     }
 
-    public static double toAngle(Direction d) {
-        return angleMap.get(d);
+    public static double toAngle(Direction dir) {
+        return angleMap.get(dir);
     }
 
 }

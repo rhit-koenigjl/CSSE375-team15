@@ -23,6 +23,9 @@ public enum GameImage {
     TRACKER("angry_ghost", Extension.PNG, DirectionType.EIGHT),
     JUMP_WIND("jump_wind", Extension.PNG);
 
+    private static final int BYTE_SIZE = 1024;
+    private static final String IMAGES_DIRECTORY = "/images/";
+
     private String fileName;
     private Extension extension;
     private Set<Direction> directions;
@@ -90,10 +93,10 @@ public enum GameImage {
 
     private Image generateImage(String path) {
         try {
-            InputStream in = getClass().getResourceAsStream("/images/" + path);
+            InputStream in = getClass().getResourceAsStream(IMAGES_DIRECTORY + path);
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             int nRead;
-            byte[] data = new byte[1024];
+            byte[] data = new byte[BYTE_SIZE];
             while ((nRead = in.read(data, 0, data.length)) != -1) {
                 buffer.write(data, 0, nRead);
             }
