@@ -6,7 +6,8 @@ import arcadeGame.gameComponents.imageManagers.Direction;
 import arcadeGame.gameComponents.imageManagers.GameImage;
 
 public class BouncePad extends Tile {
-    private static double BOUNCE_VALUE = 2f/5f;
+    private static double VERTICAL_BOUNCE_VALUE = 2f/5f;
+    private static double HORIZONTAL_BOUNCE_VALUE = 7f/10f;
 
     public BouncePad(int x, int y, int width, int height, Direction dir) {
         super(
@@ -58,19 +59,19 @@ public class BouncePad extends Tile {
     void handleCollision(Actor actor, double xPos, double yPos) {
         if (xPos > 0) {
             actor.setX(x - actor.getWidth());
-            actor.setVx(dir == Direction.LEFT ? -width * BOUNCE_VALUE : 0);
+            actor.setVx(dir == Direction.LEFT ? -width * HORIZONTAL_BOUNCE_VALUE : 0);
         }
         if (xPos < 0) {
             actor.setX(x + width);
-            actor.setVx(dir == Direction.RIGHT ? width * BOUNCE_VALUE : 0);
+            actor.setVx(dir == Direction.RIGHT ? width * HORIZONTAL_BOUNCE_VALUE : 0);
         }
         if (yPos > 0) {
             actor.setY(y - actor.getHeight());
-            actor.setVy(dir == Direction.UP ? -width * BOUNCE_VALUE : 0);
+            actor.setVy(dir == Direction.UP ? -width * VERTICAL_BOUNCE_VALUE : 0);
         }
         if (yPos < 0) {
             actor.setY(y + height);
-            actor.setVy(dir == Direction.DOWN ? width * BOUNCE_VALUE : 0);
+            actor.setVy(dir == Direction.DOWN ? width * VERTICAL_BOUNCE_VALUE : 0);
         }
     }
 
