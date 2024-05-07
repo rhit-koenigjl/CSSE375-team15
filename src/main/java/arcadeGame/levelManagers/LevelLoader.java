@@ -19,13 +19,15 @@ import arcadeGame.gameComponents.Wall;
 import arcadeGame.gameComponents.imageManagers.Direction;
 
 public class LevelLoader {
+    private static final int EMPTY = -1;
+    private static final double ACTOR_SIZE_MULTIPLIER = 4.0 / 5.0;
+    private static final double ACTOR_POSITION_OFFSET = 0.1;
+
     private List<Tile> tiles;
     private List<Enemy> enemies;
     private Player player;
-
     private InputStream file;
     private String dataString;
-
     private int size;
     private int levelWidth;
     private int levelHeight;
@@ -35,9 +37,9 @@ public class LevelLoader {
         this.tiles = new ArrayList<Tile>();
         this.enemies = new ArrayList<Enemy>();
         this.player = null;
-        this.size = -1;
-        this.levelWidth = -1;
-        this.levelHeight = -1;
+        this.size = EMPTY;
+        this.levelWidth = EMPTY;
+        this.levelHeight = EMPTY;
         this.numCoins = 0;
 
         try {
@@ -49,33 +51,33 @@ public class LevelLoader {
     }
 
     JSONObject getJsonObject() {
-        Object obj = null;
+        Object jsonObject = null;
 
         try {
-            obj = new JSONParser().parse(new InputStreamReader(this.file));
+            jsonObject = new JSONParser().parse(new InputStreamReader(this.file));
         } catch (Exception e) {
             System.err.println("Could not load level");
             e.printStackTrace();
         }
 
-        return (JSONObject) obj;
+        return (JSONObject) jsonObject;
     }
 
-    void setupInternalValues(JSONObject jo) {
-        String h = (String) jo.get("height");
-        String w = (String) jo.get("width");
-        String s = (String) jo.get("block_size");
-        String blockStream = (String) jo.get("data");
-        this.levelHeight = Integer.parseInt(h);
-        this.levelWidth = Integer.parseInt(w);
-        size = Integer.parseInt(s);
+    void setupInternalValues(JSONObject jsonObject) {
+        String height = (String) jsonObject.get("height");
+        String width = (String) jsonObject.get("width");
+        String blockSize = (String) jsonObject.get("block_size");
+        String blockStream = (String) jsonObject.get("data");
+        this.levelHeight = Integer.parseInt(height);
+        this.levelWidth = Integer.parseInt(width);
+        this.size = Integer.parseInt(blockSize);
         this.dataString = blockStream;
     }
 
     private void addBlock(int xPos, int yPos, char blockType, Direction dir) {
-        int actorSize = (int) (size * 4.0 / 5.0);
-        int actorXPos = (int) ((xPos + 0.1) * size);
-        int actorYPos = (int) ((yPos + 0.1) * size);
+        int actorSize = (int) (size * ACTOR_SIZE_MULTIPLIER);
+        int actorXPos = (int) ((xPos + ACTOR_POSITION_OFFSET) * size);
+        int actorYPos = (int) ((yPos + ACTOR_POSITION_OFFSET) * size);
 
         switch (blockType) {
             case 'b':
@@ -114,8 +116,8 @@ public class LevelLoader {
     }
 
     public void loadLevel() {
-        JSONObject jo = getJsonObject();
-        setupInternalValues(jo);
+        JSONObject jsonObject = getJsonObject();
+        setupInternalValues(jsonObject);
 
         this.player = new Player(0, 0, size, size);
 
