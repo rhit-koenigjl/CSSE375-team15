@@ -11,6 +11,10 @@ import arcadeGame.gameHelpers.SceneManager;
 import arcadeGame.levelManagers.Level;
 
 public class PauseUpdater extends SceneUpdater {
+    private static final Color BACKGROUND_COLOR = new Color(0, 0, 0, 75);
+    private static final int WIDTH_OFFSET = 14;
+    private static final int HEIGHT_OFFSET = 37;
+
     private SceneUpdater gameUpdater;
     private Map<Integer, Boolean> keys;
     private Level level;
@@ -27,7 +31,7 @@ public class PauseUpdater extends SceneUpdater {
     public void updateScene() {
         if (keys.getOrDefault(KeyEvent.VK_ESCAPE, false)) {
             sceneManager.switchScene(gameUpdater);
-            keys.remove(27);
+            keys.remove(KeyEvent.VK_ESCAPE);
         }
     }
 
@@ -36,9 +40,9 @@ public class PauseUpdater extends SceneUpdater {
         super.drawScene(g2);
         level.draw(g2);
 
-        g2.setColor(new Color(0, 0, 0, 75));
-        g2.fillRect(0, 0, level.getWidth() + 14, level.getHeight() + 37);
-        g2.setColor(new Color(255, 0, 0));
+        g2.setColor(BACKGROUND_COLOR);
+        g2.fillRect(0, 0, level.getWidth() + WIDTH_OFFSET, level.getHeight() + HEIGHT_OFFSET);
+        g2.setColor(Color.RED);
 
         String str1 = "Game Paused.";
         String str2 = "Press Escape to Continue";
