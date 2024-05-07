@@ -7,7 +7,7 @@ class Block:
         self.width = bs
         self.height = bs
         self.type = type
-        self.selected_img = pygame.image.load("assets\\selected_square.png")
+        self.selected_img = pygame.image.load("level_creator\\assets\\selected_square.png")
 
     def display(self, screen: pygame.surface, image_map, current_block):
         if self.type != "none":
