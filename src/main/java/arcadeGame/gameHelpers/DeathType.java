@@ -6,7 +6,7 @@ public enum DeathType {
     HUNTER_SEEKER("They'll find you! Hit em' in the Head!");
 
     private final String encouragementString;
-    
+
     DeathType(String message) {
         this.encouragementString = message;
     }
