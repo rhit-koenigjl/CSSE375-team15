@@ -12,9 +12,16 @@ import java.util.regex.Pattern;
 public class AiMessageGenerator implements MessageGenerator {
     private static final String GEMINI_URL =
             "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=";
+    private static final String DEFAULT_MESSAGE = "You are doing great!";
+    private static final String API_KEY = "/apiKey.local";
+    private static final String API_PROMPT = "/apiPrompt.txt";
+    private static final String REQUEST_BODY = "{\"contents\":[{\"parts\":[{\"text\":\"%s\"}]}]}";
+    private static final int MATCH_START = 9;
+    private static final Pattern SUCCESS_PATTERN = Pattern.compile("\"text\": \".*\"");
+    private static final Pattern FAILURE_PATTERN = Pattern.compile("\"finishReason\": \"SAFETY\"");
 
     private Scanner scanner;
-    private String message = "You are doing great!";
+    private String message = DEFAULT_MESSAGE;
     private String apiKey = "";
 
     public AiMessageGenerator() {
@@ -24,13 +31,12 @@ public class AiMessageGenerator implements MessageGenerator {
 
     private void loadApiKey() {
         try {
-            InputStream apiKeyFile = getClass().getResourceAsStream("/apiKey.local");
+            InputStream apiKeyFile = getClass().getResourceAsStream(API_KEY);
             scanner = new Scanner(apiKeyFile);
             apiKey = scanner.nextLine();
             scanner.close();
         } catch (Exception e) {
-            System.err.println(
-                    "API key not found. Please follow the repo instructions to change the default message.");
+            System.err.println("API key not found");
         }
     }
 
@@ -39,12 +45,11 @@ public class AiMessageGenerator implements MessageGenerator {
             return;
         }
         try {
-            InputStream apiPromptFile = getClass().getResourceAsStream("/apiPrompt.txt");
+            InputStream apiPromptFile = getClass().getResourceAsStream(API_PROMPT);
             Scanner scanner = new Scanner(apiPromptFile);
             String prompt = scanner.nextLine();
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(GEMINI_URL + apiKey))
-                    .POST(HttpRequest.BodyPublishers.ofString(
-                            "{\"contents\":[{\"parts\":[{\"text\":\"" + prompt + "\"}]}]}"))
+                    .POST(HttpRequest.BodyPublishers.ofString(String.format(REQUEST_BODY, prompt)))
                     .build();
             scanner.close();
 
@@ -52,8 +57,7 @@ public class AiMessageGenerator implements MessageGenerator {
             client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                     .thenAccept(response -> parseResponse(response));
         } catch (Exception e) {
-            System.err.println(
-                    "API prompt instructions not found. Please follow the repo instructions to change the default message.");
+            System.err.println("API prompt instructions not found");
         }
     }
 
@@ -66,20 +70,18 @@ public class AiMessageGenerator implements MessageGenerator {
 
     private void parseResponse(HttpResponse<String> response) {
         try {
-            Pattern successPattern = Pattern.compile("\"text\": \".*\"");
-            Matcher successMatcher = successPattern.matcher(response.body());
+            Matcher successMatcher = SUCCESS_PATTERN.matcher(response.body());
             if (!successMatcher.find()) {
                 throw new Exception();
             }
-            message = successMatcher.group().substring(9, successMatcher.group().length() - 1);
+            message = successMatcher.group().substring(MATCH_START, successMatcher.group().length() - 1);
         } catch (Exception e) {
-            Pattern failurePattern = Pattern.compile("\"finishReason\": \"SAFETY\"");
-            Matcher failureMatcher = failurePattern.matcher(response.body());
+            Matcher failureMatcher = FAILURE_PATTERN.matcher(response.body());
             if (failureMatcher.find()) {
                 requestMessage();
             } else {
                 System.err.println("API request quota exceeded. Try again in a few minutes.");
-                message = "You got this!";
+                message = DEFAULT_MESSAGE;
             }
         }
     }
