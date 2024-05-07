@@ -46,10 +46,14 @@ task listFiles(type: DefaultTask) {
             outputFile.delete()
         }
         if (dir.exists()) {
+            def fileList = []
             dir.listFiles().each { file ->
                 if (file.getName().endsWith(".json")) {
-                    outputFile << file.name + "\n"
+                    fileList << file.name
                 }
+            }
+            fileList.sort().each { fileName ->
+                outputFile << fileName + "\n"
             }
         } else {
             println "Directory does not exist: $dir"
