@@ -11,9 +11,13 @@ import arcadeGame.gameHelpers.SceneManager;
 import arcadeGame.levelManagers.Level;
 
 public class PauseUpdater extends SceneUpdater {
-    private SceneUpdater gameUpdater;
-    private Map<Integer, Boolean> keys;
-    private Level level;
+    private static final Color BACKGROUND_COLOR = new Color(0, 0, 0, 75);
+    private static final int WIDTH_OFFSET = 14;
+    private static final int HEIGHT_OFFSET = 37;
+
+    private final SceneUpdater gameUpdater;
+    private final Map<Integer, Boolean> keys;
+    private final Level level;
 
     public PauseUpdater(SceneManager sceneManager, SceneUpdater gameUpdater,
             Map<Integer, Boolean> keys, Level level) {
@@ -27,7 +31,7 @@ public class PauseUpdater extends SceneUpdater {
     public void updateScene() {
         if (keys.getOrDefault(KeyEvent.VK_ESCAPE, false)) {
             sceneManager.switchScene(gameUpdater);
-            keys.remove(27);
+            keys.remove(KeyEvent.VK_ESCAPE);
         }
     }
 
@@ -36,9 +40,9 @@ public class PauseUpdater extends SceneUpdater {
         super.drawScene(g2);
         level.draw(g2);
 
-        g2.setColor(new Color(0, 0, 0, 75));
-        g2.fillRect(0, 0, level.getWidth() + 14, level.getHeight() + 37);
-        g2.setColor(new Color(255, 0, 0));
+        g2.setColor(BACKGROUND_COLOR);
+        g2.fillRect(0, 0, level.getWidth() + WIDTH_OFFSET, level.getHeight() + HEIGHT_OFFSET);
+        g2.setColor(Color.RED);
 
         String str1 = "Game Paused.";
         String str2 = "Press Escape to Continue";
@@ -48,9 +52,9 @@ public class PauseUpdater extends SceneUpdater {
         g2.setFont(font);
 
         Rectangle boundingBox = g2.getClipBounds();
-        double midX1 = boundingBox.getWidth() / 2 - metrics.stringWidth(str1) / 2;
-        double midX2 = boundingBox.getWidth() / 2 - metrics.stringWidth(str2) / 2;
-        double midY = boundingBox.getHeight() / 2 - metrics.getHeight() / 2;
+        double midX1 = boundingBox.getWidth() / 2 - (double) metrics.stringWidth(str1) / 2;
+        double midX2 = boundingBox.getWidth() / 2 - (double) metrics.stringWidth(str2) / 2;
+        double midY = boundingBox.getHeight() / 2 - (double) metrics.getHeight() / 2;
 
         g2.drawString(str1, (int) midX1, (int) midY - metrics.getHeight());
         g2.drawString(str2, (int) midX2, (int) midY + metrics.getHeight());

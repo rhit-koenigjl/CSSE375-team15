@@ -8,8 +8,9 @@ import arcadeGame.levelManagers.Level;
 
 public abstract class SceneUpdater {
     public static final int FONT_SIZE = 28;
+    public static final int BACKGROUND_SIZE = 100;
 
-    protected SceneManager sceneManager;
+    protected final SceneManager sceneManager;
     protected Level level;
 
     protected SceneUpdater(SceneManager sceneManager) {
@@ -22,9 +23,10 @@ public abstract class SceneUpdater {
 
     public void drawScene(Graphics2D g) {
         Dimension screenSize = g.getClipBounds().getSize();
-        for (int i = 0; i < screenSize.getWidth(); i += 100) {
-            for (int j = 0; j < screenSize.getHeight(); j += 100) {
-                g.drawImage(GameImage.BACKGROUND.getImage(), i, j, 100, 100, null);
+        for (int i = 0; i < screenSize.getWidth(); i += BACKGROUND_SIZE) {
+            for (int j = 0; j < screenSize.getHeight(); j += BACKGROUND_SIZE) {
+                g.drawImage(GameImage.BACKGROUND.getImage(), i, j, BACKGROUND_SIZE, BACKGROUND_SIZE,
+                        null);
             }
         }
     }

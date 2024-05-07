@@ -17,7 +17,8 @@ public class EnemyGenerator extends EnemySpawner {
     @Override
     public Enemy returnNew() {
         double angle = super.getAngle();
-        return new Enemy(x, y, width, height, Math.cos(angle) * 4, Math.sin(angle) * 4);
+        return new Enemy(x, y, width, height, Math.cos(angle) * VELOCITY_MULTIPLIER,
+                Math.sin(angle) * VELOCITY_MULTIPLIER);
     }
 
 }

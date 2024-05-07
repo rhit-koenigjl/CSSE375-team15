@@ -30,23 +30,27 @@ public class GameComponent extends JComponent {
     private static final String LEVELS_DEFINITION = LEVEL_DIRECTORY + "levels";
     private static final int STARTING_LIVES = 3;
     private static final int STARTING_SCORE = 0;
+    private static final int FONT_SIZE = 28;
+    private static final Color TEXT_COLOR = new Color(200, 255, 200);
+    private static final int TEXT_X = 25;
+    private static final int TEXT_Y = 30;
 
     private final MessageGenerator generator = new AiMessageGenerator();
     private SceneManager sceneManager;
     private int score = STARTING_SCORE;
     private int lives = STARTING_LIVES;
-    private String levelFiles[];
+    private String[] levelFiles;
     private Level currentLevel;
-    private UpdateState state = new UpdateState(this);
-    private Player hero = new Player(0, 0, 0, 0);
-    private Map<Integer, Boolean> keys = new HashMap<Integer, Boolean>();
-    private JFrame frame;
+    private final Player hero = new Player(0, 0, 0, 0);
+    private final Map<Integer, Boolean> keys = new HashMap<>();
+    private final JFrame frame;
 
     public GameComponent(JFrame frame, MouseListener mouseListener) {
         buildLevelsList();
         this.frame = frame;
         this.currentLevel = new Level(LEVEL_DIRECTORY + levelFiles[0], 0, hero);
         this.sceneManager = new SceneManager(null);
+        UpdateState state = new UpdateState(this);
         GameUpdater g = new GameUpdater(sceneManager, currentLevel, keys, state);
         MenuUpdater m = new MenuUpdater(sceneManager, g, mouseListener);
         this.sceneManager.switchScene(m);
@@ -60,7 +64,6 @@ public class GameComponent extends JComponent {
                     .toArray(String[]::new);
         } catch (Exception e) {
             System.err.println("Could not load levels");
-            e.printStackTrace();
         }
     }
 
@@ -87,10 +90,10 @@ public class GameComponent extends JComponent {
 
         sceneManager.drawScene(g2);
         if (sceneManager.displayStats()) {
-            g2.setFont(new Font("Monospaced", Font.BOLD, 28));
-            g2.setColor(new Color(200, 255, 200));
-            g2.drawString("Lives: " + lives, 25, 30);
-            g2.drawString("Score: " + score, 25, 60);
+            g2.setFont(new Font("Monospaced", Font.BOLD, FONT_SIZE));
+            g2.setColor(TEXT_COLOR);
+            g2.drawString("Lives: " + lives, TEXT_X, TEXT_Y);
+            g2.drawString("Score: " + score, TEXT_X, 2 * TEXT_Y);
         }
     }
 
@@ -149,17 +152,8 @@ public class GameComponent extends JComponent {
         sceneManager.switchScene(new TransitionUpdater(sceneManager, generator));
     }
 
-    int getScore() {
-        return score;
-    }
-
     public void resize() {
         this.frame.setSize(currentLevel.getWidth() + 14, currentLevel.getHeight() + 37);
-    }
-
-    // For testing purposes
-    SceneManager getSceneManager() {
-        return sceneManager;
     }
 
     void setSceneManager(SceneManager sceneManager) {

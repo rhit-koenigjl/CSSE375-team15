@@ -17,8 +17,13 @@ import arcadeGame.gameHelpers.UpdateState;
 import arcadeGame.gameHelpers.screens.PauseUpdater;
 
 public class Level {
-    private int levelIndex;
-    private String levelPath;
+    private static final int BOUNCE_FACTOR = 5;
+    private static final int ENEMY_SCORE = 50;
+    private static final int COIN_SCORE = 25;
+    private static final int LEVEL_SCORE = 100;
+
+    private final int levelIndex;
+    private final String levelPath;
     private int levelHeight;
     private int levelWidth;
     private Player hero;
@@ -26,8 +31,7 @@ public class Level {
     private List<Enemy> enemies;
     private int numCoins = 0;
     private boolean heroHurt = false;
-    private List<DisplaySprite> sprites;
-
+    private final List<DisplaySprite> sprites;
     private double initialPlayerX;
     private double initialPlayerY;
     private DeathType deathType;
@@ -36,21 +40,21 @@ public class Level {
         this.levelPath = levelPath;
         this.levelIndex = index;
         this.hero = hero;
-        this.sprites = new ArrayList<DisplaySprite>();
+        this.sprites = new ArrayList<>();
     }
 
     public Object[] generateLevel() {
         sprites.clear();
-        LevelLoader ll = new LevelLoader(levelPath);
-        ll.loadLevel();
-        tiles = ll.getTiles();
-        enemies = ll.getEnemies();
-        hero = ll.getPlayer();
+        LevelLoader loader = new LevelLoader(levelPath);
+        loader.loadLevel();
+        tiles = loader.getTiles();
+        enemies = loader.getEnemies();
+        hero = loader.getPlayer();
         initialPlayerX = hero.getX();
         initialPlayerY = hero.getY();
-        numCoins = ll.getNumCoins();
-        levelHeight = ll.getHeight();
-        levelWidth = ll.getWidth();
+        numCoins = loader.getNumCoins();
+        levelHeight = loader.getHeight();
+        levelWidth = loader.getWidth();
         return new Object[] {tiles, hero, enemies};
     }
 
@@ -62,10 +66,8 @@ public class Level {
             deathType = DeathType.SPIKE;
         }
 
-        if (hero.getX() + hero.getWidth() < 0 ||
-        hero.getY() + hero.getHeight() < 0 ||
-        hero.getX() > levelWidth ||
-        hero.getY() > levelHeight) {
+        if (hero.getX() + hero.getWidth() < 0 || hero.getY() + hero.getHeight() < 0
+                || hero.getX() > levelWidth || hero.getY() > levelHeight) {
             hero.setX(initialPlayerX);
             hero.setY(initialPlayerY);
             hero.setVx(0);
@@ -75,23 +77,23 @@ public class Level {
     }
 
     private void handleEnemies(UpdateState state) {
-        List<Enemy> enemiesRemove = new ArrayList<Enemy>();
-        List<Enemy> enemiesToAdd = new ArrayList<Enemy>();
+        List<Enemy> enemiesRemove = new ArrayList<>();
+        List<Enemy> enemiesToAdd = new ArrayList<>();
         for (Enemy enemy : enemies) {
-            int collisionType = hero.handleCollisions(enemy);
-            if (collisionType == 1) {
-                heroHurt = true;
-                if (enemy.isNonTrackingEnemy()) {
-                    deathType = DeathType.ENEMY;
-                } else {
-                    deathType = DeathType.HUNTER_SEEKER;
-                }
-            }
-            if (collisionType == 2) {
-                if (hero.getVy() > 0) {
-                    hero.setVy(-hero.getWidth() / 5);
-                }
-                enemiesRemove.add(enemy);
+            switch (hero.handleCollisions(enemy)) {
+                case PLAYER_WON:
+                    if (hero.getVy() > 0) {
+                        hero.setVy(-hero.getWidth() / BOUNCE_FACTOR);
+                    }
+                    enemiesRemove.add(enemy);
+                    break;
+                case ENEMY_WON:
+                    heroHurt = true;
+                    deathType =
+                            enemy.isNonTrackingEnemy() ? DeathType.ENEMY : DeathType.HUNTER_SEEKER;
+                    break;
+                default:
+                    break;
             }
             enemy.update(tiles);
             if (enemy.getAdding()) {
@@ -106,15 +108,13 @@ public class Level {
             enemies.remove(e);
             sprites.add(new DeadEnemySprite(e.getX(), e.getY(), e.getWidth(), e.getHeight(),
                     e.getVx(), e.getVy()));
-            state.incrementScore(50);
+            state.incrementScore(ENEMY_SCORE);
         }
-        for (Enemy e : enemiesToAdd) {
-            enemies.add(e);
-        }
+        enemies.addAll(enemiesToAdd);
     }
 
     private void handleTiles(UpdateState state) {
-        List<Tile> toRemove = new ArrayList<Tile>();
+        List<Tile> toRemove = new ArrayList<>();
         for (Tile t : tiles) {
             if (t.shouldRemove()) {
                 toRemove.add(t);
@@ -124,14 +124,14 @@ public class Level {
         }
         for (Tile t : toRemove) {
             tiles.remove(t);
-            state.incrementScore(25);
+            state.incrementScore(COIN_SCORE);
             numCoins--;
         }
     }
 
-    private void handleCoins(UpdateState state, SceneManager sceneManager) {
+    private void handleCoins(UpdateState state) {
         if (numCoins == 0) {
-            state.incrementScore(100);
+            state.incrementScore(LEVEL_SCORE);
             if (levelIndex == state.getLevelCount() - 1) {
                 state.handleWinGame();
             } else {
@@ -142,7 +142,8 @@ public class Level {
 
     private void handleDebugControls(Map<Integer, Boolean> keys, UpdateState state,
             SceneManager sceneManager) {
-        if (keys.getOrDefault(KeyEvent.VK_EQUALS, false) && levelIndex < state.getLevelCount() - 1) {
+        if (keys.getOrDefault(KeyEvent.VK_EQUALS, false)
+                && levelIndex < state.getLevelCount() - 1) {
             state.setNextLevel(levelIndex + 1);
             keys.put(KeyEvent.VK_EQUALS, false);
         }
@@ -161,7 +162,7 @@ public class Level {
         handlePlayer(keys);
         handleEnemies(state);
         handleTiles(state);
-        handleCoins(state, sceneManager);
+        handleCoins(state);
         handleDebugControls(keys, state, sceneManager);
 
         if (heroHurt) {

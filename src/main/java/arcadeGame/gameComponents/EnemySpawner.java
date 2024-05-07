@@ -1,13 +1,19 @@
 package arcadeGame.gameComponents;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.util.List;
 import arcadeGame.gameComponents.imageManagers.Direction;
 import arcadeGame.gameComponents.imageManagers.GameImage;
 
 public abstract class EnemySpawner extends Enemy {
-    protected List<Enemy> enemies;
-    protected Player p;
+    protected static final double VELOCITY_MULTIPLIER = 4;
+    private static final double IMAGE_SCALE = 1.25;
+    private static final double IMAGE_OFFSET = 0.125;
+    private static final double TIME_INCREMENT = 0.1;
+    private static final int THIS_VELOCITY_MULTIPLIER = 12;
+
+    protected final List<Enemy> enemies;
+    protected final Player p;
     private double timeInc = 0;
 
     EnemySpawner(double startX, double startY, double width, double height, double velocityX,
@@ -22,14 +28,14 @@ public abstract class EnemySpawner extends Enemy {
 
     @Override
     public void drawActor(Graphics2D g2) {
-        drawImage(g2, 1.25, 0.125, false);
+        drawImage(g2, IMAGE_SCALE, IMAGE_OFFSET, false);
     }
 
     @Override
     public void update(List<Tile> tiles) {
         control();
         super.update(tiles);
-        timeInc += 0.1;
+        timeInc += TIME_INCREMENT;
         if (timeInc > Math.PI * 2) {
             timeInc = 0;
             this.adding = true;
@@ -38,8 +44,8 @@ public abstract class EnemySpawner extends Enemy {
 
     void control() {
         double goalSpeed = 0;
-        vx += (goalSpeed - vx) / (APPROACH_FACTOR * 12);
-        vy += (goalSpeed - vy) / (APPROACH_FACTOR * 12);
+        vx += (goalSpeed - vx) / (APPROACH_FACTOR * THIS_VELOCITY_MULTIPLIER);
+        vy += (goalSpeed - vy) / (APPROACH_FACTOR * THIS_VELOCITY_MULTIPLIER);
     }
 
     public abstract Enemy returnNew();

@@ -10,9 +10,9 @@ import java.util.Map;
 import arcadeGame.gameHelpers.SceneManager;
 
 public class LossUpdater extends SceneUpdater {
-    private Map<Integer, Boolean> keys;
-    private SceneUpdater gameUpdater;
-    private int score;
+    private final Map<Integer, Boolean> keys;
+    private final SceneUpdater gameUpdater;
+    private final int score;
 
     public LossUpdater(SceneManager sceneManager, Map<Integer, Boolean> keys, int score) {
         super(sceneManager);
@@ -40,10 +40,10 @@ public class LossUpdater extends SceneUpdater {
         g2.setFont(font);
 
         Rectangle boundingBox = g2.getClipBounds();
-        double midX1 = boundingBox.getWidth() / 2 - metrics.stringWidth(str1) / 2;
-        double midX2 = boundingBox.getWidth() / 2 - metrics.stringWidth(str2) / 2;
-        double midX3 = boundingBox.getWidth() / 2 - metrics.stringWidth(str3) / 2;
-        double midY = boundingBox.getHeight() / 2 - metrics.getHeight() / 2;
+        double midX1 = boundingBox.getWidth() / 2 - (double) metrics.stringWidth(str1) / 2;
+        double midX2 = boundingBox.getWidth() / 2 - (double) metrics.stringWidth(str2) / 2;
+        double midX3 = boundingBox.getWidth() / 2 - (double) metrics.stringWidth(str3) / 2;
+        double midY = boundingBox.getHeight() / 2 - (double) metrics.getHeight() / 2;
 
         g2.setColor(Color.WHITE);
         g2.drawString(str1, (int) midX1, (int) midY - metrics.getHeight() / 2);

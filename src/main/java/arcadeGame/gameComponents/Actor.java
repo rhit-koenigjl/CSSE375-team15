@@ -1,6 +1,5 @@
 package arcadeGame.gameComponents;
 
-import java.awt.Graphics2D;
 import java.util.List;
 import arcadeGame.gameComponents.imageManagers.GameImage;
 
@@ -8,14 +7,13 @@ abstract class Actor extends GameObject {
     protected static final double APPROACH_FACTOR = 4;
     protected static final double SPEED = 5;
     protected static final double DEFAULT_SPEED = 1.0 / 10.0;
+    protected static final double HERO_VELOCITY = 0.75;
 
     private boolean didCollideWithSpikes = false;
 
     Actor(double startX, double startY, double width, double height, GameImage gameImage) {
         super(startX, startY, width, height, gameImage);
     }
-
-    abstract void drawActor(Graphics2D g2);
 
     private void handleTileCollisions(List<Tile> tiles, double xVel, double yVel) {
         for (Tile tile : tiles) {
@@ -25,7 +23,7 @@ abstract class Actor extends GameObject {
     }
 
     public void update(List<Tile> tiles) {
-        x += vx * (isHero() ? 0.75 : 1);
+        x += vx * (isHero() ? HERO_VELOCITY : 1);
         handleTileCollisions(tiles, vx, 0);
         y += vy;
         handleTileCollisions(tiles, 0, vy);

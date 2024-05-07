@@ -3,8 +3,12 @@ package arcadeGame.gameComponents.spriteAnimations;
 import arcadeGame.gameComponents.imageManagers.GameImage;
 
 public class CollectedCoinSprite extends DisplaySprite {
-    private static int COIN_FINAL_X = 10;
-    private static int COIN_FINAL_Y = 10;
+    private static final int COIN_FINAL_X = 10;
+    private static final int COIN_FINAL_Y = 10;
+    private static final int ONE_SECOND = 100;
+    private static final int TIME_OFFSET = 8;
+    private static final int TIME_DIVISOR = 20;
+
     private double animationTime;
 
     public CollectedCoinSprite(double x, double y, double width, double height) {
@@ -14,10 +18,10 @@ public class CollectedCoinSprite extends DisplaySprite {
 
     @Override
     public void updatePosition() {
-        x += (COIN_FINAL_X - x) / Math.max(1, 100 - animationTime / 3);
-        y += (COIN_FINAL_Y - y) / Math.max(1, 100 - animationTime / 3);
-        animationTime += 8;
-        this.y += Math.max(8 - animationTime / 20, 0);
+        x += (COIN_FINAL_X - x) / Math.max(1, ONE_SECOND - animationTime / 3);
+        y += (COIN_FINAL_Y - y) / Math.max(1, ONE_SECOND - animationTime / 3);
+        animationTime += TIME_OFFSET;
+        this.y += Math.max(TIME_OFFSET - animationTime / TIME_DIVISOR, 0);
     }
 
 }

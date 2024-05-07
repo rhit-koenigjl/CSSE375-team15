@@ -5,6 +5,8 @@ import arcadeGame.gameComponents.imageManagers.Direction;
 import arcadeGame.gameComponents.imageManagers.GameImage;
 
 public class Enemy extends Actor {
+    private static final double FLOAT_ERROR = 0.0001;
+
     protected boolean adding = false;
 
     public Enemy(double startX, double startY, double width, double height) {
@@ -36,20 +38,19 @@ public class Enemy extends Actor {
                 gameImage);
     }
 
-    @Override
     public void drawActor(Graphics2D g2) {
         if (vx != 0 || vy != 0) {
             String horizontalDirection = closeToZero(vx) ? "" : (vx > 0) ? "R" : "L";
             String verticalDirection = closeToZero(vy) ? "" : (vy > 0) ? "D" : "U";
-            String direction = String.format("%s%s", closeToZero(vx) ? verticalDirection : "",
-                    closeToZero(vy) ? horizontalDirection : "");
-            this.dir = direction.equals("") ? this.dir : Direction.fromString(direction);
+            String direction = String.format("%s%s", closeToZero(vx) ? "" : verticalDirection,
+                    closeToZero(vy) ? "" : horizontalDirection);
+            this.dir = direction.isEmpty() ? this.dir : Direction.fromString(direction);
         }
         drawImage(g2);
     }
 
     private boolean closeToZero(double num) {
-        return Math.abs(num) < 0.0001;
+        return Math.abs(num) < FLOAT_ERROR;
     }
 
     public boolean getAdding() {
@@ -67,14 +68,6 @@ public class Enemy extends Actor {
     @Override
     public boolean isNonTrackingEnemy() {
         return true;
-    }
-
-    GameImage getImage() {
-        return this.gameImage;
-    }
-
-    Direction getDir() {
-        return this.dir;
     }
 
 }

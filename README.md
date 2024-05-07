@@ -21,8 +21,7 @@ Note: This build does not include an API key for AI-generated transition message
 
 ### Level Editor
 The project repository includes a Python level creator. To use:
-1. Navigate to the `level_creator` directory
-2. Run `python level_creator_app.py`
+1. Run `python level_creator_app.py`
 
 ### Google Gemini Integration
 To generate your personal API key:

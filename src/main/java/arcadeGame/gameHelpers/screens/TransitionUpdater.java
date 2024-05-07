@@ -10,8 +10,12 @@ import arcadeGame.gameHelpers.transitions.MessageGenerator;
 import arcadeGame.gameHelpers.transitions.TextGraphics;
 
 public class TransitionUpdater extends SceneUpdater {
-    private SceneUpdater gameUpdater;
-    private String message;
+    private static final int TIMER_START = 400;
+    private static final int ONE_SECOND = 100;
+    private static final int TEXT_OFFSET = 10;
+
+    private final SceneUpdater gameUpdater;
+    private final String message;
     private int timer;
 
     public TransitionUpdater(SceneManager sceneManager, MessageGenerator generator) {
@@ -24,7 +28,7 @@ public class TransitionUpdater extends SceneUpdater {
     @Override
     public void updateScene() {
         this.timer++;
-        if (timer > 300) {
+        if (timer > TIMER_START - ONE_SECOND) {
             sceneManager.switchScene(gameUpdater);
         }
     }
@@ -38,11 +42,11 @@ public class TransitionUpdater extends SceneUpdater {
         g2.setColor(Color.WHITE);
 
         Rectangle boundingBox = g2.getClipBounds();
-        double midY = boundingBox.getHeight() / 2 - metrics.getHeight() / 2;
+        double midY = boundingBox.getHeight() / 2 - (double) metrics.getHeight() / 2;
 
-        String timerMessage = "Next level in " + (400 - timer) / 100;
-        double midX2 = boundingBox.getWidth() / 2 - metrics.stringWidth(timerMessage) / 2;
-        g2.drawString(timerMessage, (int) midX2, (int) midY - metrics.getHeight() - 10);
+        String timerMessage = "Next level in " + (TIMER_START - timer) / ONE_SECOND;
+        double midX2 = boundingBox.getWidth() / 2 - (double) metrics.stringWidth(timerMessage) / 2;
+        g2.drawString(timerMessage, (int) midX2, (int) midY - metrics.getHeight() - TEXT_OFFSET);
 
         TextGraphics.drawMultilineText(message, g2);
     }

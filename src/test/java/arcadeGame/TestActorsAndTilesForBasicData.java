@@ -8,9 +8,7 @@ import java.util.HashMap;
 import org.junit.jupiter.api.Test;
 import arcadeGame.gameComponents.Enemy;
 import arcadeGame.gameComponents.Player;
-import arcadeGame.gameComponents.Tile;
 import arcadeGame.gameComponents.Wall;
-import arcadeGame.gameComponents.spriteAnimations.DisplaySprite;
 
 class TestActorsAndTilesForBasicData {
 
@@ -45,8 +43,8 @@ class TestActorsAndTilesForBasicData {
 
         p.setVx(10);
         p.setVy(7);
-        p.update(new HashMap<Integer, Boolean>(), new ArrayList<Tile>(),
-                new ArrayList<DisplaySprite>());
+        p.update(new HashMap<>(), new ArrayList<>(),
+                new ArrayList<>());
 
         assertEquals(7.5, p.getX());
         assertEquals(7, p.getY());

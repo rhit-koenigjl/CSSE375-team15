@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import arcadeGame.GameComponent;
 
 public class GameAdvanceListener implements ActionListener {
-    private GameComponent gameComponent;
+    private final GameComponent gameComponent;
 
     public GameAdvanceListener(GameComponent gameComponent) {
         this.gameComponent = gameComponent;
@@ -16,7 +16,7 @@ public class GameAdvanceListener implements ActionListener {
         advanceOneTick();
     }
 
-    void advanceOneTick() {
+    private void advanceOneTick() {
         this.gameComponent.updateState();
         this.gameComponent.drawScreen();
     }

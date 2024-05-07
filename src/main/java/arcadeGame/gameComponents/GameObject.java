@@ -23,10 +23,10 @@ public class GameObject {
     }
 
     GameObject(int x, int y, int width, int height, GameImage gameImage) {
-        this.x = (double) x;
-        this.y = (double) y;
-        this.width = (double) width;
-        this.height = (double) height;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
         this.gameImage = gameImage;
     }
 

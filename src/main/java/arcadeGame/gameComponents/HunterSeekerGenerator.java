@@ -12,7 +12,8 @@ public class HunterSeekerGenerator extends EnemySpawner {
     @Override
     public Enemy returnNew() {
         double angle = super.getAngle();
-        return new HunterSeeker(x, y, width, height, Math.cos(angle) * 4, Math.sin(angle) * 4, p);
+        return new HunterSeeker(x, y, width, height, Math.cos(angle) * VELOCITY_MULTIPLIER,
+                Math.sin(angle) * VELOCITY_MULTIPLIER, p);
     }
 
 }
