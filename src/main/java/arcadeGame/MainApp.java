@@ -26,7 +26,7 @@ class MainApp {
         addListeners();
         gameFrame.setVisible(true);
     }
-    
+
     private void createFrame() {
         gameFrame = new JFrame(GAME_TITLE);
         gameFrame.setSize(MENU_WIDTH, MENU_HEIGHT);

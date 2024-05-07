@@ -19,6 +19,7 @@ public class AiMessageGenerator implements MessageGenerator {
     private static final int MATCH_START = 9;
     private static final Pattern SUCCESS_PATTERN = Pattern.compile("\"text\": \".*\"");
     private static final Pattern FAILURE_PATTERN = Pattern.compile("\"finishReason\": \"SAFETY\"");
+    private static final Pattern INTERNAL_ERROR_MATCHER = Pattern.compile("\"status\": \"INTERNAL\"");
 
     private String message = DEFAULT_MESSAGE;
     private String apiKey = "";
@@ -76,7 +77,8 @@ public class AiMessageGenerator implements MessageGenerator {
             message = successMatcher.group().substring(MATCH_START, successMatcher.group().length() - 1);
         } catch (Exception e) {
             Matcher failureMatcher = FAILURE_PATTERN.matcher(response.body());
-            if (failureMatcher.find()) {
+            Matcher internalErrorMatcher = INTERNAL_ERROR_MATCHER.matcher(response.body());
+            if (failureMatcher.find() || internalErrorMatcher.find()) {
                 requestMessage();
             } else {
                 System.err.println("API request quota exceeded. Try again in a few minutes.");

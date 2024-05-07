@@ -16,7 +16,7 @@ public class GameAdvanceListener implements ActionListener {
         advanceOneTick();
     }
 
-    void advanceOneTick() {
+    private void advanceOneTick() {
         this.gameComponent.updateState();
         this.gameComponent.drawScreen();
     }
