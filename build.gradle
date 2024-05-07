@@ -9,6 +9,7 @@ plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 repositories {
@@ -36,3 +37,24 @@ application {
     // Define the main class for the application.
     mainClass = 'arcadeGame.MainApp'
 }
+
+task listFiles(type: DefaultTask) {
+    doLast {
+        def dir = file('src/main/resources/levels/user_test_level_set')
+        def outputFile = file('src/main/resources/levels/user_test_level_set/levels')
+        if (outputFile.exists()) {
+            outputFile.delete()
+        }
+        if (dir.exists()) {
+            dir.listFiles().each { file ->
+                if (file.getName().endsWith(".json")) {
+                    outputFile << file.name + "\n"
+                }
+            }
+        } else {
+            println "Directory does not exist: $dir"
+        }
+    }
+}
+
+processResources.dependsOn listFiles

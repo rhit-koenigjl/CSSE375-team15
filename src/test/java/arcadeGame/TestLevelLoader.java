@@ -21,8 +21,7 @@ class TestLevelLoader {
 
     @Test
     void testLevelLoader_createLevel_expectTenByFive() {
-        LevelLoader testLoader =
-                new LevelLoader("src\\main\\resources\\levels\\testLevels\\test_level_3.json");
+        LevelLoader testLoader = new LevelLoader("levels\\testLevels\\test_level_3.json");
         testLoader.loadLevel();
 
         assertEquals(500, testLoader.getWidth());
@@ -34,8 +33,7 @@ class TestLevelLoader {
 
     @Test
     void testLevelLoader_createLevel_expectFiveBlocksFiveEnemies() {
-        LevelLoader testLoader =
-                new LevelLoader("src\\main\\resources\\levels\\testLevels\\test55.json");
+        LevelLoader testLoader = new LevelLoader("levels\\testLevels\\test55.json");
         testLoader.loadLevel();
 
         assertEquals(5, testLoader.getTiles().size());
@@ -44,8 +42,7 @@ class TestLevelLoader {
 
     @Test
     void testLevelLoader_createLevel_expectSpikes() {
-        LevelLoader testLoader =
-                new LevelLoader("src\\main\\resources\\levels\\testLevels\\spike_test.json");
+        LevelLoader testLoader = new LevelLoader("levels\\testLevels\\spike_test.json");
         assertEquals(0, testLoader.getTiles().size());
         testLoader.loadLevel();
         assertEquals(7, testLoader.getTiles().size());
@@ -53,8 +50,7 @@ class TestLevelLoader {
 
     @Test
     void testLevelLoader_createLevel_expectHunterSeekers() {
-        LevelLoader testLoader = new LevelLoader(
-                "src\\main\\resources\\levels\\testLevels\\hunter_seeker_test.json");
+        LevelLoader testLoader = new LevelLoader("levels\\testLevels\\hunter_seeker_test.json");
         assertEquals(0, testLoader.getEnemies().size());
         testLoader.loadLevel();
         assertEquals(8, testLoader.getEnemies().size());
@@ -62,8 +58,7 @@ class TestLevelLoader {
 
     @Test
     void testLevelLoader_createLevel_expectCoins() {
-        LevelLoader testLoader =
-                new LevelLoader("src\\main\\resources\\levels\\testLevels\\coin_test.json");
+        LevelLoader testLoader = new LevelLoader("levels\\testLevels\\coin_test.json");
         assertEquals(0, testLoader.getTiles().size());
         testLoader.loadLevel();
         assertEquals(15, testLoader.getTiles().size());
@@ -71,8 +66,7 @@ class TestLevelLoader {
 
     @Test
     void testLevelLoader_createLevel_expectDesiredPlayer() {
-        LevelLoader testLoader =
-                new LevelLoader("src\\main\\resources\\levels\\testLevels\\player_test.json");
+        LevelLoader testLoader = new LevelLoader("levels\\testLevels\\player_test.json");
         assertEquals(null, testLoader.getPlayer());
         testLoader.loadLevel();
         assertEquals(73, (int) testLoader.getPlayer().getX());

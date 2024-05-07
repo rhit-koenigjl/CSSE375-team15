@@ -1,11 +1,13 @@
 package arcadeGame.gameComponents.imageManagers;
 
 import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import javax.swing.ImageIcon;
 
 public enum GameImage {
     BACKGROUND("background", Extension.PNG),
@@ -77,9 +79,30 @@ public enum GameImage {
                 path.append("_").append(direction.toString().toLowerCase());
             }
             path.append(".").append(this.extension.toString().toLowerCase());
-            images.put(direction,
-                    new ImageIcon(getClass().getResource("/images/" + path.toString())).getImage());
-            imageFiles.put(direction, new File(path.toString()));
+            try {
+                images.put(direction, generateImage(path.toString()));
+                imageFiles.put(direction, new File(path.toString()));
+            } catch (Exception e) {
+                System.err.println("Could not load image: " + path.toString());
+            }
+        }
+    }
+
+    private Image generateImage(String path) {
+        try {
+            InputStream in = getClass().getResourceAsStream("/images/" + path);
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            int nRead;
+            byte[] data = new byte[1024];
+            while ((nRead = in.read(data, 0, data.length)) != -1) {
+                buffer.write(data, 0, nRead);
+            }
+            buffer.flush();
+            byte[] imageInByte = buffer.toByteArray();
+            return Toolkit.getDefaultToolkit().createImage(imageInByte);
+        } catch (Exception e) {
+            System.err.println("Could not load image: " + path);
+            return null;
         }
     }
 
