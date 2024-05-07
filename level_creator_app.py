@@ -2,21 +2,21 @@ import pygame
 import sys
 import json
 
-from grid import Grid
-from image_manager import ImageManager
-from block_pallete import BlockPallete
-from level_setup import LevelSetup
+from level_creator.app.grid import Grid
+from level_creator.app.image_manager import ImageManager
+from level_creator.app.block_pallete import BlockPallete
+from level_creator.app.level_setup import LevelSetup
 
-config_f = open('app-config.json')
+config_f = open('level_creator\\app-config.json')
 config_data = json.load(config_f)
 
-ls = LevelSetup('..\\src\\main\\resources\\levels\\user_test_level_set')
+ls = LevelSetup(config_data['destination'])
 level_data = ls.get_level_object()
 
 LEVEL_WIDTH, LEVEL_HEIGHT, BLOCK_SIZE, STREAM = int(level_data['width']), int(level_data['height']), int(level_data['block_size']), level_data['data']
 
 grid = Grid(LEVEL_WIDTH, LEVEL_HEIGHT, BLOCK_SIZE, STREAM)
-image_manager = ImageManager("app-config.json")
+image_manager = ImageManager("level_creator\\app-config.json")
 block_pallete = BlockPallete(list(config_data['assets']))
 
 image_keys = list(image_manager.get_keys())

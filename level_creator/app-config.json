@@ -1,142 +1,146 @@
 {
+    "destination": "src\\main\\resources\\levels\\user_test_level_set",
     "assets": [
         [
             [
                 "b",
-                "assets\\brick.png"
+                "src\\main\\resources\\images\\brick.png"
             ],
             [
                 "m",
-                "assets\\mossy_brick.png"
+                "src\\main\\resources\\images\\mossy_brick.png"
             ]
         ],
         [
             [
                 "B",
-                "assets\\bounce_pad.gif"
+                "src\\main\\resources\\images\\bounce_pad.gif"
             ],
             [
                 "B#U",
-                "assets\\bounce_pad_up.gif"
+                "src\\main\\resources\\images\\bounce_pad_up.gif"
             ],
             [
                 "B#D",
-                "assets\\bounce_pad_down.gif"
+                "src\\main\\resources\\images\\bounce_pad_down.gif"
             ],
             [
                 "B#L",
-                "assets\\bounce_pad_left.gif"
+                "src\\main\\resources\\images\\bounce_pad_left.gif"
             ],
             [
                 "B#R",
-                "assets\\bounce_pad_right.gif"
+                "src\\main\\resources\\images\\bounce_pad_right.gif"
             ]
         ],
         [
             [
                 "S#U",
-                "assets\\upward_spike.png"
+                "src\\main\\resources\\images\\spike_up.png"
             ],
             [
                 "S#D",
-                "assets\\downward_spike.png"
+                "src\\main\\resources\\images\\spike_down.png"
             ],
             [
                 "S#L",
-                "assets\\leftward_spike.png"
+                "src\\main\\resources\\images\\spike_left.png"
             ],
             [
                 "S#R",
-                "assets\\rightward_spike.png"
+                "src\\main\\resources\\images\\spike_right.png"
             ]
         ],
         [
             [
                 "c",
-                "assets\\coin.gif"
+                "src\\main\\resources\\images\\coin.gif"
             ]
         ],
         [
             [
                 "&#U",
-                "assets\\ghost_up.png"
+                "src\\main\\resources\\images\\ghost_up.png"
             ],
             [
                 "&#UR",
-                "assets\\ghost_up_right.png"
+                "src\\main\\resources\\images\\ghost_up_right.png"
             ],
             [
                 "&#R",
-                "assets\\ghost_right.png"
+                "src\\main\\resources\\images\\ghost_right.png"
             ],
             [
                 "&#DR",
-                "assets\\ghost_down_right.png"
+                "src\\main\\resources\\images\\ghost_down_right.png"
             ],
             [
                 "&#D",
-                "assets\\ghost_down.png"
+                "src\\main\\resources\\images\\ghost_down.png"
             ],
             [
                 "&#DL",
-                "assets\\ghost_down_left.png"
+                "src\\main\\resources\\images\\ghost_down_left.png"
             ],
             [
                 "&#L",
-                "assets\\ghost_left.png"
+                "src\\main\\resources\\images\\ghost_left.png"
             ],
             [
                 "&#UL",
-                "assets\\ghost_up_left.png"
+                "src\\main\\resources\\images\\ghost_up_left.png"
             ]
         ],
         [
             [
                 "@#U",
-                "assets\\angry_ghost_up.png"
+                "src\\main\\resources\\images\\angry_ghost_up.png"
             ],
             [
                 "@#UR",
-                "assets\\angry_ghost_up_right.png"
+                "src\\main\\resources\\images\\angry_ghost_up_right.png"
             ],
             [
                 "@#R",
-                "assets\\angry_ghost_right.png"
+                "src\\main\\resources\\images\\angry_ghost_right.png"
             ],
             [
                 "@#DR",
-                "assets\\angry_ghost_down_right.png"
+                "src\\main\\resources\\images\\angry_ghost_down_right.png"
             ],
             [
                 "@#D",
-                "assets\\angry_ghost_down.png"
+                "src\\main\\resources\\images\\angry_ghost_down.png"
             ],
             [
                 "@#DL",
-                "assets\\angry_ghost_down_left.png"
+                "src\\main\\resources\\images\\angry_ghost_down_left.png"
             ],
             [
                 "@#L",
-                "assets\\angry_ghost_left.png"
+                "src\\main\\resources\\images\\angry_ghost_left.png"
             ],
             [
                 "@#UL",
-                "assets\\angry_ghost_up_left.png"
+                "src\\main\\resources\\images\\angry_ghost_up_left.png"
             ]
         ],
         [
-            ["G", "assets\\spawner.gif"]
+            [
+                "G",
+                "src\\main\\resources\\images\\spawner.gif"
+            ]
         ],
         [
             [
                 "P",
-                "assets\\player_right.gif"
+                "src\\main\\resources\\images\\player_right.gif"
             ]
         ],
         [
             [
                 "none",
-                "assets\\none_type.png"
+                "src\\main\\resources\\images\\none_type.png"
             ]
         ]
     ]
