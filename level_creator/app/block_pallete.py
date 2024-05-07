@@ -13,7 +13,7 @@ class BlockPallete:
                 keys.append(asset[0])
             self.collections.append(keys)
 
-        self.selected_img = pygame.image.load("assets\\selected_square.png")
+        self.selected_img = pygame.image.load("level_creator\\assets\\selected_square.png")
 
     def get_active_type(self):
         return self.collections[self.current_collection][self.current_selections[self.current_collection]]

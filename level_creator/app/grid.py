@@ -1,6 +1,5 @@
-import pygame
 import math
-from block import Block
+from level_creator.app.block import Block
 
 class Grid:
     def __init__(self, width, height, bs, stream) -> None:
