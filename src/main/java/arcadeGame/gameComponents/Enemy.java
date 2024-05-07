@@ -5,6 +5,8 @@ import arcadeGame.gameComponents.imageManagers.Direction;
 import arcadeGame.gameComponents.imageManagers.GameImage;
 
 public class Enemy extends Actor {
+    private static final double FLOAT_ERROR = 0.0001;
+
     protected boolean adding = false;
 
     public Enemy(double startX, double startY, double width, double height) {
@@ -49,7 +51,7 @@ public class Enemy extends Actor {
     }
 
     private boolean closeToZero(double num) {
-        return Math.abs(num) < 0.0001;
+        return Math.abs(num) < FLOAT_ERROR;
     }
 
     public boolean getAdding() {
