@@ -8,15 +8,18 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 public enum GameImage {
-    BACKGROUND("background", Extension.PNG), BOUNCE_PAD("bounce_pad", Extension.GIF), BRICK("brick",
-            Extension.PNG), COIN("coin", Extension.GIF), GHOST("ghost", Extension.PNG,
-                    DirectionType.EIGHT), DEAD_GHOST("dead_ghost", Extension.PNG), MOSSY_BRICK(
-                            "mossy_brick", Extension.PNG), PLAYER("player", Extension.GIF,
-                                    DirectionType.TWO), SPAWNER("spawner", Extension.GIF), SPIKE(
-                                            "spike", Extension.PNG, DirectionType.FOUR), TRACKER(
-                                                    "angry_ghost", Extension.PNG,
-                                                    DirectionType.EIGHT), JUMP_WIND("jump_wind",
-                                                            Extension.PNG);
+    BACKGROUND("background", Extension.PNG),
+    BOUNCE_PAD("bounce_pad", Extension.GIF, DirectionType.FOUR),
+    BRICK("brick", Extension.PNG),
+    COIN("coin", Extension.GIF),
+    GHOST("ghost", Extension.PNG, DirectionType.EIGHT),
+    DEAD_GHOST("dead_ghost", Extension.PNG),
+    MOSSY_BRICK("mossy_brick", Extension.PNG),
+    PLAYER("player", Extension.GIF, DirectionType.TWO),
+    SPAWNER("spawner", Extension.GIF),
+    SPIKE("spike", Extension.PNG, DirectionType.FOUR),
+    TRACKER("angry_ghost", Extension.PNG, DirectionType.EIGHT),
+    JUMP_WIND("jump_wind", Extension.PNG);
 
     private String fileName;
     private Extension extension;
