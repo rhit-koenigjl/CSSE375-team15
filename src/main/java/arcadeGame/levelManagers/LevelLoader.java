@@ -41,8 +41,7 @@ public class LevelLoader {
         this.numCoins = 0;
 
         try {
-            this.file = ClassLoader.getSystemClassLoader()
-                    .getResourceAsStream("levels/user_test_level_set/" + path.trim());
+            this.file = ClassLoader.getSystemClassLoader().getResourceAsStream(path.trim());
         } catch (Exception e) {
             System.err.println("Could not load level " + path);
             e.printStackTrace();

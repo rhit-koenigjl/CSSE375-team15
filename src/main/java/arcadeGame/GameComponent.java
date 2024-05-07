@@ -26,7 +26,8 @@ import arcadeGame.levelManagers.Level;
 import arcadeGame.stateComponents.MouseListener;
 
 public class GameComponent extends JComponent {
-    private static final String LEVELS_DEFINITION = "levels/user_test_level_set/levels";
+    private static final String LEVEL_DIRECTORY = "levels/user_test_level_set/";
+    private static final String LEVELS_DEFINITION = LEVEL_DIRECTORY + "levels";
     private static final int STARTING_LIVES = 3;
     private static final int STARTING_SCORE = 0;
 
@@ -44,7 +45,7 @@ public class GameComponent extends JComponent {
     public GameComponent(JFrame frame, MouseListener mouseListener) {
         buildLevelsList();
         this.frame = frame;
-        this.currentLevel = new Level(levelFiles[0], 0, hero);
+        this.currentLevel = new Level(LEVEL_DIRECTORY + levelFiles[0], 0, hero);
         this.sceneManager = new SceneManager(null);
         GameUpdater g = new GameUpdater(sceneManager, currentLevel, keys, state);
         MenuUpdater m = new MenuUpdater(sceneManager, g, mouseListener);
@@ -53,8 +54,10 @@ public class GameComponent extends JComponent {
 
     private void buildLevelsList() {
         try {
-            InputStream levelNames = ClassLoader.getSystemClassLoader().getResourceAsStream(LEVELS_DEFINITION);
-            levelFiles = Arrays.asList(new String(levelNames.readAllBytes()).split("\n")).toArray(String[]::new);
+            InputStream levelNames =
+                    ClassLoader.getSystemClassLoader().getResourceAsStream(LEVELS_DEFINITION);
+            levelFiles = Arrays.asList(new String(levelNames.readAllBytes()).split("\n"))
+                    .toArray(String[]::new);
         } catch (Exception e) {
             System.err.println("Could not load levels");
             e.printStackTrace();
@@ -96,7 +99,7 @@ public class GameComponent extends JComponent {
             currentLevel.reset();
             return;
         } else {
-            this.currentLevel = new Level(newLevel, index, hero);
+            this.currentLevel = new Level(LEVEL_DIRECTORY + newLevel, index, hero);
             this.sceneManager.setLevel(currentLevel);
             currentLevel.generateLevel();
         }
