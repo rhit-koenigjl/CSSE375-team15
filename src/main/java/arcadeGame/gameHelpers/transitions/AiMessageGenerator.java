@@ -1,7 +1,7 @@
 package arcadeGame.gameHelpers.transitions;
 
+import java.io.InputStream;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -24,8 +24,8 @@ public class AiMessageGenerator implements MessageGenerator {
 
     private void loadApiKey() {
         try {
-            URL apiKeyFile = getClass().getResource("/apiKey.local");
-            scanner = new Scanner(apiKeyFile.openStream());
+            InputStream apiKeyFile = getClass().getResourceAsStream("/apiKey.local");
+            scanner = new Scanner(apiKeyFile);
             apiKey = scanner.nextLine();
             scanner.close();
         } catch (Exception e) {
@@ -39,8 +39,8 @@ public class AiMessageGenerator implements MessageGenerator {
             return;
         }
         try {
-            URL apiPromptFile = getClass().getResource("/apiPrompt.txt");
-            Scanner scanner = new Scanner(apiPromptFile.openStream());
+            InputStream apiPromptFile = getClass().getResourceAsStream("/apiPrompt.txt");
+            Scanner scanner = new Scanner(apiPromptFile);
             String prompt = scanner.nextLine();
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(GEMINI_URL + apiKey))
                     .POST(HttpRequest.BodyPublishers.ofString(

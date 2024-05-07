@@ -5,21 +5,18 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
 
 public enum GameImage {
-    BACKGROUND("background", Extension.PNG),
-    BOUNCE_PAD("bounce_pad", Extension.GIF),
-    BRICK("brick", Extension.PNG),
-    COIN("coin", Extension.GIF),
-    GHOST("ghost", Extension.PNG, DirectionType.EIGHT),
-    DEAD_GHOST("dead_ghost", Extension.PNG),
-    MOSSY_BRICK("mossy_brick", Extension.PNG),
-    PLAYER("player", Extension.GIF, DirectionType.TWO),
-    SPAWNER("spawner", Extension.GIF),
-    SPIKE("spike", Extension.PNG, DirectionType.FOUR),
-    TRACKER("angry_ghost", Extension.PNG, DirectionType.EIGHT),
-    JUMP_WIND("jump_wind", Extension.PNG);
+    BACKGROUND("background", Extension.PNG), BOUNCE_PAD("bounce_pad", Extension.GIF), BRICK("brick",
+            Extension.PNG), COIN("coin", Extension.GIF), GHOST("ghost", Extension.PNG,
+                    DirectionType.EIGHT), DEAD_GHOST("dead_ghost", Extension.PNG), MOSSY_BRICK(
+                            "mossy_brick", Extension.PNG), PLAYER("player", Extension.GIF,
+                                    DirectionType.TWO), SPAWNER("spawner", Extension.GIF), SPIKE(
+                                            "spike", Extension.PNG, DirectionType.FOUR), TRACKER(
+                                                    "angry_ghost", Extension.PNG,
+                                                    DirectionType.EIGHT), JUMP_WIND("jump_wind",
+                                                            Extension.PNG);
 
     private String fileName;
     private Extension extension;
@@ -77,9 +74,14 @@ public enum GameImage {
                 path.append("_").append(direction.toString().toLowerCase());
             }
             path.append(".").append(this.extension.toString().toLowerCase());
-            images.put(direction,
-                    new ImageIcon(getClass().getResource("/images/" + path.toString())).getImage());
-            imageFiles.put(direction, new File(path.toString()));
+            try {
+                Image image =
+                        ImageIO.read(getClass().getResourceAsStream("/images/" + path.toString()));
+                images.put(direction, image);
+                imageFiles.put(direction, new File(path.toString()));
+            } catch (Exception e) {
+                System.err.println("Could not load image: " + path.toString());
+            }
         }
     }
 

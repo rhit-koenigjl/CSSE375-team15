@@ -4,8 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.io.File;
-import java.nio.file.Path;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +26,7 @@ import arcadeGame.levelManagers.Level;
 import arcadeGame.stateComponents.MouseListener;
 
 public class GameComponent extends JComponent {
-    private static final String LEVEL_DIRECTORY = "levels/user_test_level_set/";
+    private static final String LEVELS_DEFINITION = "levels/user_test_level_set/levels";
     private static final int STARTING_LIVES = 3;
     private static final int STARTING_SCORE = 0;
 
@@ -54,10 +53,8 @@ public class GameComponent extends JComponent {
 
     private void buildLevelsList() {
         try {
-            Path levelDir = Path
-                    .of(ClassLoader.getSystemClassLoader().getResource(LEVEL_DIRECTORY).toURI());
-            levelFiles = Arrays.asList(levelDir.toFile().listFiles()).stream().map(File::getPath)
-                    .toArray(String[]::new);
+            InputStream levelNames = ClassLoader.getSystemClassLoader().getResourceAsStream(LEVELS_DEFINITION);
+            levelFiles = Arrays.asList(new String(levelNames.readAllBytes()).split("\n")).toArray(String[]::new);
         } catch (Exception e) {
             System.err.println("Could not load levels");
             e.printStackTrace();
@@ -116,8 +113,8 @@ public class GameComponent extends JComponent {
         lives--;
         levelReset();
         if (lives > 0) {
-            sceneManager
-                    .switchScene(new ResetUpdater(sceneManager, sceneManager.getCurrentScene(), currentLevel.getDeathType()));
+            sceneManager.switchScene(new ResetUpdater(sceneManager, sceneManager.getCurrentScene(),
+                    currentLevel.getDeathType()));
         } else {
             restart(false);
         }

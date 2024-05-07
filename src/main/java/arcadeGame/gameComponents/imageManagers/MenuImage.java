@@ -17,7 +17,7 @@ public enum MenuImage {
 
     private MenuImage(String fileName, int width, int height) {
         try {
-            this.image = ImageIO.read(getClass().getResource("/images/" + fileName));
+            this.image = ImageIO.read(getClass().getResourceAsStream("/images/" + fileName));
             resize(width, height);
         } catch (Exception e) {
             System.err.println("Error loading image: " + fileName);
