@@ -4,6 +4,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -22,20 +23,11 @@ jobs:
         with:
           name: indiana-ghost
           path: build/libs/*.jar
-
-  release:
-    runs-on: ubuntu-latest
-    needs: build
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
       - name: Rename file
         run: mv build/libs/*.jar "./IndianaGhost.jar"
       - name: Delete release if exist then create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release view "v1.0" && gh release delete "v1.0" -y --cleanup-tag
-          gh release create "v1.0" "./IndianaGhost.jar" -p -t "Indiana Ghost"
+          gh release delete "v1.0" -y --cleanup-tag
+          gh release create "v1.0" "./IndianaGhost.jar" -t "Indiana Ghost"
