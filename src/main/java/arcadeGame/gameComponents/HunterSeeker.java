@@ -41,16 +41,16 @@ public class HunterSeeker extends Enemy {
         double goalSpeed = 0;
         double goalLift = 0;
         if (x + width < hero.getX()) {
-            goalSpeed = width * DEFAULT_SPEED * 0.5;
+            goalSpeed = width * DEFAULT_SPEED / 2;
         }
         if (x > hero.getX() + hero.getWidth()) {
-            goalSpeed = -width * DEFAULT_SPEED * 0.5;
+            goalSpeed = -width * DEFAULT_SPEED / 2;
         }
 
         if (y > hero.getY() + hero.getHeight() / 2) {
-            goalLift = -width * DEFAULT_SPEED * 0.5;
+            goalLift = -width * DEFAULT_SPEED / 2;
         } else {
-            goalLift = width * DEFAULT_SPEED * 0.5;
+            goalLift = width * DEFAULT_SPEED / 2;
         }
 
         vx += (goalSpeed - vx) / APPROACH_FACTOR;
