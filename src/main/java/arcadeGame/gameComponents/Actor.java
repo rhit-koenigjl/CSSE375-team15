@@ -8,6 +8,7 @@ abstract class Actor extends GameObject {
     protected static final double APPROACH_FACTOR = 4;
     protected static final double SPEED = 5;
     protected static final double DEFAULT_SPEED = 1.0 / 10.0;
+    protected static final double HERO_VELOCITY = 0.75;
 
     private boolean didCollideWithSpikes = false;
 
@@ -25,7 +26,7 @@ abstract class Actor extends GameObject {
     }
 
     public void update(List<Tile> tiles) {
-        x += vx * (isHero() ? 0.75 : 1);
+        x += vx * (isHero() ? HERO_VELOCITY : 1);
         handleTileCollisions(tiles, vx, 0);
         y += vy;
         handleTileCollisions(tiles, 0, vy);
