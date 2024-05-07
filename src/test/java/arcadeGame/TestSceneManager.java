@@ -6,7 +6,7 @@ import org.junit.Test;
 import arcadeGame.gameHelpers.SceneManager;
 import arcadeGame.gameHelpers.screens.SceneUpdater;
 
-class TestSceneManager {
+public class TestSceneManager {
     private int drawnScene1 = 0;
     private int updatedScene1 = 0;
 
@@ -62,7 +62,7 @@ class TestSceneManager {
     }
 
     @Test
-    void testSceneManager_drawScene_expectSingleDraw() {
+    public void testSceneManager_drawScene_expectSingleDraw() {
         drawnScene1 = 0;
         SceneManager sm = new SceneManager(null);
         sm.switchScene(new DummyScene1(sm));
@@ -73,7 +73,7 @@ class TestSceneManager {
     }
 
     @Test
-    void testSceneManager_drawSceneMultipleTimes_expectMultipleDraws() {
+    public void testSceneManager_drawSceneMultipleTimes_expectMultipleDraws() {
         drawnScene1 = 0;
         SceneManager sm = new SceneManager(null);
         sm.switchScene(new DummyScene1(sm));
@@ -85,7 +85,7 @@ class TestSceneManager {
     }
 
     @Test
-    void testSceneManager_runScene_expectUpdate() {
+    public void testSceneManager_runScene_expectUpdate() {
         updatedScene1 = 0;
         SceneManager sm = new SceneManager(null);
         sm.switchScene(new DummyScene1(sm));
@@ -95,7 +95,7 @@ class TestSceneManager {
     }
 
     @Test
-    void testSceneManager_runSceneMultipleTimes_expectMultipleUpdates() {
+    public void testSceneManager_runSceneMultipleTimes_expectMultipleUpdates() {
         updatedScene1 = 0;
         SceneManager sm = new SceneManager(null);
         sm.switchScene(new DummyScene1(sm));
@@ -107,7 +107,7 @@ class TestSceneManager {
     }
 
     @Test
-    void testSceneManager_testSwitchScene_expectSceneSwitched() {
+    public void testSceneManager_testSwitchScene_expectSceneSwitched() {
         SceneManager sm = new SceneManager(null);
         sm.switchScene(new DummyScene1(sm));
         assertEquals("DummyScene1", sm.getCurrentScene().getSceneName());
@@ -116,7 +116,7 @@ class TestSceneManager {
     }
 
     @Test
-    void testSceneMAnager_testSwitchSceneAtRuntime_expectRuntimeSwitch() {
+    public void testSceneMAnager_testSwitchSceneAtRuntime_expectRuntimeSwitch() {
         drawnScene1 = 0;
         updatedScene1 = 0;
 

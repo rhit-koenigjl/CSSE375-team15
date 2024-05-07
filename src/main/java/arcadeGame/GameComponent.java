@@ -39,18 +39,18 @@ public class GameComponent extends JComponent {
     private SceneManager sceneManager;
     private int score = STARTING_SCORE;
     private int lives = STARTING_LIVES;
-    private String levelFiles[];
+    private String[] levelFiles;
     private Level currentLevel;
-    private UpdateState state = new UpdateState(this);
-    private Player hero = new Player(0, 0, 0, 0);
-    private Map<Integer, Boolean> keys = new HashMap<Integer, Boolean>();
-    private JFrame frame;
+    private final Player hero = new Player(0, 0, 0, 0);
+    private final Map<Integer, Boolean> keys = new HashMap<>();
+    private final JFrame frame;
 
     public GameComponent(JFrame frame, MouseListener mouseListener) {
         buildLevelsList();
         this.frame = frame;
         this.currentLevel = new Level(LEVEL_DIRECTORY + levelFiles[0], 0, hero);
         this.sceneManager = new SceneManager(null);
+        UpdateState state = new UpdateState(this);
         GameUpdater g = new GameUpdater(sceneManager, currentLevel, keys, state);
         MenuUpdater m = new MenuUpdater(sceneManager, g, mouseListener);
         this.sceneManager.switchScene(m);
@@ -64,7 +64,6 @@ public class GameComponent extends JComponent {
                     .toArray(String[]::new);
         } catch (Exception e) {
             System.err.println("Could not load levels");
-            e.printStackTrace();
         }
     }
 
@@ -153,17 +152,8 @@ public class GameComponent extends JComponent {
         sceneManager.switchScene(new TransitionUpdater(sceneManager, generator));
     }
 
-    int getScore() {
-        return score;
-    }
-
     public void resize() {
         this.frame.setSize(currentLevel.getWidth() + 14, currentLevel.getHeight() + 37);
-    }
-
-    // For testing purposes
-    SceneManager getSceneManager() {
-        return sceneManager;
     }
 
     void setSceneManager(SceneManager sceneManager) {

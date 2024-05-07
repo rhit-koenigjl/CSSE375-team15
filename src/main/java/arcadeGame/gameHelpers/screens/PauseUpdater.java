@@ -15,9 +15,9 @@ public class PauseUpdater extends SceneUpdater {
     private static final int WIDTH_OFFSET = 14;
     private static final int HEIGHT_OFFSET = 37;
 
-    private SceneUpdater gameUpdater;
-    private Map<Integer, Boolean> keys;
-    private Level level;
+    private final SceneUpdater gameUpdater;
+    private final Map<Integer, Boolean> keys;
+    private final Level level;
 
     public PauseUpdater(SceneManager sceneManager, SceneUpdater gameUpdater,
             Map<Integer, Boolean> keys, Level level) {
@@ -52,9 +52,9 @@ public class PauseUpdater extends SceneUpdater {
         g2.setFont(font);
 
         Rectangle boundingBox = g2.getClipBounds();
-        double midX1 = boundingBox.getWidth() / 2 - metrics.stringWidth(str1) / 2;
-        double midX2 = boundingBox.getWidth() / 2 - metrics.stringWidth(str2) / 2;
-        double midY = boundingBox.getHeight() / 2 - metrics.getHeight() / 2;
+        double midX1 = boundingBox.getWidth() / 2 - (double) metrics.stringWidth(str1) / 2;
+        double midX2 = boundingBox.getWidth() / 2 - (double) metrics.stringWidth(str2) / 2;
+        double midY = boundingBox.getHeight() / 2 - (double) metrics.getHeight() / 2;
 
         g2.drawString(str1, (int) midX1, (int) midY - metrics.getHeight());
         g2.drawString(str2, (int) midX2, (int) midY + metrics.getHeight());

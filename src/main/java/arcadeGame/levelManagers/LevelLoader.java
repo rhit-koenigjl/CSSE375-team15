@@ -23,8 +23,8 @@ public class LevelLoader {
     private static final double ACTOR_SIZE_MULTIPLIER = 4.0 / 5.0;
     private static final double ACTOR_POSITION_OFFSET = 0.1;
 
-    private List<Tile> tiles;
-    private List<Enemy> enemies;
+    private final List<Tile> tiles;
+    private final List<Enemy> enemies;
     private Player player;
     private InputStream file;
     private String dataString;
@@ -34,8 +34,8 @@ public class LevelLoader {
     private int numCoins;
 
     public LevelLoader(String path) {
-        this.tiles = new ArrayList<Tile>();
-        this.enemies = new ArrayList<Enemy>();
+        this.tiles = new ArrayList<>();
+        this.enemies = new ArrayList<>();
         this.player = null;
         this.size = EMPTY;
         this.levelWidth = EMPTY;
@@ -46,7 +46,6 @@ public class LevelLoader {
             this.file = ClassLoader.getSystemClassLoader().getResourceAsStream(path.trim());
         } catch (Exception e) {
             System.err.println("Could not load level " + path);
-            e.printStackTrace();
         }
     }
 
@@ -57,7 +56,6 @@ public class LevelLoader {
             jsonObject = new JSONParser().parse(new InputStreamReader(this.file));
         } catch (Exception e) {
             System.err.println("Could not load level");
-            e.printStackTrace();
         }
 
         return (JSONObject) jsonObject;

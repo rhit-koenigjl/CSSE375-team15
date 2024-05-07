@@ -17,7 +17,7 @@ public class TextGraphics {
         g2.setColor(Color.WHITE);
 
         Rectangle boundingBox = g2.getClipBounds();
-        double midY = boundingBox.getHeight() / 2 - metrics.getHeight() / 2;
+        double midY = boundingBox.getHeight() / 2 - (double) metrics.getHeight() / 2;
 
         String[] words = text.split(" ");
         String currentLine = words[0];
@@ -27,14 +27,14 @@ public class TextGraphics {
                     .getWidth()) {
                 currentLine += " " + words[i];
             } else {
-                double midX = boundingBox.getWidth() / 2 - metrics.stringWidth(currentLine) / 2;
+                double midX = boundingBox.getWidth() / 2 - (double) metrics.stringWidth(currentLine) / 2;
                 g2.drawString(currentLine, (int) midX, y);
                 y += metrics.getHeight();
                 currentLine = words[i];
             }
         }
-        if (currentLine.trim().length() > 0) {
-            double midX = boundingBox.getWidth() / 2 - metrics.stringWidth(currentLine) / 2;
+        if (!currentLine.trim().isEmpty()) {
+            double midX = boundingBox.getWidth() / 2 - (double) metrics.stringWidth(currentLine) / 2;
             g2.drawString(currentLine, (int) midX, y);
         }
     }

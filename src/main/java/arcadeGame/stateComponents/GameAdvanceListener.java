@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import arcadeGame.GameComponent;
 
 public class GameAdvanceListener implements ActionListener {
-    private GameComponent gameComponent;
+    private final GameComponent gameComponent;
 
     public GameAdvanceListener(GameComponent gameComponent) {
         this.gameComponent = gameComponent;

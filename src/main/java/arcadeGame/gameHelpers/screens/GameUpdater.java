@@ -9,8 +9,8 @@ import arcadeGame.gameHelpers.UpdateState;
 import arcadeGame.levelManagers.Level;
 
 public class GameUpdater extends SceneUpdater {
-    private Map<Integer, Boolean> keys;
-    private UpdateState state;
+    private final Map<Integer, Boolean> keys;
+    private final UpdateState state;
 
     public GameUpdater(SceneManager sm, Level level, Map<Integer, Boolean> k, UpdateState state) {
         super(sm);
@@ -37,10 +37,6 @@ public class GameUpdater extends SceneUpdater {
     @Override
     public void onFirstLoad() {
         this.state.resizeLevel();
-    }
-
-    void changeLevel(Level level) {
-        this.level = level;
     }
 
     @Override

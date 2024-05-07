@@ -15,8 +15,8 @@ public class ResetUpdater extends SceneUpdater {
     private static final int ONE_SECOND = 100;
 
     private int timer;
-    private SceneUpdater gameUpdater;
-    private DeathType deathType;
+    private final SceneUpdater gameUpdater;
+    private final DeathType deathType;
 
     public ResetUpdater(SceneManager sceneManager, SceneUpdater gameUpdater, DeathType deathType) {
         super(sceneManager);
@@ -45,9 +45,9 @@ public class ResetUpdater extends SceneUpdater {
         g2.setColor(Color.WHITE);
 
         Rectangle boundingBox = g2.getClipBounds();
-        double midX1 = boundingBox.getWidth() / 2 - metrics.stringWidth(str1) / 2;
-        double midX2 = boundingBox.getWidth() / 2 - metrics.stringWidth(str2) / 2;
-        double midY = (boundingBox.getHeight() / 2 - metrics.getHeight() / 2) - Y_POS_OFFSET;
+        double midX1 = boundingBox.getWidth() / 2 - (double) metrics.stringWidth(str1) / 2;
+        double midX2 = boundingBox.getWidth() / 2 - (double) metrics.stringWidth(str2) / 2;
+        double midY = (boundingBox.getHeight() / 2 - (double) metrics.getHeight() / 2) - Y_POS_OFFSET;
 
         g2.drawString(str1, (int) midX1, (int) midY - FONT_SIZE / 2);
         g2.drawString(str2, (int) midX2, (int) midY + FONT_SIZE / 2);

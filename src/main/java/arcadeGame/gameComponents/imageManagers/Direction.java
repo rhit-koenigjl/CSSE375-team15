@@ -6,7 +6,7 @@ import java.util.Map;
 public enum Direction {
     UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT, NONE;
 
-    private static Map<String, Direction> stringMap = new HashMap<String, Direction>() {
+    private static final Map<String, Direction> stringMap = new HashMap<>() {
         {
             put("U", UP);
             put("UR", UP_RIGHT);
@@ -20,7 +20,7 @@ public enum Direction {
         }
     };
 
-    private static HashMap<Direction, Double> angleMap = new HashMap<Direction, Double>() {
+    private static final HashMap<Direction, Double> angleMap = new HashMap<>() {
         {
             put(UP, 0.0);
             put(UP_RIGHT, Math.PI / 4.0);

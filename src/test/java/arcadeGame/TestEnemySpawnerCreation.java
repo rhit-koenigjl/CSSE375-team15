@@ -20,7 +20,7 @@ class TestEnemySpawnerCreation {
     private static final double STARTING_POSITION = 0;
     private static final int STARTING_VELOCITY = 0;
     private static final int ACTOR_SIZE = 10;
-    private static final List<Enemy> ENEMIES = new ArrayList<Enemy>();
+    private static final List<Enemy> ENEMIES = new ArrayList<>();
     private static final Player PLAYER = EasyMock.createMock(Player.class);
 
     @BeforeEach

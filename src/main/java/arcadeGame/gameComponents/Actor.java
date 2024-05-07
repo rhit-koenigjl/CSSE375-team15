@@ -1,6 +1,5 @@
 package arcadeGame.gameComponents;
 
-import java.awt.Graphics2D;
 import java.util.List;
 import arcadeGame.gameComponents.imageManagers.GameImage;
 
@@ -15,8 +14,6 @@ abstract class Actor extends GameObject {
     Actor(double startX, double startY, double width, double height, GameImage gameImage) {
         super(startX, startY, width, height, gameImage);
     }
-
-    abstract void drawActor(Graphics2D g2);
 
     private void handleTileCollisions(List<Tile> tiles, double xVel, double yVel) {
         for (Tile tile : tiles) {

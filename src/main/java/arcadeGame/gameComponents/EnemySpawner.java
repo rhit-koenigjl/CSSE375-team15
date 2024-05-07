@@ -1,6 +1,6 @@
 package arcadeGame.gameComponents;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.util.List;
 import arcadeGame.gameComponents.imageManagers.Direction;
 import arcadeGame.gameComponents.imageManagers.GameImage;
@@ -12,8 +12,8 @@ public abstract class EnemySpawner extends Enemy {
     private static final double TIME_INCREMENT = 0.1;
     private static final int THIS_VELOCITY_MULTIPLIER = 12;
 
-    protected List<Enemy> enemies;
-    protected Player p;
+    protected final List<Enemy> enemies;
+    protected final Player p;
     private double timeInc = 0;
 
     EnemySpawner(double startX, double startY, double width, double height, double velocityX,

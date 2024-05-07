@@ -3,7 +3,7 @@ package arcadeGame.gameHelpers;
 import arcadeGame.GameComponent;
 
 public class UpdateState {
-    private GameComponent gameComponent;
+    private final GameComponent gameComponent;
 
     public UpdateState(GameComponent gameComponent) {
         this.gameComponent = gameComponent;

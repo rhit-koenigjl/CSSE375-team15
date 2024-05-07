@@ -26,31 +26,31 @@ public enum GameImage {
     private static final int BYTE_SIZE = 1024;
     private static final String IMAGES_DIRECTORY = "/images/";
 
-    private String fileName;
-    private Extension extension;
+    private final String fileName;
+    private final Extension extension;
     private Set<Direction> directions;
     private Map<Direction, Image> images;
 
     // For testing purposes
     private Map<Direction, File> imageFiles;
 
-    private GameImage(String fileName, Extension extension, DirectionType directionType) {
+    GameImage(String fileName, Extension extension, DirectionType directionType) {
         this.fileName = fileName;
         this.extension = extension;
         setPossibleDirections(directionType);
         createImages();
     }
 
-    private GameImage(String fileName, Extension extension) {
+    GameImage(String fileName, Extension extension) {
         this(fileName, extension, DirectionType.NONE);
     }
 
     private enum Extension {
-        GIF, PNG;
+        GIF, PNG
     }
 
     private enum DirectionType {
-        NONE, TWO, FOUR, EIGHT;
+        NONE, TWO, FOUR, EIGHT
     }
 
     private void setPossibleDirections(DirectionType directionType) {
@@ -86,7 +86,7 @@ public enum GameImage {
                 images.put(direction, generateImage(path.toString()));
                 imageFiles.put(direction, new File(path.toString()));
             } catch (Exception e) {
-                System.err.println("Could not load image: " + path.toString());
+                System.err.println("Could not load image: " + path);
             }
         }
     }

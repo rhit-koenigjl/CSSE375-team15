@@ -15,7 +15,7 @@ public enum MenuImage {
 
     private BufferedImage image;
 
-    private MenuImage(String fileName, int width, int height) {
+    MenuImage(String fileName, int width, int height) {
         try {
             this.image = ImageIO.read(getClass().getResourceAsStream("/images/" + fileName));
             resize(width, height);

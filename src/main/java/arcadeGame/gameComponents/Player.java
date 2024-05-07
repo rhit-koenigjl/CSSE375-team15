@@ -21,15 +21,15 @@ public class Player extends Actor {
     private static final double IMAGE_SCALE = 2.0;
     private static final double IMAGE_OFFSET = 0.5;
 
-    private double horizontalSpeed;
+    private final double horizontalSpeed;
     private int flyCoolDownTimer = 0;
-    private double downwardPushAcceleration;
-    private double naturalFallMaxSpeed;
-    private double naturalFallAcceleration;
-    private double flyJumpSpeed;
-    private double flyPassiveSpeed;
-    private double flyMaxSpeed;
-    private double maxHorizontalAccelerationChange;
+    private final double downwardPushAcceleration;
+    private final double naturalFallMaxSpeed;
+    private final double naturalFallAcceleration;
+    private final double flyJumpSpeed;
+    private final double flyPassiveSpeed;
+    private final double flyMaxSpeed;
+    private final double maxHorizontalAccelerationChange;
 
 
     public Player(double startX, double startY, double width, double height) {
@@ -72,11 +72,6 @@ public class Player extends Actor {
         setSpikeCollision(false);
     }
 
-    void clearMovementSpeed() {
-        vx = 0;
-        vy = 0;
-    }
-
     void handleKeyAction(Map<Integer, Boolean> keys, List<DisplaySprite> sprites) {
         handleXControls(keys);
         handleYControls(keys, sprites);
@@ -117,10 +112,10 @@ public class Player extends Actor {
     private void handleXControls(Map<Integer, Boolean> keys) {
         int desiredVelocity = 0;
         if (findKey(keys, KeyEvent.VK_RIGHT) || findKey(keys, KeyEvent.VK_D))
-            desiredVelocity += this.horizontalSpeed;
+            desiredVelocity += (int) this.horizontalSpeed;
 
         if (findKey(keys, KeyEvent.VK_LEFT) || findKey(keys, KeyEvent.VK_A))
-            desiredVelocity -= this.horizontalSpeed;
+            desiredVelocity -= (int) this.horizontalSpeed;
 
         double vxMod = (desiredVelocity - vx) / APPROACH_FACTOR;
         if (vxMod > 0) {
@@ -139,7 +134,6 @@ public class Player extends Actor {
         }
     }
 
-    @Override
     public void drawActor(Graphics2D g2) {
         drawImage(g2, IMAGE_SCALE, IMAGE_OFFSET, true);
     }

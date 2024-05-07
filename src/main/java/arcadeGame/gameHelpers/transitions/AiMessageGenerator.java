@@ -20,7 +20,6 @@ public class AiMessageGenerator implements MessageGenerator {
     private static final Pattern SUCCESS_PATTERN = Pattern.compile("\"text\": \".*\"");
     private static final Pattern FAILURE_PATTERN = Pattern.compile("\"finishReason\": \"SAFETY\"");
 
-    private Scanner scanner;
     private String message = DEFAULT_MESSAGE;
     private String apiKey = "";
 
@@ -32,7 +31,7 @@ public class AiMessageGenerator implements MessageGenerator {
     private void loadApiKey() {
         try {
             InputStream apiKeyFile = getClass().getResourceAsStream(API_KEY);
-            scanner = new Scanner(apiKeyFile);
+            Scanner scanner = new Scanner(apiKeyFile);
             apiKey = scanner.nextLine();
             scanner.close();
         } catch (Exception e) {
@@ -55,7 +54,7 @@ public class AiMessageGenerator implements MessageGenerator {
 
             HttpClient client = HttpClient.newHttpClient();
             client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                    .thenAccept(response -> parseResponse(response));
+                    .thenAccept(this::parseResponse);
         } catch (Exception e) {
             System.err.println("API prompt instructions not found");
         }

@@ -8,7 +8,7 @@ public class PlayerJumpSprite extends DisplaySprite {
     private static final int X_DIVISOR = 60;
     private static final int Y_DIVISOR = 120;
 
-    private double origWidth;
+    private final double origWidth;
 
     public PlayerJumpSprite(double x, double y, double width) {
         super(x, y, width, width / 2, GameImage.JUMP_WIND);

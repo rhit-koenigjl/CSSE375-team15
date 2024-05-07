@@ -6,7 +6,7 @@ import arcadeGame.gameComponents.imageManagers.Direction;
 import arcadeGame.gameComponents.imageManagers.GameImage;
 
 public class BouncePad extends Tile {
-    private static double BOUNCE_VALUE = 2f / 5f;
+    private static final double BOUNCE_VALUE = 2f / 5f;
 
     public BouncePad(int x, int y, int width, int height, Direction dir) {
         super(dir == Direction.LEFT ? x + width / 2 : x,

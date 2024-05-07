@@ -17,10 +17,10 @@ import arcadeGame.gameHelpers.transitions.MessageGenerator;
 import arcadeGame.levelManagers.Level;
 import arcadeGame.stateComponents.MouseListener;
 
-class TestLevelTransitionScreen {
+public class TestLevelTransitionScreen {
 
     @Test
-    void testTransitionScreenDisplayedOnNextLevel() {
+    public void testTransitionScreenDisplayedOnNextLevel() {
         JFrame frame = EasyMock.createMock(JFrame.class);
         frame.setSize(EasyMock.anyInt(), EasyMock.anyInt());
         frame.repaint();
@@ -56,7 +56,7 @@ class TestLevelTransitionScreen {
     }
 
     @Test
-    void testTransitionMessageGeneration() {
+    public void testTransitionMessageGeneration() {
         MessageGenerator generator = EasyMock.createMock(MessageGenerator.class);
         EasyMock.expect(generator.generateEncouragingMessage())
                 .andReturn("This is a test message.");
@@ -73,9 +73,9 @@ class TestLevelTransitionScreen {
                 .andReturn(EasyMock.createMock(SceneUpdater.class));
         EasyMock.replay(generator, metrics, g, sceneManager);
 
-        SceneUpdater transition = new TransitionUpdater(sceneManager, generator);
+        TransitionUpdater transition = new TransitionUpdater(sceneManager, generator);
         transition.drawScene(g);
-        ((TransitionUpdater) transition).setTimer(400);
+        transition.setTimer(400);
         transition.updateScene();
         EasyMock.verify(generator, metrics, g, sceneManager);
     }

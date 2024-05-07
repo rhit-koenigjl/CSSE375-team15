@@ -22,8 +22,8 @@ public class Level {
     private static final int COIN_SCORE = 25;
     private static final int LEVEL_SCORE = 100;
 
-    private int levelIndex;
-    private String levelPath;
+    private final int levelIndex;
+    private final String levelPath;
     private int levelHeight;
     private int levelWidth;
     private Player hero;
@@ -31,7 +31,7 @@ public class Level {
     private List<Enemy> enemies;
     private int numCoins = 0;
     private boolean heroHurt = false;
-    private List<DisplaySprite> sprites;
+    private final List<DisplaySprite> sprites;
     private double initialPlayerX;
     private double initialPlayerY;
     private DeathType deathType;
@@ -40,7 +40,7 @@ public class Level {
         this.levelPath = levelPath;
         this.levelIndex = index;
         this.hero = hero;
-        this.sprites = new ArrayList<DisplaySprite>();
+        this.sprites = new ArrayList<>();
     }
 
     public Object[] generateLevel() {
@@ -77,8 +77,8 @@ public class Level {
     }
 
     private void handleEnemies(UpdateState state) {
-        List<Enemy> enemiesRemove = new ArrayList<Enemy>();
-        List<Enemy> enemiesToAdd = new ArrayList<Enemy>();
+        List<Enemy> enemiesRemove = new ArrayList<>();
+        List<Enemy> enemiesToAdd = new ArrayList<>();
         for (Enemy enemy : enemies) {
             switch (hero.handleCollisions(enemy)) {
                 case PLAYER_WON:
@@ -110,13 +110,11 @@ public class Level {
                     e.getVx(), e.getVy()));
             state.incrementScore(ENEMY_SCORE);
         }
-        for (Enemy e : enemiesToAdd) {
-            enemies.add(e);
-        }
+        enemies.addAll(enemiesToAdd);
     }
 
     private void handleTiles(UpdateState state) {
-        List<Tile> toRemove = new ArrayList<Tile>();
+        List<Tile> toRemove = new ArrayList<>();
         for (Tile t : tiles) {
             if (t.shouldRemove()) {
                 toRemove.add(t);
@@ -131,7 +129,7 @@ public class Level {
         }
     }
 
-    private void handleCoins(UpdateState state, SceneManager sceneManager) {
+    private void handleCoins(UpdateState state) {
         if (numCoins == 0) {
             state.incrementScore(LEVEL_SCORE);
             if (levelIndex == state.getLevelCount() - 1) {
@@ -164,7 +162,7 @@ public class Level {
         handlePlayer(keys);
         handleEnemies(state);
         handleTiles(state);
-        handleCoins(state, sceneManager);
+        handleCoins(state);
         handleDebugControls(keys, state, sceneManager);
 
         if (heroHurt) {

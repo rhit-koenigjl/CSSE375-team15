@@ -1,11 +1,10 @@
 package arcadeGame.gameComponents;
 
-import java.util.ArrayList;
 import java.util.List;
 import arcadeGame.gameComponents.imageManagers.GameImage;
 
 public class HunterSeeker extends Enemy {
-    private Player hero;
+    private final Player hero;
 
     public HunterSeeker(double startX, double startY, double width, double height, Player h) {
         this(startX, startY, width, height, 0, 0, h);
@@ -24,13 +23,6 @@ public class HunterSeeker extends Enemy {
         this.gameImage = GameImage.TRACKER;
     }
 
-    void handleCollisions(ArrayList<Tile> tiles, double ix, double iy) {
-        for (Tile t : tiles) {
-            if (collidesWith(t))
-                t.handleCollision(this, ix, iy);
-        }
-    }
-
     @Override
     public void update(List<Tile> tiles) {
         control();
@@ -39,7 +31,7 @@ public class HunterSeeker extends Enemy {
 
     void control() {
         double goalSpeed = 0;
-        double goalLift = 0;
+        double goalLift;
         if (x + width < hero.getX()) {
             goalSpeed = width * DEFAULT_SPEED / 2;
         }

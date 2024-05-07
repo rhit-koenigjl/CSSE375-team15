@@ -1,7 +1,5 @@
 package arcadeGame;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import java.awt.Image;
 import java.io.File;
 import java.util.HashSet;
@@ -11,7 +9,9 @@ import org.junit.Test;
 import arcadeGame.gameComponents.imageManagers.Direction;
 import arcadeGame.gameComponents.imageManagers.GameImage;
 
-class TestSpriteImageGeneration {
+import static org.junit.Assert.*;
+
+public class TestSpriteImageGeneration {
 
     private Set<Direction> getNoDirections() {
         return Set.of(Direction.NONE);
@@ -28,7 +28,7 @@ class TestSpriteImageGeneration {
         for (Direction direction : images.keySet()) {
             if (expectedFileNames.isEmpty()) {
                 // We have more images than expected
-                assertTrue(false);
+                fail();
             }
             File fileName = gameImage.getImageFile(direction);
             for (String expectedFileName : expectedFileNames) {
@@ -44,7 +44,7 @@ class TestSpriteImageGeneration {
     }
 
     @Test
-    void testBackgroundImageGenerator() {
+    public void testBackgroundImageGenerator() {
         Set<Direction> expectedDirections = getNoDirections();
         Set<String> expectedFileNames = new HashSet<>(Set.of("background.png"));
 
@@ -53,7 +53,7 @@ class TestSpriteImageGeneration {
     }
 
     @Test
-    void testBouncePadImageGenerator() {
+    public void testBouncePadImageGenerator() {
         Set<Direction> expectedDirections = getNoDirections();
         Set<String> expectedFileNames = new HashSet<>(Set.of("bounce_pad.gif"));
 
@@ -62,7 +62,7 @@ class TestSpriteImageGeneration {
     }
 
     @Test
-    void testBrickImageGenerator() {
+    public void testBrickImageGenerator() {
         Set<Direction> expectedDirections = getNoDirections();
         Set<String> expectedFileNames = new HashSet<>(Set.of("brick.png"));
 
@@ -71,7 +71,7 @@ class TestSpriteImageGeneration {
     }
 
     @Test
-    void testCoinImageGenerator() {
+    public void testCoinImageGenerator() {
         Set<Direction> expectedDirections = getNoDirections();
         Set<String> expectedFileNames = new HashSet<>(Set.of("coin.gif"));
 
@@ -94,7 +94,7 @@ class TestSpriteImageGeneration {
     }
 
     @Test
-    void testGhostImageGenerator() {
+    public void testGhostImageGenerator() {
         Set<Direction> expectedDirections = getEightDirections();
         Set<String> expectedFileNames = getDirectedFiles("ghost", "png", expectedDirections);
 
@@ -103,7 +103,7 @@ class TestSpriteImageGeneration {
     }
 
     @Test
-    void testMossyBrickImageGenerator() {
+    public void testMossyBrickImageGenerator() {
         Set<Direction> expectedDirections = getNoDirections();
         Set<String> expectedFileNames = new HashSet<>(Set.of("mossy_brick.png"));
 
@@ -116,7 +116,7 @@ class TestSpriteImageGeneration {
     }
 
     @Test
-    void testPlayerImageGenerator() {
+    public void testPlayerImageGenerator() {
         Set<Direction> expectedDirections = getTwoDirections();
         Set<String> expectedFileNames = getDirectedFiles("player", "gif", expectedDirections);
 
@@ -125,7 +125,7 @@ class TestSpriteImageGeneration {
     }
 
     @Test
-    void testSpawnerImageGenerator() {
+    public void testSpawnerImageGenerator() {
         Set<Direction> expectedDirections = getNoDirections();
         Set<String> expectedFileNames = new HashSet<>(Set.of("spawner.gif"));
 
@@ -138,7 +138,7 @@ class TestSpriteImageGeneration {
     }
 
     @Test
-    void testSpikeImageGenerator() {
+    public void testSpikeImageGenerator() {
         Set<Direction> expectedDirections = getFourDirections();
         Set<String> expectedFileNames = getDirectedFiles("spike", "png", expectedDirections);
 
@@ -147,7 +147,7 @@ class TestSpriteImageGeneration {
     }
 
     @Test
-    void testTrackerImageGenerator() {
+    public void testTrackerImageGenerator() {
         Set<Direction> expectedDirections = getEightDirections();
         Set<String> expectedFileNames = getDirectedFiles("angry_ghost", "png", expectedDirections);
 

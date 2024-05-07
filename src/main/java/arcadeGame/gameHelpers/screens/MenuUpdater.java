@@ -13,10 +13,10 @@ public class MenuUpdater extends SceneUpdater {
     private static final int BUTTON_Y_OFFSET = 320;
     private static final int BUTTON_X_OFFSET = 100;
 
-    private GameUpdater gameUpdater;
-    private InstructionsUpdater instructionsUpdater;
-    private CreditsUpdater creditsUpdater;
-    private MouseListener mouseListener;
+    private final GameUpdater gameUpdater;
+    private final InstructionsUpdater instructionsUpdater;
+    private final CreditsUpdater creditsUpdater;
+    private final MouseListener mouseListener;
 
     public MenuUpdater(SceneManager sceneManager, GameUpdater gameUpdater,
             MouseListener mouseListener) {

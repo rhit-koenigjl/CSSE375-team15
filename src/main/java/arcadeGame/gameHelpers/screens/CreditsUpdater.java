@@ -19,8 +19,8 @@ public class CreditsUpdater extends SceneUpdater {
     private static final int BACK_BUTTON_WIDTH = 50;
     private static final int BACK_BUTTON_HEIGHT = 75;
 
-    private SceneUpdater menuScene;
-    private MouseListener mouseListener;
+    private final SceneUpdater menuScene;
+    private final MouseListener mouseListener;
 
     protected CreditsUpdater(SceneManager sceneManager, SceneUpdater menuScene,
             MouseListener mouseListener) {

@@ -10,7 +10,7 @@ public abstract class SceneUpdater {
     public static final int FONT_SIZE = 28;
     public static final int BACKGROUND_SIZE = 100;
 
-    protected SceneManager sceneManager;
+    protected final SceneManager sceneManager;
     protected Level level;
 
     protected SceneUpdater(SceneManager sceneManager) {

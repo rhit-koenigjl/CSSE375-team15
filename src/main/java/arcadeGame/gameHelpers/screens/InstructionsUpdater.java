@@ -25,8 +25,8 @@ public class InstructionsUpdater extends SceneUpdater {
     private static final int THREE_Y_POS = 275;
     private static final int FOUR_Y_POS = 400;
 
-    private SceneUpdater menuScene;
-    private MouseListener mouseListener;
+    private final SceneUpdater menuScene;
+    private final MouseListener mouseListener;
 
     InstructionsUpdater(SceneManager sceneManager, SceneUpdater menuScene,
             MouseListener mouseListener) {

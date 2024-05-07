@@ -3,11 +3,11 @@ package arcadeGame.gameComponents.spriteAnimations;
 import arcadeGame.gameComponents.imageManagers.GameImage;
 
 public class CollectedCoinSprite extends DisplaySprite {
-    private static int COIN_FINAL_X = 10;
-    private static int COIN_FINAL_Y = 10;
-    private static int ONE_SECOND = 100;
-    private static int TIME_OFFSET = 8;
-    private static int TIME_DIVISOR = 20;
+    private static final int COIN_FINAL_X = 10;
+    private static final int COIN_FINAL_Y = 10;
+    private static final int ONE_SECOND = 100;
+    private static final int TIME_OFFSET = 8;
+    private static final int TIME_DIVISOR = 20;
 
     private double animationTime;
 
