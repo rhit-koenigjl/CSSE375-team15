@@ -11,6 +11,8 @@ import arcadeGame.gameHelpers.transitions.TextGraphics;
 
 public class ResetUpdater extends SceneUpdater {
     private static final int Y_POS_OFFSET = 80;
+    private static final int TIMER_START = 400;
+    private static final int ONE_SECOND = 100;
 
     private int timer;
     private SceneUpdater gameUpdater;
@@ -26,7 +28,7 @@ public class ResetUpdater extends SceneUpdater {
     @Override
     public void updateScene() {
         this.timer++;
-        if (timer > 300) {
+        if (timer > TIMER_START - ONE_SECOND) {
             sceneManager.switchScene(gameUpdater);
         }
     }
@@ -35,12 +37,12 @@ public class ResetUpdater extends SceneUpdater {
     public void drawScene(Graphics2D g2) {
         super.drawScene(g2);
         String str1 = "You got hit!";
-        String str2 = "Restarting the level in " + (400 - timer) / 100;
+        String str2 = "Restarting the level in " + (TIMER_START - timer) / ONE_SECOND;
 
         Font font = new Font("Monospaced", Font.BOLD, FONT_SIZE);
         FontMetrics metrics = g2.getFontMetrics(font);
         g2.setFont(font);
-        g2.setColor(new Color(255, 255, 255));
+        g2.setColor(Color.WHITE);
 
         Rectangle boundingBox = g2.getClipBounds();
         double midX1 = boundingBox.getWidth() / 2 - metrics.stringWidth(str1) / 2;
