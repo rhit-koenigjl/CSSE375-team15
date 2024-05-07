@@ -10,40 +10,40 @@ import arcadeGame.gameComponents.spriteAnimations.DisplaySprite;
 import arcadeGame.gameComponents.spriteAnimations.PlayerJumpSprite;
 
 public class Player extends Actor {
+    private static final float SPEED_MULTIPLIER = 8f / 5f;
+    private static final int DOWNWARD_ACCELERATION = 75;
+    private static final int NATURAL_FALL_SPEED = 7;
+    private static final int NATURAL_FALL_ACCELERATION = 300;
+    private static final int FLY_JUMP_SPEED = 17;
+    private static final int FLY_PASSIVE_SPEED = 250;
+    private static final int HORIZONTAL_ACCELERATION = 100;
+    private static final int FLY_COOL_DOWN = 30;
+    private static final double IMAGE_SCALE = 2.0;
+    private static final double IMAGE_OFFSET = 0.5;
 
     private double horizontalSpeed;
-
-    private final int FLY_COOL_DOWN = 30;
     private int flyCoolDownTimer = 0;
-
-    private double downWardPushAcceleration;
-
+    private double downwardPushAcceleration;
     private double naturalFallMaxSpeed;
     private double naturalFallAcceleration;
-
     private double flyJumpSpeed;
     private double flyPassiveSpeed;
     private double flyMaxSpeed;
-
     private double maxHorizontalAccelerationChange;
+
 
     public Player(double startX, double startY, double width, double height) {
         super(startX, startY, width, height, GameImage.PLAYER);
 
         dir = Direction.RIGHT;
-
-        horizontalSpeed = width * DEFAULT_SPEED * 8f / 5f;
-
-        downWardPushAcceleration = width / 75;
-
-        naturalFallMaxSpeed = width / 7;
-        naturalFallAcceleration = width / 300;
-
-        flyJumpSpeed = width / 17;
-        flyPassiveSpeed = width / 250;
-        flyMaxSpeed = width / 7;
-
-        maxHorizontalAccelerationChange = width / 100;
+        horizontalSpeed = width * DEFAULT_SPEED * SPEED_MULTIPLIER;
+        downwardPushAcceleration = width / DOWNWARD_ACCELERATION;
+        naturalFallMaxSpeed = width / NATURAL_FALL_SPEED;
+        naturalFallAcceleration = width / NATURAL_FALL_ACCELERATION;
+        flyJumpSpeed = width / FLY_JUMP_SPEED;
+        flyPassiveSpeed = width / FLY_PASSIVE_SPEED;
+        flyMaxSpeed = width / NATURAL_FALL_SPEED;
+        maxHorizontalAccelerationChange = width / HORIZONTAL_ACCELERATION;
     }
 
     public void update(Map<Integer, Boolean> keys, List<Tile> tiles, List<DisplaySprite> sprites) {
@@ -56,14 +56,13 @@ public class Player extends Actor {
         return keys.getOrDefault(val, false);
     }
 
-    public int handleCollisions(Enemy enemy) {
-        int collisionType = 0; // 0 = No Collision, 1 = Enemy Won Collision, 2 = Player Won
-                               // Collision
+    public CollisionResult handleCollisions(Enemy enemy) {
+        CollisionResult collisionType = CollisionResult.NONE;
         if (collidesWith(enemy)) {
             if (y + height * 3 / 4 - vy < enemy.getY() - enemy.getVy()) {
-                collisionType = 2;
+                collisionType = CollisionResult.PLAYER_WON;
             } else {
-                collisionType = 1;
+                collisionType = CollisionResult.ENEMY_WON;
             }
         }
         return collisionType;
@@ -112,7 +111,7 @@ public class Player extends Actor {
     }
 
     private void downEffect() {
-        vy += downWardPushAcceleration;
+        vy += downwardPushAcceleration;
     }
 
     private void handleXControls(Map<Integer, Boolean> keys) {
@@ -142,12 +141,16 @@ public class Player extends Actor {
 
     @Override
     public void drawActor(Graphics2D g2) {
-        drawImage(g2, 2.0, 0.5, true);
+        drawImage(g2, IMAGE_SCALE, IMAGE_OFFSET, true);
     }
 
     @Override
     protected boolean isHero() {
         return true;
+    }
+
+    public enum CollisionResult {
+        NONE, PLAYER_WON, ENEMY_WON
     }
 
 }
