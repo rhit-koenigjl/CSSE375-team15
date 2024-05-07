@@ -3,7 +3,6 @@ package arcadeGame.gameComponents;
 import java.util.List;
 
 public class EnemyGenerator extends EnemySpawner {
-    private static final double VELOCITY_MULTIPLIER = 4;
 
     public EnemyGenerator(double startX, double startY, double width, double height,
             List<Enemy> enemies, Player player) {

@@ -6,10 +6,11 @@ import arcadeGame.gameComponents.imageManagers.Direction;
 import arcadeGame.gameComponents.imageManagers.GameImage;
 
 public abstract class EnemySpawner extends Enemy {
+    protected static final double VELOCITY_MULTIPLIER = 4;
     private static final double IMAGE_SCALE = 1.25;
     private static final double IMAGE_OFFSET = 0.125;
     private static final double TIME_INCREMENT = 0.1;
-    private static final int VELOCITY_MULTIPLIER = 12;
+    private static final int THIS_VELOCITY_MULTIPLIER = 12;
 
     protected List<Enemy> enemies;
     protected Player p;
@@ -43,8 +44,8 @@ public abstract class EnemySpawner extends Enemy {
 
     void control() {
         double goalSpeed = 0;
-        vx += (goalSpeed - vx) / (APPROACH_FACTOR * VELOCITY_MULTIPLIER);
-        vy += (goalSpeed - vy) / (APPROACH_FACTOR * VELOCITY_MULTIPLIER);
+        vx += (goalSpeed - vx) / (APPROACH_FACTOR * THIS_VELOCITY_MULTIPLIER);
+        vy += (goalSpeed - vy) / (APPROACH_FACTOR * THIS_VELOCITY_MULTIPLIER);
     }
 
     public abstract Enemy returnNew();
