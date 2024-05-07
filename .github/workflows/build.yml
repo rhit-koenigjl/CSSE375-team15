@@ -30,4 +30,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release delete "v1.0" -y --cleanup-tag
-          gh release create "v1.0" "./IndianaGhost.jar" -p -t "Indiana Ghost"
+          gh release create "v1.0" "./IndianaGhost.jar" -t "Indiana Ghost"
