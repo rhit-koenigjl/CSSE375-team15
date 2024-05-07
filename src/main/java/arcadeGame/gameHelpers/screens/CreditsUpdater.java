@@ -9,8 +9,11 @@ import arcadeGame.gameHelpers.transitions.TextGraphics;
 import arcadeGame.stateComponents.MouseListener;
 
 public class CreditsUpdater extends SceneUpdater {
-    private static final String CREDITS_MESSAGE =
-            "This game was originally created in W21 for the CSSE220 final project by JL Koenig and Tommy Welch. It has been modified by JL Koenig and Canon Maranda in S24 for the CSSE375 term project.";
+    private static final String CREDITS_MESSAGE = """
+            This game was originally created in W21 for the CSSE220 final project
+             by JL Koenig and Tommy Welch. It has been modified by JL Koenig and
+             Canon Maranda in S24 for the CSSE375 term project.
+            """;
     private static final int BACK_BUTTON_X = 10;
     private static final int BACK_BUTTON_Y = 10;
     private static final int BACK_BUTTON_WIDTH = 50;
