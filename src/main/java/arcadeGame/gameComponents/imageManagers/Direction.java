@@ -38,6 +38,18 @@ public enum Direction {
         return stringMap.get(str);
     }
 
+    public static Direction fromVector(double vx, double vy, double error) {
+        double x = Math.abs(vx) < error ? 0 : vx;
+        double y = Math.abs(vy) < error ? 0 : vy;
+
+        if (x < 0) {
+            return (y < 0) ? UP_LEFT : (y > 0) ? DOWN_LEFT : LEFT;
+        } else if (x > 0) {
+            return (y < 0) ? UP_RIGHT : (y > 0) ? DOWN_RIGHT : RIGHT;
+        }
+        return (y < 0) ? UP : (y > 0) ? DOWN : NONE;
+    }
+
     public static double toAngle(Direction dir) {
         return angleMap.get(dir);
     }
