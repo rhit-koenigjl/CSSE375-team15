@@ -14,5 +14,6 @@ bin
 .classpath
 
 *.local
+levels
 
 .idea/

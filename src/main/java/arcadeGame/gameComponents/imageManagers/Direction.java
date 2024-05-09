@@ -43,26 +43,11 @@ public enum Direction {
         double y = Math.abs(vy) < error ? 0 : vy;
 
         if (x < 0) {
-            if (y < 0) {
-                return UP_LEFT;
-            } else if (y > 0) {
-                return DOWN_LEFT;
-            }
-            return LEFT;
+            return (y < 0) ? UP_LEFT : (y > 0) ? DOWN_LEFT : LEFT;
         } else if (x > 0) {
-            if (y < 0) {
-                return UP_RIGHT;
-            } else if (y > 0) {
-                return DOWN_RIGHT;
-            }
-            return RIGHT;
+            return (y < 0) ? UP_RIGHT : (y > 0) ? DOWN_RIGHT : RIGHT;
         }
-        if (y > 0) {
-            return DOWN;
-        } else if (y < 0) {
-            return UP;
-        }
-        return NONE;
+        return (y < 0) ? UP : (y > 0) ? DOWN : NONE;
     }
 
     public static double toAngle(Direction dir) {
