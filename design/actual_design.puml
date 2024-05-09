@@ -560,194 +560,192 @@ package arcadeGame.gameComponents.spriteAnimations {
     }
 }
 
-MainApp -> GameComponent
-MainApp -> MouseListener
-MainApp .> GameAdvanceListener
+MainApp -d-> GameComponent
+MainApp -l-> MouseListener
+MainApp .l.> GameAdvanceListener
 
-GameComponent -> MessageGenerator
-GameComponent -> SceneManager
-GameComponent -> Level
-GameComponent -> Player
-GameComponent .> MouseListener
-GameComponent .> GameUpdater
-GameComponent .> MenuUpdater
-GameComponent .> ResetUpdater
-GameComponent .> WinUpdater
-GameComponent .> LossUpdater
-GameComponent .> TransitionUpdater
+GameComponent -u-> MessageGenerator
+GameComponent -d-> SceneManager
+GameComponent -d-> Level
+GameComponent -d-> Player
+GameComponent .u.> AiMessageGenerator
+GameComponent .d.> MouseListener
+GameComponent .r.> GameUpdater
+GameComponent .r.> MenuUpdater
+GameComponent .r.> ResetUpdater
+GameComponent .r.> WinUpdater
+GameComponent .r.> LossUpdater
+GameComponent .r.> TransitionUpdater
 
-GameAdvanceListener -> GameComponent
+GameAdvanceListener -u-> GameComponent
 
-MouseListener -> SceneManager
-MouseListener -> "*" SceneUpdater
+MouseListener -d-> SceneManager
+MouseListener -d-> "*" SceneUpdater
 
-Level -> Player
-Level -> "*" Tile
-Level -> "*" Enemy
-Level -> "*" DisplaySprite
-Level -> DeathType
-Level .> LevelLoader
-Level .> SceneManager
+Level -d-> Player
+Level -d-> "*" Tile
+Level -d-> "*" Enemy
+Level -d-> "*" DisplaySprite
+Level -d-> DeathType
+Level .d.> LevelLoader
+Level .d.> SceneManager
 
-LevelLoader -> "*" Tile
-LevelLoader -> "*" Enemy
-LevelLoader -> Player
-LevelLoader .> Direction
-LevelLoader .> Wall
-LevelLoader .> MossyWall
-LevelLoader .> Spike
-LevelLoader .> HunterSeeker
-LevelLoader .> Coin
-LevelLoader .> BouncePad
-LevelLoader .> EnemyGenerator
+LevelLoader -d-> "*" Tile
+LevelLoader -d-> "*" Enemy
+LevelLoader -d-> Player
+LevelLoader .d.> Direction
+LevelLoader .d.> Wall
+LevelLoader .d.> MossyWall
+LevelLoader .d.> Spike
+LevelLoader .d.> HunterSeeker
+LevelLoader .d.> Coin
+LevelLoader .d.> BouncePad
+LevelLoader .d.> EnemyGenerator
 
-SceneManager -> SceneUpdater
-SceneUpdater .> Level
+SceneManager -d-> SceneUpdater
+SceneUpdater .u.> Level
 
-UpdateState -> GameComponent
+UpdateState -u-> GameComponent
 
-AiMessageGenerator .|> MessageGenerator
+AiMessageGenerator .u.|> MessageGenerator
 
-CreditsUpdater -|> SceneUpdater
-CreditsUpdater -> SceneUpdater
-CreditsUpdater -> MouseListener
-CreditsUpdater .> SceneManager
-CreditsUpdater .> MenuImage
-CreditsUpdater .> TextGraphics
+CreditsUpdater -u-|> SceneUpdater
+CreditsUpdater -u-> SceneUpdater
+CreditsUpdater -u.> MouseListener
+CreditsUpdater .u.> SceneManager
+CreditsUpdater .u.> MenuImage
+CreditsUpdater .r.> TextGraphics
 
-GameUpdater -|> SceneUpdater
-GameUpdater -> UpdateState
-GameUpdater .> SceneManager
-GameUpdater .> Level
+GameUpdater -u-|> SceneUpdater
+GameUpdater -u-> UpdateState
+GameUpdater .r.> SceneManager
+GameUpdater .d.> Level
 
-InstructionsUpdater -|> SceneUpdater
-InstructionsUpdater -> SceneUpdater
-InstructionsUpdater -> MouseListener
-InstructionsUpdater .> SceneManager
-InstructionsUpdater .> MenuImage
+InstructionsUpdater -u-|> SceneUpdater
+InstructionsUpdater -u-> SceneUpdater
+InstructionsUpdater -u-> MouseListener
+InstructionsUpdater .r.> SceneManager
+InstructionsUpdater .u.> MenuImage
 
-LossUpdater -|> SceneUpdater
-LossUpdater -> SceneUpdater
-LossUpdater .> SceneManager
+LossUpdater -u-|> SceneUpdater
+LossUpdater -u-> SceneUpdater
+LossUpdater .r.> SceneManager
 
-MenuUpdater -|> SceneUpdater
-MenuUpdater -> GameUpdater
-MenuUpdater -> InstructionsUpdater
-MenuUpdater -> CreditsUpdater
-MenuUpdater -> MouseListener
-MenuUpdater .> SceneManager
+MenuUpdater -u-|> SceneUpdater
+MenuUpdater -u-> GameUpdater
+MenuUpdater -u-> InstructionsUpdater
+MenuUpdater -u-> CreditsUpdater
+MenuUpdater -u-> MouseListener
+MenuUpdater .r.> SceneManager
 
-PauseUpdater -|> SceneUpdater
-PauseUpdater -> SceneUpdater
-PauseUpdater -> Level
-PauseUpdater .> SceneManager
+PauseUpdater -u-|> SceneUpdater
+PauseUpdater -u-> SceneUpdater
+PauseUpdater -d-> Level
+PauseUpdater .r.> SceneManager
 
-ResetUpdater -|> SceneUpdater
-ResetUpdater -> SceneUpdater
-ResetUpdater -> DeathType
-ResetUpdater .> SceneManager
-ResetUpdater .> TextGraphics
+ResetUpdater -u-|> SceneUpdater
+ResetUpdater -u-> SceneUpdater
+ResetUpdater -d-> DeathType
+ResetUpdater .r.> SceneManager
+ResetUpdater .r.> TextGraphics
 
-SceneUpdater -> Level
-SceneUpdater -> SceneManager
+SceneUpdater -d-> Level
+SceneUpdater -r-> SceneManager
 
-TransitionUpdater -|> SceneUpdater
-TransitionUpdater .> SceneManager
-TransitionUpdater .> MessageGenerator
-TransitionUpdater .> TextGraphics
+TransitionUpdater -u-|> SceneUpdater
+TransitionUpdater .u.> SceneManager
+TransitionUpdater .l.> MessageGenerator
+TransitionUpdater .r.> TextGraphics
 
-WinUpdater -|> SceneUpdater
-WinUpdater -> SceneUpdater
-WinUpdater .> SceneManager
+WinUpdater -u-|> SceneUpdater
+WinUpdater -u-> SceneUpdater
+WinUpdater .u.> SceneManager
 
-Actor -|> GameObject
-Actor .> GameImage
+Actor -u-|> GameObject
+Actor .d.> GameImage
 Actor .> Tile
 
-BouncePad -|> Tile
-BouncePad .> Direction
-BouncePad .> GameImage
+BouncePad -u-|> Tile
+BouncePad .d.> Direction
+BouncePad .d.> GameImage
 BouncePad .> Actor
 
-Coin -|> Tile
-Coin .> GameImage
+Coin -u-|> Tile
+Coin .d.> GameImage
 Coin .> Actor
 
-Enemy -|> Actor
-Enemy .> GameImage
-Enemy .> Direction
+Enemy -u-|> Actor
+Enemy .d.> GameImage
+Enemy .d.> Direction
 
-EnemyGenerator -|> EnemySpawner
+EnemyGenerator -u-|> EnemySpawner
 EnemyGenerator .> Enemy
 EnemyGenerator .> Player
 
-EnemySpawner -|> Enemy
+EnemySpawner -u-|> Enemy
 EnemySpawner -> "*" Enemy
 EnemySpawner -> Player
-EnemySpawner .> GameImage
-EnemySpawner .> Direction
+EnemySpawner .d.> GameImage
+EnemySpawner .d.> Direction
 
-EnemySpawnerGenerator -|> EnemySpawner
+EnemySpawnerGenerator -u-|> EnemySpawner
 EnemySpawnerGenerator .> Enemy
 EnemySpawnerGenerator .> Player
 
-GameObject -> GameImage
-GameObject -> Direction
+GameObject -d-> GameImage
+GameObject -d-> Direction
 GameObject .> GameObject
 
-HunterSeeker -|> Enemy
+HunterSeeker -u-|> Enemy
 HunterSeeker -> Player
-HunterSeeker .> GameImage
-HunterSeeker .> Tile
+HunterSeeker .d.> GameImage
+HunterSeeker .d.> Tile
 
-HunterSeekerGenerator -|> EnemySpawner
+HunterSeekerGenerator -u-|> EnemySpawner
 HunterSeekerGenerator .> Enemy
 HunterSeekerGenerator .> Player
 HunterSeekerGenerator .> HunterSeeker
 
-MossyWall -|> Wall
-MossyWall .> GameImage
+MossyWall -u-|> Wall
+MossyWall .d.> GameImage
 
-Player -|> Actor
-Player .> GameImage
-Player .> Direction
+Player -u-|> Actor
+Player .d.> GameImage
+Player .d.> Direction
 Player .> Tile
 Player .> DisplaySprite
 Player .> Enemy
-Player .> CollisionResult
+Player .d.> CollisionResult
 
-RecursiveEnemySpawnerGenerator -|> EnemySpawner
+RecursiveEnemySpawnerGenerator -u-|> EnemySpawner
 RecursiveEnemySpawnerGenerator .> Enemy
 RecursiveEnemySpawnerGenerator .> Player
-RecursiveEnemySpawnerGenerator .> RecursiveEnemySpawnerGenerator
 
-Spike -|> Tile
-Spike .> Direction
-Spike .> GameImage
+Spike -u-|> Tile
+Spike .d.> Direction
+Spike .d.> GameImage
 Spike .> Actor
 
-Tile -|> GameObject
-Tile .> GameImage
+Tile -u-|> GameObject
+Tile .d.> GameImage
 Tile .> Actor
 
-Wall -|> Tile
-Wall .> GameImage
+Wall -u-|> Tile
+Wall .d.> GameImage
 
-Direction -> "*" Direction
+GameImage -d-> Extension
+GameImage -d-> DirectionType
+GameImage -u-> "*" Direction
 
-GameImage -> Extension
-GameImage -> DirectionType
-GameImage -> "*" Direction
+CollectedCoinSprite -u-|> DisplaySprite
+CollectedCoinSprite .d.> GameImage
 
-CollectedCoinSprite -|> DisplaySprite
-CollectedCoinSprite .> GameImage
+DeadEnemySprite -u-|> DisplaySprite
+DeadEnemySprite .d.> GameImage
 
-DeadEnemySprite -|> DisplaySprite
-DeadEnemySprite .> GameImage
+DisplaySprite -u-|> GameObject
+DisplaySprite .d.> GameImage
 
-DisplaySprite -|> GameObject
-DisplaySprite .> GameImage
-
-PlayerJumpSprite -|> DisplaySprite
-PlayerJumpSprite .> GameImage
+PlayerJumpSprite -u-|> DisplaySprite
+PlayerJumpSprite .d.> GameImage
 @enduml
