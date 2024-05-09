@@ -1,466 +1,751 @@
-@startuml ArcadeGame
+@startuml IndianaGhost
 package arcadeGame {
-  abstract Actor {
-    #{static} {final} APPROACH_FACTOR: int
-    #{static} {final} SPEED: int
-    #{static} {final} DEFAULT_SPEED: double
-    -didCollideWithSpikes: boolean
-    +Actor(startX: double, startY: double, width: double, height: double, gameImage: GameImage)
-    ~{abstract} drawActor(g2: Graphics2D): void
-    +toString(): String
-    #handleTileCollisions(tiles: List<Tile>, xVel: double, yVel: double): void
-    #update(tiles: List<Tile>): void
-    #isHero(): boolean
-    #isNonTrackingEnemy(): boolean
-    #setSpikeCollision(didCollideWithSpikes: boolean): void
-    #getSpikeCollision(): boolean
-  }
-  Actor -|> GameObject
-
-  class AiMessageGenerator {
-    -{static} {final} GEMINI_URL: String
-    -response: CompletableFuture<HttpResponse<String>>
-    +AiMessageGenerator()
-    +generateEncouragingMessage(): String
-    +requestMessage(): void
-  }
-  AiMessageGenerator .|> MessageGenerator
-
-  class BouncePad {
-    +BouncePad(x: int, y: int, width: int, height: int)
-    #display(g2: Graphics2D): void
-    +handleCollision(actor: Actor, xPos: double, yPos: double): void
-  }
-  BouncePad -|> Tile
-
-  class Coin {
-    +Coin(x: int, y: int, width: int, height: int)
-    ~display(g2: Graphics2D): void
-    ~handleCollision(actor: Actor, xPos: double, yPos: double): void
-  }
-  Coin -|> Tile
-
-  class CollectedCoinSprite {
-    -animationMetric: double
-    +CollectedCoinSprite(x: double, y: double, width: double, height: double)
-    +updatePosition(): void
-  }
-  CollectedCoinSprite -|> DisplaySprite
-
-  class DeadEnemySprite {
-    +DeadEnemySprite(x: double, y: double, width: double, height: double, vx: double, vy: double, dir: Direction, gameImage: GameImage)
-    +updatePosition(): void
-  }
-  DeadEnemySprite -|> DisplaySprite
-
-  enum Direction {
-    UP
-    DOWN
-    LEFT
-    RIGHT
-    UP_LEFT
-    UP_RIGHT
-    DOWN_LEFT
-    DOWN_RIGHT
-    NONE
-
-    -{static} stringMap: Map<String, Direction>
-    -{static} angleMap: Map<Direction, Double>
-    +{static} fromString(str: String): Direction
-    +{static} toAngle(d: Direction): double
-  }
-
-  abstract DisplaySprite {
-    +DisplaySprite(x: double, y: double, width: double, height: double, gameImage: GameImage)
-    +canBeRemoved(screenSize: Rectangle): boolean
-    +display(g2: Graphics2D): void
-    +{abstract} updatePosition(): void
-  }
-  DisplaySprite -|> GameObject
-
-  class Enemy {
-    #adding: boolean
-    +Enemy(startX: double, startY: double, width: double, height: double)
-    +Enemy(startX: double, startY: double, width: double, height: double, velocityX: double, velocityY: double)
-    +Enemy(startX: double, startY: double, width: double, height: double, velocityX: double, velocityY: double, gameImage: GameImage)
-    +Enemy(startX: double, startY: double, width: double, height: double, dir: Direction)
-    +Enemy(startX: double, startY: double, width: double, height: double, gameImage: GameImage)
-    ~drawActor(g2: Graphics2D): void
-    +getAdding(): boolean
-    +setAdding(newAdding: boolean): void
-    #returnNew(): Enemy
-    +isNonTrackingEnemy(): boolean
-    +getImage(): GameImage
-    +getDir(): Direction
-  }
-  Enemy -|> Actor
-
-  class EnemyGenerator {
-    +EnemyGenerator(startX: double, startY: double, width: double, height: double, enemies: List<Enemy>, player: Player)
-    +EnemyGenerator(startX: double, startY: double, width: double, height: double, velocityX: double, velocityY: double, enemies: List<Enemy>, player: Player)
-    +returnNew(): Enemy
-  }
-  EnemyGenerator -|> EnemySpawner
-
-  abstract EnemySpawner {
-    #enemies: List<Enemy>
-    #p: Player
-    -timeInc: double
-    +EnemySpawner(startX: double, startY: double, width: double, height: double, velocityX: double, velocityY: double, enemies: List<Enemy>, player: Player)
-    +drawActor(g2: Graphics2D): void
-    +update(tiles: List<Tile>): void
-    +control(): void
-    +{abstract} returnNew(): Enemy
-    #getAngle(): double
-    +isNonTrackingEnemy(): boolean
-  }
-  EnemySpawner -|> Enemy
-
-  class EnemySpawnerGenerator {
-    +EnemySpawnerGenerator(startX: double, startY: double, width: double, height: double, enemies: List<Enemy>, player: Player)
-    +EnemySpawnerGenerator(startX: double, startY: double, width: double, height: double, velocityX: double, velocityY: double, enemies: List<Enemy>, player: Player)
-    +returnNew(): Enemy
-  }
-  EnemySpawnerGenerator -|> EnemySpawner
-
-  class GameAdvanceListener {
-    -gameComponent: GameComponent
-    +GameAdvanceListener(gameComponent: GameComponent)
-    +actionPerformed(e: ActionEvent): void
-    +advanceOneTick(): void
-  }
-
-  class GameComponent {
-    -{static} {final} LEVEL_DIRECTORY: String
-    -{final} messageGenerator: AiMessageGenerator
-    -sceneManager: SceneManager
-    -score: int
-    -lives: int
-    -levelFiles: String[]
-    -currentLevel: Level
-    -state: UpdateState
-    -hero: Player
-    -keys: Map<Integer, Boolean>
-    -frame: JFrame
-    +GameComponent(frame: JFrame)
-    -buildLevelsList(): void
-    +loadLevelByIndex(index: int): void
-    +handleKey(keyCode: int, newVal: boolean): void
-    +updateState(): void
-    +drawScreen(): void
-    +paintComponent(g: Graphics): void
-    +sizeFrame(frame: JFrame): void
-    +switchLevel(newLevel: String, index: int): void
-    +levelReset(): void
-    +loseLife(): void
-    +getLevelCount(): int
-    +incrementScore(score: int): void
-    +nextLevel(): void
-    ~getSceneManager(): SceneManager
-  }
-
-  enum GameImage {
-    BACKGROUND
-    BOUNCE_PAD
-    BRICK
-    COIN
-    GHOST
-    MOSSY_BRICK
-    PLAYER
-    SPAWNER
-    SPIKE
-    TRACKER
-
-    -fieldName: String
-    -extension: Extension
-    -directions: Set<Direction>
-    -images: Map<Direction, Image>
-    -imageFiles: Map<Direction, File>
-    -GameImage(fileName: String, extension: Extension, directionType: DirectionType)
-    -GameImage(fileName: String, extension: Extension)
-    -setPossibleDirections(directionType: DirectionType): void
-    -createImages(): void
-    +getImage(): Image
-    +getImage(direction: Direction): Image
-    ~getImages(): Map<Direction, Image>
-    ~getImageFile(direction: Direction): File
-  }
-
-  -enum Extension {
-    GIF
-    PNG
-  }
-
-  -enum DirectionType {
-    NONE
-    TWO
-    FOUR
-    EIGHT
-  }
-
-  class GameObject {
-    #x: double
-    #y: double
-    #width: double
-    #height: double
-    #vx: double
-    #vy: double
-    #gameImage: GameImage
-    #dir: Direction
-    +GameObject(x: double, y: double, width: double, height: double, gameImage: GameImage)
-    +GameObject(x: int, y: int, width: int, height: int, gameImage: GameImage)
-    +getX(): double
-    +setX(x: double): void
-    +getY(): double
-    +setY(y: double): void
-    +getVx(): double
-    +setVx(vx: double): void
-    +getVy(): double
-    +setVy(vy: double): void
-    +getHeight(): double
-    +setHeight(height: double): void
-    +getWidth(): double
-    +setWidth(width: double): void
-    +collidesWith(o: GameObject): boolean
-    #drawImage(g2: Graphics2D): void
-    #drawImage(g2: Graphics2D, scale: double, offset: double, negativeDirection: boolean): void
-  }
-
-  class GameUpdater {
-    -keys: Map<Integer, Boolean>
-    -state: UpdateState
-    +GameUpdater(sm: SceneManager, level: Level, k: Map<Integer, Boolean>, state: UpdateState)
-    +updateScene(): void
-    +drawScene(g2: Graphics2D, score: int): void
-    +changeLevel(level: Level): void
-    ~getSceneName(): String
-  }
-  GameUpdater -|> SceneUpdater
-
-  class HunterSeeker {
-    -hero: Player
-    +HunterSeeker startX: double, startY: double, width: double, height: double, h: Player)
-    +HunterSeeker startX: double, startY: double, width: double, height: double, velocityX: double, velocityY: double, h: Player)
-    +handleCollisions(tiles: List<Tile>, ix: double, iy: double): void
-    +update(tiles: List<Tile>): void
-    +control(): void
-    +isNonTrackingEnemy(): boolean
-  }
-  HunterSeeker -|> Enemy
-
-  class HunterSeekerGenerator {
-    +HunterSeekerGenerator(startX: double, startY: double, width: double, height: double, velocityX: double, velocityY: double, enemies: List<Enemy>, player: Player)
-    +returnNew(): Enemy
-  }
-  HunterSeekerGenerator -|> EnemySpawner
-
-  class Level {
-    -levelIndex: int
-    -levelPath: String
-    -levelHeight: int
-    -levelWidth: int
-    -hero: Player
-    -tiles: List<Tile>
-    -enemies: List<Enemy>
-    -numCoins: int
-    -heroHurt: boolean
-    -gameImage: GameImage
-    -sprites: List<DisplaySprite>
-    +Level(levelPath: String, index: int, hero: Player)
-    +generateLevel(): Object[]
-    -handlePlayer(keys: Map<Integer, Boolean>): void
-    -handleEnemies(state: UpdateState): void
-    -handleTiles(state: UpdateState): void
-    -handleCoins(state: UpdateState, sceneManager: SceneManager): void
-    -handleDebugControls(keys: Map<Integer, Boolean>, state: UpdateState, sceneManager: SceneManager): void
-    +update(keys: Map<Integer, Boolean>, state: UpdateState, sceneManager: SceneManager): void
-    +draw(g2: Graphics2D, score: int): void
-    +drawScore(g2: Graphics2D, score: int): void
-    +reset(): void
-    +getHeight(): int
-    +getWidth(): int
-    +getIndex(): int
-  }
-
-  class LevelLoader {
-    -tiles: List<Tile>
-    -enemies: List<Enemy>
-    -player: Player
-    -filePath: URL
-    -dataString: String
-    -size: int
-    -levelWidth: int
-    -levelHeight: int
-    -numCoins: int
-    +LevelLoader(path: String)
-    +getJsonObject(): JSONObject
-    +setupInternalValues(jo: JsonObject): void
-    -addBlock(xPos: int, yPos: int, blockType: char, dir: Direction): void
-    +loadLevel(): void
-    +getTiles(): List<Tile>
-    +getEnemies(): List<Enemy>
-    +getPlayer(): Player
-    +getWidth(): int
-    +getHeight(): int
-    +getSize(): int
-    +getDataString(): String
-    +getNumCoins(): int
-  }
-
-  class LossUpdater {
-    -level: Level
-    +LossUpdater(sceneManager: SceneManager, level: Level)
-    +updateScene(): void
-    +drawScene(g2: Graphics2D, score: int): void
-    ~getSceneName(): String
-  }
-  LossUpdater -|> SceneUpdater
-
-  class MainApp {
-    -{static} {final} DELAY: int
-    -gameComponent: GameComponent
-    -gameFrame: JFrame
-    -runApp(): void
-    +{static} main(args: String[]): void
-  }
-
-  class MenuUpdater {
-    -gameUpdater: GameUpdater
-    -keys: Map<Integer, Boolean>
-    +MenuUpdater(sceneManager: SceneManager, gameUpdater: GameUpdater, keys: Map<Integer, Boolean>)
-    +updateScene(): void
-    +drawScene(g2: Graphics2D, score: int): void
-    ~getSceneName(): String
-    ~setKeys(keys: Map<Integer, Boolean>): void
-  }
-  MenuUpdater -|> SceneUpdater
-
-  interface MessageGenerator {
-    +generateEncouragingMessage(): String
-    +requestMessage(): void
-  }
-
-  class MossyWall {
-    +MossyWall(x: int, y: int, width: int, height: int)
-    ~display(g2: Graphics2D): void
-  }
-  MossyWall -|> Wall
-
-  class PauseUpdater {
-    -sceneUpdater: SceneUpdater
-    -keys: Map<Integer, Boolean>
-    -level: Level
-    +PauseUpdater(sceneManager: SceneManager, gameUpdater: SceneUpdater, keys: Map<Integer, Boolean>, level: Level)
-    +updateScene(): void
-    +drawScene(g2: Graphics2D, score: int): void
-    ~getSceneName(): String
-  }
-  PauseUpdater -|> SceneUpdater
-
-  class Player {
-    -gravity: double
-    -jumpHeight: double
-    -speed: double
-    +Player(startX: double, startY: double, width: double, height: double)
-    +update(keys: Map<Integer, Boolean>, tiles: List<Tile>): void
-    +findKey(keys: Map<Integer, Boolean>, val: int): boolean
-    +handleCollisions(enemy: Enemy): int
-    +loseLife(): void
-    +clearMovementSpeed(): void
-    +handleKeyAction(keys: Map<Integer, Boolean>): void
-    +drawActor(g2: Graphics2D): void
-    +isHero(): boolean
-  }
-  Player -|> Actor
-
-  class RecursiveEnemySpawnerGenerator {
-    +RecursiveEnemySpawnerGenerator(startX: double, startY: double, width: double, height: double, enemies: List<Enemy>, player: Player)
-    +RecursiveEnemySpawnerGenerator(startX: double, startY: double, width: double, height: double, velocityX: double, velocityY: double, enemies: List<Enemy>, player: Player)
-    +returnNew(): Enemy
-  }
-  RecursiveEnemySpawnerGenerator -|> EnemySpawner
-
-  class ResetUpdater {
-    -timer: int
-    -gameUpdater: SceneUpdater
-    +ResetUpdater(sceneManager: SceneManager, gameUpdater: SceneUpdater)
-    +updateScene(): void
-    +drawScene(g2: Graphics2D, score: int): void
-    ~getSceneName(): String
-  }
-  ResetUpdater -|> SceneUpdater
-
-  class SceneManager {
-    -scene: SceneUpdater
-    +SceneManager(scene: SceneUpdater)
-    +runScene(): void
-    +switchScene(newScene: SceneUpdater): void
-    +drawScene(g2: Graphics2D, score: int): void
-    +getCurrentScene(): SceneUpdater
-    +setLevel(level: Level): void
-  }
-
-  abstract SceneUpdater {
-    #{static} {final} FONT_SIZE: int
-    #sceneManager: SceneManager
-    #level: Level
-    +SceneUpdater(sceneManager: SceneManager)
-    +{abstract} updateScene(): void
-    +{abstract} drawScene(g2: Graphics2D, score: int): void
-    ~getSceneName(): String
-  }
-
-  class Spike {
-    +Spike(x: int, y: int, sideLength: int, d: Direction)
-    +display(g2: Graphics2D): void
-    +handleCollision(a: Actor, ix: double, iy: double): void
-  }
-  Spike -|> Tile
-
-  abstract Tile {
-    +Tile(x: int, y: int, width: int, height: int, gameImage: GameImage)
-    #setRemove(): void
-    ~shouldRemove(): boolean
-    ~{abstract} display(g2: Graphics2D): void
-    ~handleCollision(a: Actor, ix: double, iy: double): void
-  }
-  Tile -|> GameObject
-
-  class TransitionUpdater {
-    -gameUpdater: SceneUpdater
-    -generator: MessageGenerator
-    -timer: int
-    +TransitionUpdater(sceneManager: SceneManager, generator: MessageGenerator)
-    +updateScene(): void
-    +drawScene(g2: Graphics2D, score: int): void
-    ~getSceneName(): String
-    ~setTimer(timer: int): void
-  }
-  TransitionUpdater -|> SceneUpdater
-
-  class UpdateState {
-    -gameComponent: GameComponent
-    +UpdateState(gameComponent: GameComponent)
-    +incrementScore(score: int): void
-    +heroLostLife(): void
-    +setNextLevel(level: int): void
-    +getLevelCount(): int
-    +transitionNextLevel(): void
-  }
-
-  class Wall {
-    +Wall(x: int, y: int, width: int, height: int)
-    +Wall(x: int, y: int, width: int, height: int, gameImage: GameImage)
-    +display(g2: Graphics2D): void
-  }
-  Wall -|> Tile
-
-  class WinUpdater {
-    +WinUpdater(sceneManager: SceneManager)
-    +updateScene(): void
-    +drawScene(g2: Graphics2D, score: int): void
-    ~getSceneName(): String
-  }
-  WinUpdater -|> SceneUpdater
+    class MainApp {
+        -{static} {final} DELAY: int
+        -{static} {final} MENU_WIDTH: int
+        -{static} {final} MENU_HEIGHT: int
+        -{static} {final} GAME_TITLE: String
+        -{static} {final} LIGHT_BLUE: Color
+        -gameFrame: JFrame
+        -runApp(): void
+        -createFrame(): void
+        -createGameComponent(): void
+        -addListeners(): void
+        +{static} main(args: String[]): void
+    }
+    class GameComponent {
+        -{static} {final} LEVEL_DIRECTORY: String
+        -{static} {final} LEVELS_DEFINITION: String
+        -{static} {final} STARTING_LIVES: int
+        -{static} {final} STARTING_SCORE: int
+        -{static} {final} FONT_SIZE: int
+        -{static} {final} TEXT_COLOR: Color
+        -{static} {final} TEXT_X: int
+        -{static} {final} TEXT_Y: int
+        -score: int
+        -lives: int
+        -levelFiles: String[]
+        -keys: Map<Integer,Boolean>
+        -frame: JFrame
+        +GameComponent(frame: JFrame, mouseListener: MouseListener)
+        -buildLevelsList(): void
+        +loadLevelByIndex(index: int): void
+        +handleKey(keyCode: int, newVal: boolean): void
+        +updateState(): void
+        +drawScreen(): void
+        #paintComponent(g: Graphics): void
+        ~switchLevel(newLevel: String, index: int): void
+        ~levelReset(): void
+        +loseLife(): void
+        +winGame(): void
+        -restart(win: boolean): void
+        +getLevelCount(): int
+        +incrementScore(score: int): void
+        +nextLevel(): void
+        +resize(): void
+        ~setSceneManager(sceneManager: SceneManager): void
+    }
 }
+
+package arcadeGame.stateComponents {
+    class MouseListener {
+        -{static} {final} DEFAULT_CURSOR: Cursor
+        -{static} {final} HAND_CURSOR: Cursor
+        -clicks: Map<Rectangle,SceneUpdater>
+        -frame: JFrame
+        -hovered: Rectangle
+        +MouseListener(frame: JFrame)
+        +mouseClicked(e: MouseEvent): void
+        +mouseMoved(e: MouseEvent): void
+        -resetCursor(): void
+        +setSceneManager(sceneManager: SceneManager): void
+        +addClickAction(r: Rectangle, s: SceneUpdater): void
+    }
+    class GameAdvanceListener {
+        +GameAdvanceListener(gameComponent: GameComponent)
+        +actionPerformed(e: ActionEvent): void
+        -advanceOneTick(): void
+    }
+}
+
+package arcadeGame.levelManagers {
+    class Level {
+        -{static} {final} BOUNCE_FACTOR: int
+        -{static} {final} ENEMY_SCORE: int
+        -{static} {final} COIN_SCORE: int
+        -{static} {final} LEVEL_SCORE: int
+        -levelIndex: int
+        -levelPath: String
+        -levelHeight: int
+        -levelWidth: int
+        -numCoins: int
+        -heroHurt: boolean
+        -initialPlayerX: double
+        -initialPlayerY: double
+        +Level(levelPath: String, index: int, hero: Player)
+        +generateLevel(): Object[]
+        -handlePlayer(keys: Map<Integer,Boolean>): void
+        -handleEnemies(state: UpdateState): void
+        -handleTiles(state: UpdateState): void
+        -handleCoins(state: UpdateState): void
+        -handleDebugControls(keys: Map<Integer,Boolean>, state: UpdateState, sceneManager: SceneManager): void
+        +update(keys: Map<Integer,Boolean>, state: UpdateState, sceneManager: SceneManager): void
+        +draw(g2: Graphics2D): void
+        +reset(): void
+        +getHeight(): int
+        +getWidth(): int
+        +getIndex(): int
+    }
+    class LevelLoader {
+        -{static} {final} EMPTY: int
+        -{static} {final} ACTOR_SIZE_MULTIPLIER: double
+        -{static} {final} ACTOR_POSITION_OFFSET: double
+        -file: InputStream
+        -dataString: String
+        -size: int
+        -levelWidth: int
+        -levelHeight: int
+        -numCoins: int
+        +LevelLoader(path: String)
+        ~getJsonObject(): JSONObject
+        ~setupInternalValues(jsonObject: JSONObject): void
+        -addBlock(xPos: int, yPos: int, blockType: char, dir: Direction): void
+        +loadLevel(): void
+        +getWidth(): int
+        +getHeight(): int
+        +getSize(): int
+        +getDataString(): String
+        ~getNumCoins(): int
+    }
+}
+
+package arcadeGame.gameHelpers {
+    enum DeathType {
+        SPIKE
+        ENEMY
+        HUNTER_SEEKER
+        -{final} encouragementString: String
+        ~DeathType(message: String)
+        +getEncouragementString(): String
+    }
+    class SceneManager {
+        +SceneManager(scene: SceneUpdater)
+        +runScene(): void
+        +switchScene(newScene: SceneUpdater): void
+        +drawScene(g: Graphics2D): void
+        +setLevel(level: Level): void
+        +displayStats(): boolean
+    }
+    class UpdateState {
+        +UpdateState(gameComponent: GameComponent)
+        +incrementScore(score: int): void
+        +heroLostLife(): void
+        +setNextLevel(level: int): void
+        +getLevelCount(): int
+        +transitionNextLevel(): void
+        +handleWinGame(): void
+        +resizeLevel(): void
+    }
+    class LossUpdater {
+        -keys: Map<Integer,Boolean>
+        -score: int
+        +LossUpdater(sceneManager: SceneManager, keys: Map<Integer,Boolean>, score: int)
+        +updateScene(): void
+        +drawScene(g2: Graphics2D): void
+        +getSceneName(): String
+    }
+    class MenuUpdater {
+        -{static} {final} MENU_Y_OFFSET: int
+        -{static} {final} BUTTON_Y_OFFSET: int
+        -{static} {final} BUTTON_X_OFFSET: int
+        +MenuUpdater(sceneManager: SceneManager, gameUpdater: GameUpdater, mouseListener: MouseListener)
+        +updateScene(): void
+        +drawScene(g2: Graphics2D): void
+        +getSceneName(): String
+    }
+    abstract class SceneUpdater {
+        +{static} {final} FONT_SIZE: int
+        +{static} {final} BACKGROUND_SIZE: int
+        #SceneUpdater(sceneManager: SceneManager)
+        +displayStats(): boolean
+        +drawScene(g: Graphics2D): void
+        +setLevel(level: Level): void
+        +onFirstLoad(): void
+        +{abstract} updateScene(): void
+        +{abstract} getSceneName(): String
+    }
+}
+
+package arcadeGame.gameHelpers.screens {
+    class CreditsUpdater {
+        -{static} {final} CREDITS_MESSAGE: String
+        -{static} {final} BACK_BUTTON_X: int
+        -{static} {final} BACK_BUTTON_Y: int
+        -{static} {final} BACK_BUTTON_WIDTH: int
+        -{static} {final} BACK_BUTTON_HEIGHT: int
+        #CreditsUpdater(sceneManager: SceneManager, menuScene: SceneUpdater, mouseListener: MouseListener)
+        +updateScene(): void
+        +drawScene(g2: Graphics2D): void
+        +getSceneName(): String
+    }
+    class GameUpdater {
+        -keys: Map<Integer,Boolean>
+        +GameUpdater(sm: SceneManager, level: Level, k: Map<Integer,Boolean>, state: UpdateState)
+        +updateScene(): void
+        +drawScene(g2: Graphics2D): void
+        +onFirstLoad(): void
+        +getSceneName(): String
+        +displayStats(): boolean
+    }
+    class InstructionsUpdater {
+        -{static} {final} BACK_BUTTON_X: int
+        -{static} {final} BACK_BUTTON_Y: int
+        -{static} {final} BACK_BUTTON_WIDTH: int
+        -{static} {final} BACK_BUTTON_HEIGHT: int
+        -{static} {final} LINE_HEIGHT: int
+        -{static} {final} FONT_SIZE: int
+        -{static} {final} ONE_THREE_X_POS: int
+        -{static} {final} TWO_X_POS: int
+        -{static} {final} FOUR_X_POS: int
+        -{static} {final} ONE_Y_POS: int
+        -{static} {final} TWO_Y_POS: int
+        -{static} {final} THREE_Y_POS: int
+        -{static} {final} FOUR_Y_POS: int
+        ~InstructionsUpdater(sceneManager: SceneManager, menuScene: SceneUpdater, mouseListener: MouseListener)
+        +updateScene(): void
+        +getSceneName(): String
+        +drawScene(g2: Graphics2D): void
+        -drawBackButton(g2: Graphics2D): void
+        -drawInstructionScreen(g2: Graphics2D): int[]
+        -drawFirstTextBox(g2: Graphics2D, imagePos: int[], metrics: FontMetrics): void
+        -drawSecondTextBox(g2: Graphics2D, imagePos: int[], metrics: FontMetrics): void
+        -drawThirdTextBox(g2: Graphics2D, imagePos: int[], metrics: FontMetrics): void
+        -drawFourthTextBox(g2: Graphics2D, imagePos: int[], metrics: FontMetrics): void
+    }
+    class PauseUpdater {
+        -{static} {final} BACKGROUND_COLOR: Color
+        -{static} {final} WIDTH_OFFSET: int
+        -{static} {final} HEIGHT_OFFSET: int
+        -keys: Map<Integer,Boolean>
+        +PauseUpdater(sceneManager: SceneManager, gameUpdater: SceneUpdater, keys: Map<Integer,Boolean>, level: Level)
+        +updateScene(): void
+        +drawScene(g2: Graphics2D): void
+        +getSceneName(): String
+        +displayStats(): boolean
+    }
+    class ResetUpdater {
+        -{static} {final} Y_POS_OFFSET: int
+        -{static} {final} TIMER_START: int
+        -{static} {final} ONE_SECOND: int
+        -timer: int
+        +ResetUpdater(sceneManager: SceneManager, gameUpdater: SceneUpdater, deathType: DeathType)
+        +updateScene(): void
+        +drawScene(g2: Graphics2D): void
+        +getSceneName(): String
+        +displayStats(): boolean
+    }
+    class TransitionUpdater {
+        -{static} {final} TIMER_START: int
+        -{static} {final} ONE_SECOND: int
+        -{static} {final} TEXT_OFFSET: int
+        -message: String
+        -timer: int
+        +TransitionUpdater(sceneManager: SceneManager, generator: MessageGenerator)
+        +updateScene(): void
+        +drawScene(g2: Graphics2D): void
+        +getSceneName(): String
+        +setTimer(timer: int): void
+        +displayStats(): boolean
+    }
+    class WinUpdater {
+        -keys: Map<Integer,Boolean>
+        -score: int
+        +WinUpdater(sceneManager: SceneManager, keys: Map<Integer,Boolean>, score: int)
+        +updateScene(): void
+        +drawScene(g2: Graphics2D): void
+        +getSceneName(): String
+    }
+}
+
+package arcadeGame.gameHelpers.transitions {
+    class AiMessageGenerator {
+        -{static} {final} GEMINI_URL: String
+        -{static} {final} DEFAULT_MESSAGE: String
+        -{static} {final} API_KEY: String
+        -{static} {final} API_PROMPT: String
+        -{static} {final} REQUEST_BODY: String
+        -{static} {final} MATCH_START: int
+        -{static} {final} SUCCESS_PATTERN: Pattern
+        -{static} {final} FAILURE_PATTERN: Pattern
+        -{static} {final} INTERNAL_ERROR_MATCHER: Pattern
+        -message: String
+        -apiKey: String
+        +AiMessageGenerator()
+        -loadApiKey(): void
+        -requestMessage(): void
+        +generateEncouragingMessage(): String
+        -parseResponse(response: HttpResponse<String>): void
+    }
+    interface MessageGenerator {
+        generateEncouragingMessage(): String
+    }
+    class TextGraphics {
+        -{static} {final} WIDTH_BUFFER: int
+        +{static} drawMultilineText(text: String, g2: Graphics2D): void
+    }
+}
+
+package arcadeGame.gameComponents {
+    abstract class Actor {
+        #{static} {final} APPROACH_FACTOR: double
+        #{static} {final} SPEED: double
+        #{static} {final} DEFAULT_SPEED: double
+        #{static} {final} HERO_VELOCITY: double
+        -didCollideWithSpikes: boolean
+        ~Actor(startX: double, startY: double, width: double, height: double, gameImage: GameImage)
+        -handleTileCollisions(tiles: List<Tile>, xVel: double, yVel: double): void
+        +update(tiles: List<Tile>): void
+        #isHero(): boolean
+        #isNonTrackingEnemy(): boolean
+        #setSpikeCollision(didCollideWithSpikes: boolean): void
+        +getSpikeCollision(): boolean
+    }
+    class BouncePad {
+        -{static} {final} VERTICAL_BOUNCE_VALUE: double
+        -{static} {final} HORIZONTAL_BOUNCE_VALUE: double
+        +BouncePad(x: int, y: int, width: int, height: int, dir: Direction)
+        +display(g2: Graphics2D): void
+        ~handleCollision(actor: Actor, xPos: double, yPos: double): void
+    }
+    class Coin {
+        +Coin(x: int, y: int, width: int, height: int)
+        +display(g: Graphics2D): void
+        ~handleCollision(actor: Actor, xPos: double, yPos: double): void
+    }
+    class Enemy {
+        -{static} {final} FLOAT_ERROR: double
+        #adding: boolean
+        +Enemy(startX: double, startY: double, width: double, height: double)
+        ~Enemy(startX: double, startY: double, width: double, height: double, velocityX: double, velocityY: double)
+        ~Enemy(startX: double, startY: double, width: double, height: double, velocityX: double, velocityY: double, gameImage: GameImage)
+        +Enemy(startX: double, startY: double, width: double, height: double, dir: Direction)
+        ~Enemy(startX: double, startY: double, width: double, height: double, gameImage: GameImage)
+        +drawActor(g2: Graphics2D): void
+        -closeToZero(num: double): boolean
+        +getAdding(): boolean
+        +setAdding(newAdding: boolean): void
+        +isNonTrackingEnemy(): boolean
+    }
+    class EnemyGenerator {
+        +EnemyGenerator(startX: double, startY: double, width: double, height: double, enemies: List<Enemy>, player: Player)
+        +EnemyGenerator(startX: double, startY: double, width: double, height: double, velocityX: double, velocityY: double, enemies: List<Enemy>, player: Player)
+    }
+    abstract class EnemySpawner {
+        #{static} {final} VELOCITY_MULTIPLIER: double
+        -{static} {final} IMAGE_SCALE: double
+        -{static} {final} IMAGE_OFFSET: double
+        -{static} {final} TIME_INCREMENT: double
+        -{static} {final} THIS_VELOCITY_MULTIPLIER: int
+        -timeInc: double
+        ~EnemySpawner(startX: double, startY: double, width: double, height: double, velocityX: double, velocityY: double, enemies: List<Enemy>, player: Player)
+        +drawActor(g2: Graphics2D): void
+        +update(tiles: List<Tile>): void
+        ~control(): void
+        #getAngle(): double
+        +isNonTrackingEnemy(): boolean
+    }
+    class EnemySpawnerGenerator {
+        +EnemySpawnerGenerator(startX: double, startY: double, width: double, height: double, velocityX: double, velocityY: double, enemies: List<Enemy>, player: Player)
+    }
+    class GameObject {
+        #x: double
+        #y: double
+        #width: double
+        #height: double
+        #vx: double
+        #vy: double
+        #GameObject(x: double, y: double, width: double, height: double, gameImage: GameImage)
+        ~GameObject(x: int, y: int, width: int, height: int, gameImage: GameImage)
+        +getX(): double
+        +setX(x: double): void
+        +getY(): double
+        +setY(y: double): void
+        +getVx(): double
+        +setVx(vx: double): void
+        +getVy(): double
+        +setVy(vy: double): void
+        +getHeight(): double
+        +setHeight(height: double): void
+        +getWidth(): double
+        +setWidth(width: double): void
+        +collidesWith(o: GameObject): boolean
+        #drawImage(g: Graphics2D): void
+        #drawImage(g: Graphics2D, scale: double, offset: double, negativeDirection: boolean): void
+    }
+    class HunterSeeker {
+        +HunterSeeker(startX: double, startY: double, width: double, height: double, h: Player)
+        ~HunterSeeker(startX: double, startY: double, width: double, height: double, velocityX: double, velocityY: double, h: Player)
+        +update(tiles: List<Tile>): void
+        ~control(): void
+        +isNonTrackingEnemy(): boolean
+    }
+    class HunterSeekerGenerator {
+        +HunterSeekerGenerator(startX: double, startY: double, width: double, height: double, velocityX: double, velocityY: double, enemies: List<Enemy>, player: Player)
+    }
+    class MossyWall {
+        +MossyWall(x: int, y: int, width: int, height: int)
+    }
+    class Player {
+        -{static} {final} SPEED_MULTIPLIER: float
+        -{static} {final} DOWNWARD_ACCELERATION: int
+        -{static} {final} NATURAL_FALL_SPEED: int
+        -{static} {final} NATURAL_FALL_ACCELERATION: int
+        -{static} {final} FLY_JUMP_SPEED: int
+        -{static} {final} FLY_PASSIVE_SPEED: int
+        -{static} {final} HORIZONTAL_ACCELERATION: int
+        -{static} {final} FLY_COOL_DOWN: int
+        -{static} {final} IMAGE_SCALE: double
+        -{static} {final} IMAGE_OFFSET: double
+        -horizontalSpeed: double
+        -flyCoolDownTimer: int
+        -downwardPushAcceleration: double
+        -naturalFallMaxSpeed: double
+        -naturalFallAcceleration: double
+        -flyJumpSpeed: double
+        -flyPassiveSpeed: double
+        -flyMaxSpeed: double
+        -maxHorizontalAccelerationChange: double
+        +Player(startX: double, startY: double, width: double, height: double)
+        +update(keys: Map<Integer,Boolean>, tiles: List<Tile>, sprites: List<DisplaySprite>): void
+        ~findKey(keys: Map<Integer,Boolean>, val: int): boolean
+        +handleCollisions(enemy: Enemy): CollisionResult
+        +loseLife(): void
+        ~handleKeyAction(keys: Map<Integer,Boolean>, sprites: List<DisplaySprite>): void
+        -handleYControls(keys: Map<Integer,Boolean>, sprites: List<DisplaySprite>): void
+        -passiveEffect(): void
+        -upEffect(sprites: List<DisplaySprite>): void
+        -downEffect(): void
+        -handleXControls(keys: Map<Integer,Boolean>): void
+        +drawActor(g2: Graphics2D): void
+        #isHero(): boolean
+    }
+    enum CollisionResult {
+        NONE
+        PLAYER_WON
+        ENEMY_WON
+    }
+    class RecursiveEnemySpawnerGenerator {
+        ~RecursiveEnemySpawnerGenerator(startX: double, startY: double, width: double, height: double, enemies: List<Enemy>, player: Player)
+        +RecursiveEnemySpawnerGenerator(startX: double, startY: double, width: double, height: double, velocityX: double, velocityY: double, enemies: List<Enemy>, player: Player)
+    }
+    class Spike {
+        -{static} {final} SIDE_SPLIT: int
+        +Spike(x: int, y: int, sideLength: int, d: Direction)
+        +display(g2: Graphics2D): void
+        ~handleCollision(a: Actor, ix: double, iy: double): void
+    }
+    abstract class Tile {
+        -remove: boolean
+        ~Tile(x: int, y: int, width: int, height: int, gameImage: GameImage)
+        #setRemove(): void
+        +shouldRemove(): boolean
+        +{abstract} display(g2: Graphics2D): void
+        ~handleCollision(a: Actor, ix: double, iy: double): void
+    }
+    class Wall {
+        +Wall(x: int, y: int, width: int, height: int)
+        ~Wall(x: int, y: int, width: int, height: int, gameImage: GameImage)
+        +display(g: Graphics2D): void
+    }
+}
+
+package arcadeGame.gameComponents.imageManagers {
+    enum Direction {
+        UP
+        DOWN
+        LEFT
+        RIGHT
+        UP_LEFT
+        UP_RIGHT
+        DOWN_LEFT
+        DOWN_RIGHT
+        NONE
+        -{static} {final} stringMap: Map<String, Direction>
+        -{static} {final} angleMap: Map<Direction,Double>
+        +{static} fromString(str: String): Direction
+        +{static} toAngle(dir: Direction): double
+    }
+    enum GameImage {
+        BACKGROUND
+        BOUNCE_PAD
+        BRICK
+        COIN
+        GHOST
+        DEAD_GHOST
+        MOSSY_BRICK
+        PLAYER
+        SPAWNER
+        SPIKE
+        TRACKER
+        JUMP_WIND
+        -{static} {final} BYTE_SIZE
+        -{static} {final} IMAGES_DIRECTORY
+        -{final} fileName: String
+        -{final} extension: Extension
+        -images
+        -imageFiles
+        ~GameImage(fileName: String, extension: Extension, directionType: DirectionType)
+        ~GameImage(fileName: String, extension: Extension)
+        -setPossibleDirections(directionType: DirectionType): void
+        -createImages(): void
+        -generateImage(path: String): Image
+        +getImage(): Image
+        +getImage(direction: Direction): Image
+        +getImages(): Map<Direction,Image>
+        +getImageFile(direction: Direction): File
+    }
+    -enum Extension {
+        PNG
+        JPG
+    }
+    -enum DirectionType {
+        NONE
+        TWO
+        FOUR
+        EIGHT
+    }
+    enum MenuImage [[java:arcadeGame.gameComponents.imageManagers.MenuImage]] {
+        LOGO
+        PLAY
+        HELP
+        CREDITS
+        INSTRUCTION_SCREEN
+        BACK
+        -image: BufferedImage
+        ~MenuImage(fileName: String, width: int, height: int)
+        -resize(width: int, height: int): void
+        +getImage(): Image
+    }
+}
+
+package arcadeGame.gameComponents.spriteAnimations {
+    class CollectedCoinSprite {
+        -{static} {final} COIN_FINAL_X: int
+        -{static} {final} COIN_FINAL_Y: int
+        -{static} {final} ONE_SECOND: int
+        -{static} {final} TIME_OFFSET: int
+        -{static} {final} TIME_DIVISOR: int
+        -animationTime: double
+        +CollectedCoinSprite(x: double, y: double, width: double, height: double)
+        +updatePosition(): void
+    }
+    class DeadEnemySprite {
+        -{static} {final} Y_VELOCITY: double
+        +DeadEnemySprite(x: double, y: double, width: double, height: double, vx: double, vy: double)
+        +updatePosition(): void
+    }
+    abstract class DisplaySprite {
+        ~DisplaySprite(x: double, y: double, width: double, height: double, gameImage: GameImage)
+        +display(g2: Graphics2D): void
+        +{abstract} updatePosition(): void
+    }
+    class PlayerJumpSprite {
+        -{static} {final} VELOCITY_DIVISOR: int
+        -{static} {final} WIDTH_DIVISOR: int
+        -{static} {final} X_DIVISOR: int
+        -{static} {final} Y_DIVISOR: int
+        -origWidth: double
+        +PlayerJumpSprite(x: double, y: double, width: double)
+        +updatePosition(): void
+    }
+}
+
+MainApp -d-> GameComponent
+MainApp -l-> MouseListener
+MainApp .l.> GameAdvanceListener
+
+GameComponent -u-> MessageGenerator
+GameComponent -d-> SceneManager
+GameComponent -d-> Level
+GameComponent -d-> Player
+GameComponent .u.> AiMessageGenerator
+GameComponent .d.> MouseListener
+GameComponent .r.> GameUpdater
+GameComponent .r.> MenuUpdater
+GameComponent .r.> ResetUpdater
+GameComponent .r.> WinUpdater
+GameComponent .r.> LossUpdater
+GameComponent .r.> TransitionUpdater
+
+GameAdvanceListener -u-> GameComponent
+
+MouseListener -d-> SceneManager
+MouseListener -d-> "*" SceneUpdater
+
+Level -d-> Player
+Level -d-> "*" Tile
+Level -d-> "*" Enemy
+Level -d-> "*" DisplaySprite
+Level -d-> DeathType
+Level .d.> LevelLoader
+Level .d.> SceneManager
+
+LevelLoader -d-> "*" Tile
+LevelLoader -d-> "*" Enemy
+LevelLoader -d-> Player
+LevelLoader .d.> Direction
+LevelLoader .d.> Wall
+LevelLoader .d.> MossyWall
+LevelLoader .d.> Spike
+LevelLoader .d.> HunterSeeker
+LevelLoader .d.> Coin
+LevelLoader .d.> BouncePad
+LevelLoader .d.> EnemyGenerator
+
+SceneManager -d-> SceneUpdater
+SceneUpdater .u.> Level
+
+UpdateState -u-> GameComponent
+
+AiMessageGenerator .u.|> MessageGenerator
+
+CreditsUpdater -u-|> SceneUpdater
+CreditsUpdater -u-> SceneUpdater
+CreditsUpdater -u.> MouseListener
+CreditsUpdater .u.> SceneManager
+CreditsUpdater .u.> MenuImage
+CreditsUpdater .r.> TextGraphics
+
+GameUpdater -u-|> SceneUpdater
+GameUpdater -u-> UpdateState
+GameUpdater .r.> SceneManager
+GameUpdater .d.> Level
+
+InstructionsUpdater -u-|> SceneUpdater
+InstructionsUpdater -u-> SceneUpdater
+InstructionsUpdater -u-> MouseListener
+InstructionsUpdater .r.> SceneManager
+InstructionsUpdater .u.> MenuImage
+
+LossUpdater -u-|> SceneUpdater
+LossUpdater -u-> SceneUpdater
+LossUpdater .r.> SceneManager
+
+MenuUpdater -u-|> SceneUpdater
+MenuUpdater -u-> GameUpdater
+MenuUpdater -u-> InstructionsUpdater
+MenuUpdater -u-> CreditsUpdater
+MenuUpdater -u-> MouseListener
+MenuUpdater .r.> SceneManager
+
+PauseUpdater -u-|> SceneUpdater
+PauseUpdater -u-> SceneUpdater
+PauseUpdater -d-> Level
+PauseUpdater .r.> SceneManager
+
+ResetUpdater -u-|> SceneUpdater
+ResetUpdater -u-> SceneUpdater
+ResetUpdater -d-> DeathType
+ResetUpdater .r.> SceneManager
+ResetUpdater .r.> TextGraphics
+
+SceneUpdater -d-> Level
+SceneUpdater -r-> SceneManager
+
+TransitionUpdater -u-|> SceneUpdater
+TransitionUpdater .u.> SceneManager
+TransitionUpdater .l.> MessageGenerator
+TransitionUpdater .r.> TextGraphics
+
+WinUpdater -u-|> SceneUpdater
+WinUpdater -u-> SceneUpdater
+WinUpdater .u.> SceneManager
+
+Actor -u-|> GameObject
+Actor .d.> GameImage
+Actor .> Tile
+
+BouncePad -u-|> Tile
+BouncePad .d.> Direction
+BouncePad .d.> GameImage
+BouncePad .> Actor
+
+Coin -u-|> Tile
+Coin .d.> GameImage
+Coin .> Actor
+
+Enemy -u-|> Actor
+Enemy .d.> GameImage
+Enemy .d.> Direction
+
+EnemyGenerator -u-|> EnemySpawner
+EnemyGenerator .> Enemy
+EnemyGenerator .> Player
+
+EnemySpawner -u-|> Enemy
+EnemySpawner -> "*" Enemy
+EnemySpawner -> Player
+EnemySpawner .d.> GameImage
+EnemySpawner .d.> Direction
+
+EnemySpawnerGenerator -u-|> EnemySpawner
+EnemySpawnerGenerator .> Enemy
+EnemySpawnerGenerator .> Player
+
+GameObject -d-> GameImage
+GameObject -d-> Direction
+GameObject .> GameObject
+
+HunterSeeker -u-|> Enemy
+HunterSeeker -> Player
+HunterSeeker .d.> GameImage
+HunterSeeker .d.> Tile
+
+HunterSeekerGenerator -u-|> EnemySpawner
+HunterSeekerGenerator .> Enemy
+HunterSeekerGenerator .> Player
+HunterSeekerGenerator .> HunterSeeker
+
+MossyWall -u-|> Wall
+MossyWall .d.> GameImage
+
+Player -u-|> Actor
+Player .d.> GameImage
+Player .d.> Direction
+Player .> Tile
+Player .> DisplaySprite
+Player .> Enemy
+Player .d.> CollisionResult
+
+RecursiveEnemySpawnerGenerator -u-|> EnemySpawner
+RecursiveEnemySpawnerGenerator .> Enemy
+RecursiveEnemySpawnerGenerator .> Player
+
+Spike -u-|> Tile
+Spike .d.> Direction
+Spike .d.> GameImage
+Spike .> Actor
+
+Tile -u-|> GameObject
+Tile .d.> GameImage
+Tile .> Actor
+
+Wall -u-|> Tile
+Wall .d.> GameImage
+
+GameImage -d-> Extension
+GameImage -d-> DirectionType
+GameImage -u-> "*" Direction
+
+CollectedCoinSprite -u-|> DisplaySprite
+CollectedCoinSprite .d.> GameImage
+
+DeadEnemySprite -u-|> DisplaySprite
+DeadEnemySprite .d.> GameImage
+
+DisplaySprite -u-|> GameObject
+DisplaySprite .d.> GameImage
+
+PlayerJumpSprite -u-|> DisplaySprite
+PlayerJumpSprite .d.> GameImage
 @enduml
