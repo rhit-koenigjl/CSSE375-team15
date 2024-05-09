@@ -331,7 +331,6 @@ package arcadeGame.gameComponents {
         +Enemy(startX: double, startY: double, width: double, height: double, dir: Direction)
         ~Enemy(startX: double, startY: double, width: double, height: double, gameImage: GameImage)
         +drawActor(g2: Graphics2D): void
-        -closeToZero(num: double): boolean
         +getAdding(): boolean
         +setAdding(newAdding: boolean): void
         +isNonTrackingEnemy(): boolean
@@ -473,6 +472,7 @@ package arcadeGame.gameComponents.imageManagers {
         -{static} {final} stringMap: Map<String, Direction>
         -{static} {final} angleMap: Map<Direction,Double>
         +{static} fromString(str: String): Direction
+        +{static} fromVector(vx: double, vy: double, error: double): Direction
         +{static} toAngle(dir: Direction): double
     }
     enum GameImage {
@@ -603,7 +603,7 @@ LevelLoader .d.> BouncePad
 LevelLoader .d.> EnemyGenerator
 
 SceneManager -d-> SceneUpdater
-SceneUpdater .u.> Level
+SceneManager .u.> Level
 
 UpdateState -u-> GameComponent
 
@@ -694,7 +694,6 @@ EnemySpawnerGenerator .> Player
 
 GameObject -d-> GameImage
 GameObject -d-> Direction
-GameObject .> GameObject
 
 HunterSeeker -u-|> Enemy
 HunterSeeker -> Player
