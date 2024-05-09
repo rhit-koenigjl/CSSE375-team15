@@ -40,21 +40,9 @@ public class Enemy extends Actor {
     }
 
     public void drawActor(Graphics2D g2) {
-        // if (vx != 0 || vy != 0) {
-        //     String horizontalDirection = closeToZero(vx) ? "" : ((vx > 0) ? "R" : "L");
-        //     String verticalDirection = closeToZero(vy) ? "" : ((vy > 0) ? "D" : "U");
-        //     String direction = String.format("%s%s", closeToZero(vx) ? "" : verticalDirection,
-        //     closeToZero(vy) ? "" : horizontalDirection);
-        //     System.out.println();
-        //     this.dir = direction.isEmpty() ? this.dir : Direction.fromString(direction);
-        // }
         Direction newDir = Direction.fromVector(vx, vy, FLOAT_ERROR);
         dir = newDir == Direction.NONE ? dir : newDir;
         drawImage(g2);
-    }
-
-    private boolean closeToZero(double num) {
-        return Math.abs(num) < FLOAT_ERROR;
     }
 
     public boolean getAdding() {
