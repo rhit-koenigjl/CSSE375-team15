@@ -10,10 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AiMessageGenerator implements MessageGenerator {
-    private static final String GEMINI_URL =
-            "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=";
     private static final String DEFAULT_MESSAGE = "You are doing great!";
-    private static final String API_KEY = "/apiKey.local";
     private static final String API_PROMPT = "/apiPrompt.txt";
     private static final String REQUEST_BODY = "{\"contents\":[{\"parts\":[{\"text\":\"%s\"}]}]}";
     private static final int MATCH_START = 9;
@@ -31,14 +28,7 @@ public class AiMessageGenerator implements MessageGenerator {
     }
 
     private void loadApiKey() {
-        try {
-            InputStream apiKeyFile = getClass().getResourceAsStream(API_KEY);
-            Scanner scanner = new Scanner(apiKeyFile);
-            apiKey = scanner.nextLine();
-            scanner.close();
-        } catch (Exception e) {
-            System.err.println("API key not found");
-        }
+        apiKey = AiMessageEndpoint.getKey();
     }
 
     private void requestMessage() {
@@ -49,7 +39,8 @@ public class AiMessageGenerator implements MessageGenerator {
             InputStream apiPromptFile = getClass().getResourceAsStream(API_PROMPT);
             Scanner scanner = new Scanner(apiPromptFile);
             String prompt = scanner.nextLine();
-            HttpRequest request = HttpRequest.newBuilder().uri(URI.create(GEMINI_URL + apiKey))
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(AiMessageEndpoint.getEndpoint() + apiKey))
                     .POST(HttpRequest.BodyPublishers.ofString(String.format(REQUEST_BODY, prompt)))
                     .build();
             scanner.close();
