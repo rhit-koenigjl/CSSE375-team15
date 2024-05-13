@@ -52,7 +52,7 @@ public class GameComponent extends JComponent {
         this.sceneManager = new SceneManager(null);
         UpdateState state = new UpdateState(this);
         GameUpdater g = new GameUpdater(sceneManager, currentLevel, keys, state);
-        MenuUpdater m = new MenuUpdater(sceneManager, g, mouseListener);
+        MenuUpdater m = new MenuUpdater(sceneManager, g, mouseListener, keys, this);
         this.sceneManager.switchScene(m);
     }
 
@@ -158,6 +158,14 @@ public class GameComponent extends JComponent {
 
     void setSceneManager(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
+    }
+
+    public void setDefaultAiEndpoint() {
+        generator.setDefaultEndpoint();
+    }
+
+    public void setCustomAiEndpoint(String url) {
+        generator.setCustomEndpoint(url);
     }
 
 }

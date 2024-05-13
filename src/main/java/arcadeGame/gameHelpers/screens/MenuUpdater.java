@@ -4,6 +4,10 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
+import java.util.Map;
+import javax.swing.JOptionPane;
+import arcadeGame.GameComponent;
 import arcadeGame.gameComponents.imageManagers.MenuImage;
 import arcadeGame.gameHelpers.SceneManager;
 import arcadeGame.stateComponents.MouseListener;
@@ -17,19 +21,38 @@ public class MenuUpdater extends SceneUpdater {
     private final InstructionsUpdater instructionsUpdater;
     private final CreditsUpdater creditsUpdater;
     private final MouseListener mouseListener;
+    private final Map<Integer, Boolean> keys;
+    private final GameComponent game;
 
     public MenuUpdater(SceneManager sceneManager, GameUpdater gameUpdater,
-            MouseListener mouseListener) {
+            MouseListener mouseListener, Map<Integer, Boolean> keys, GameComponent game) {
         super(sceneManager);
         this.gameUpdater = gameUpdater;
         this.mouseListener = mouseListener;
         mouseListener.setSceneManager(sceneManager);
         this.instructionsUpdater = new InstructionsUpdater(sceneManager, this, mouseListener);
         this.creditsUpdater = new CreditsUpdater(sceneManager, this, mouseListener);
+        this.keys = keys;
+        this.game = game;
     }
 
     @Override
-    public void updateScene() {}
+    public void updateScene() {
+        if (keys.getOrDefault(KeyEvent.VK_0, false)) {
+            displayCustomEndpointPrompt();
+            keys.put(KeyEvent.VK_0, false);
+        }
+    }
+
+    private void displayCustomEndpointPrompt() {
+        String url = JOptionPane
+                .showInputDialog("Provide a custom endpoint URL or leave blank for default");
+        if (url.isEmpty()) {
+            game.setDefaultAiEndpoint();
+        } else {
+            game.setCustomAiEndpoint(url);
+        }
+    }
 
     @Override
     public void drawScene(Graphics2D g2) {
