@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AiMessageGenerator implements MessageGenerator {
+    private static final AiMessageEndpoint endpoint = GeminiMessageEndpoint.getInstance();
     private static final String DEFAULT_MESSAGE = "You are doing great!";
     private static final String API_PROMPT = "/apiPrompt.txt";
     private static final String REQUEST_BODY = "{\"contents\":[{\"parts\":[{\"text\":\"%s\"}]}]}";
@@ -28,7 +29,7 @@ public class AiMessageGenerator implements MessageGenerator {
     }
 
     private void loadApiKey() {
-        apiKey = AiMessageEndpoint.getKey();
+        apiKey = endpoint.getApiKey();
     }
 
     private void requestMessage() {
@@ -40,7 +41,7 @@ public class AiMessageGenerator implements MessageGenerator {
             Scanner scanner = new Scanner(apiPromptFile);
             String prompt = scanner.nextLine();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(AiMessageEndpoint.getEndpoint() + apiKey))
+                    .uri(URI.create(endpoint.getUrl() + apiKey))
                     .POST(HttpRequest.BodyPublishers.ofString(String.format(REQUEST_BODY, prompt)))
                     .build();
             scanner.close();
