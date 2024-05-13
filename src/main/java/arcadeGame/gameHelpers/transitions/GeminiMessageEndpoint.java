@@ -50,12 +50,10 @@ class GeminiMessageEndpoint implements AiMessageEndpoint {
         } catch (Exception e) {
             Matcher failureMatcher = FAILURE_PATTERN.matcher(response);
             Matcher internalErrorMatcher = INTERNAL_ERROR_MATCHER.matcher(response);
-            if (failureMatcher.find() || internalErrorMatcher.find()) {
-                return "FAIL";
-            } else {
+            if (!(failureMatcher.find() || internalErrorMatcher.find())) {
                 System.err.println("API request quota exceeded. Try again in a few minutes.");
-                return "FAIL";
             }
+            return "FAIL";
         }
     }
 
