@@ -60,6 +60,7 @@ public class AiMessageGenerator implements MessageGenerator {
         if (message.isBlank()) {
             message = DEFAULT_MESSAGE;
         } else if (message.equals("FAIL")) {
+            message = DEFAULT_MESSAGE;
             requestMessage();
         }
     }
